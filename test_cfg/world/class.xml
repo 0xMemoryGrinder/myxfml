@@ -1,0 +1,59 @@
+<entity>
+
+</entity>
+
+
+
+
+<classes>
+    <class type="P">
+        <name>Wizard</name>
+        <stats>
+            <life>80</life>
+            <max_life>80</max_life>
+            <shield>0</shield>
+            <damag_reduction>5</damag_reduction>
+            <lvl>1</lvl>
+            <xp>0</xp>
+            <damage>0</damage>
+            <knock_out>0</knock_out>
+        </stats>
+        <inventory>
+            <size>15</size>
+            <count>3</count>
+            <items count="3">
+                <item>
+                    <name>Noob Scepter</name>
+                    <tags count="4">
+                        <tag>MAGIC</tag>
+                        <tag>WEAPON</tag>
+                        <tag>MANA</tag>
+                        <tag>RANGED</tag>
+                    </tags>
+                    <piercing_damage>2</piercing_damage>
+                    <damage>30</damage>
+                </item>
+                <item>
+                    <name>Noob Ring</name>
+                    <tags count="">
+                        <tag>MAGIC</tag>
+                        <tag>RING</tag>
+                        <tag>MANA</tag>
+                    </tags>
+                </item>
+            </items>
+        </inventory>
+    </class>
+</classes>
+
+
+
+
+
+
+
+
+
+
+
+

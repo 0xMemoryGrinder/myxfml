@@ -1,0 +1,121 @@
+<entity>
+    <name>Old Tree</name>
+    <type>NPC</type>
+    <components>
+        <transform>
+            <pos>234 311</pos>
+            <scale>1.3 1.3</scale>
+            <vel>0 0</vel>
+        </transform>
+        <texts>
+            <toggle>OFF</toggle>
+            <count>1</count>
+            <text>
+                <toggle>OFF</toggle>
+                <path>assets/fonts/font.fft</path>
+                <string>Great Old Tree</string>
+            </text>
+        </texts>
+        <sounds>
+            <toggle>ON</toggle>
+            <count>2</count>
+            <sound>
+                <toggle>OFF</toggle>
+                <name>talk1</name>
+                <path>assets/sounds/tree_talk1.wav</path>
+            </sound>
+            <sound>
+                <toggle>OFF</toggle>
+                <name>talk2</name>
+                <path>assets/sounds/tree_talk2.wav</path>
+            </sound>
+        </sounds>
+        <render>
+            <toggle>ON</toggle>
+            <path>assets/sprites/old_tree.png</path>
+        </render>
+        <collider>
+            <toggle>ON</toggle>
+            <link>OFF</link>
+            <pos>260 330</pos>
+            <dim>14 10</dim>
+        </collider>
+        <animation>
+            <toggle>ON</toggle>
+            <actual_type>IDLE</actual_type>
+            <actual>IDLE_STATIC</actual>
+            <anim>
+                <toggle>ON</toggle>
+                <name>IDLE_STATIC</name>
+                <frame_count>3</frame_count>
+                <crops>
+                    30 12 45 32:0.01
+                    30 12 45 32:0.01
+                    30 12 45 32:0.01
+                </crops>
+                <action>NULL</action>
+            </anim>
+            <anim>
+                <toggle>OFF</toggle>
+                <name>TALKING</name>
+                <frame_count>12</frame_count>
+                <crops>
+                    30 12 45 32:0.01
+                    30 12 45 32:0.01
+                    30 12 45 32:0.01
+                    30 12 45 32:0.01
+                    30 12 45 32:0.01
+                    30 12 45 32:0.01
+                    30 12 45 32:0.01
+                    30 12 45 32:0.01
+                    30 12 45 32:0.01
+                    30 12 45 32:0.01
+                    30 12 45 32:0.01
+                </crops>
+                <frame_action>my_cutscene_action</frame_action>
+            </anim>
+            <anim>
+                <toggle>OFF</toggle>
+                <name>DYING_BURNED</name>
+                <frame_count>12</frame_count>
+                    <crops>
+                        30 12 45 32:0.01
+                        30 12 45 32:0.01
+                        30 12 45 32:0.01
+                        30 12 45 32:0.01
+                        30 12 45 32:0.01
+                        30 12 45 32:0.01
+                        30 12 45 32:0.01
+                        30 12 45 32:0.01
+                        30 12 45 32:0.01
+                        30 12 45 32:0.01
+                        30 12 45 32:0.01
+                    </crops>
+                <frame_action>reset_default</frame_action>
+            </anim>
+            <anim>
+                <toggle>OFF</toggle>
+                <name>DEAD</name>
+                <frame_count>1</frame_count>
+                <crops>
+                30 12 45 32:0.01
+            </crops>
+            <frame_action>NULL</frame_action>
+        </anim>
+    </animation>
+        <interact>
+            <toggle>ON</toggle>
+            <click>ON</click>
+            <hoover>ON</hoover>
+            <key>OFF</key>
+            <clikc_action>get_old_tree_talk</clikc_action>
+            <hoover_action>get_old_tree_highlight</hoover_action>
+            <key_action>NULL</key_action>
+        </interact>
+        <scripts>?</scripts>
+    </components>
+    <children>
+        <child>basic_reactions</child>
+        <child>oldtree_dialog</child>
+    </children>
+</entity>

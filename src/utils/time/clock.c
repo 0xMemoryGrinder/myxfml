@@ -16,7 +16,7 @@ sfBool my_timer(sfClock *clock, sfInt64 trigger, sfInt64 *actual)
         *actual = timer;
     } else {
         if ((*actual - timer) * -1 >= trigger) {
-            *actual = 0;
+            *actual = timer;
             return sfTrue;
         }
     }

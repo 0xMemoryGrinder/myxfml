@@ -42,6 +42,7 @@ void free_entity(entity_t *entity)
             free_animation(E_ANIMATION);
         free(entity);
     }
+    entity = NULL;
 }
 
 void free_entity_list(entity_t *entity)
@@ -50,6 +51,16 @@ void free_entity_list(entity_t *entity)
         free_entity_list(entity->children);
     if (entity->next)
         free_entity_list(entity->next);
-    if (entity != NULL)
-        free_entity(entity);
+    free_entity(entity);
+}
+
+
+void free_entites_list(entity_list_t *entity)
+{
+    if(entity == NULL)
+        return;
+    if (entity->next)
+        free_entites_list(entity->next);
+    free(entity);
+    entity = NULL;
 }

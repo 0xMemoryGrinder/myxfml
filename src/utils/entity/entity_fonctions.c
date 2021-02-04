@@ -13,59 +13,7 @@
 #include "../../../include/types_and_base/struct_shortcuts.h"
 #include "../../../include/my.h"
 
-void swap_actual_tolist(entity_list_t **from, entity_list_t **to)
-{
-    entity_t *e = pop_actual_fromlist(from);
-
-    add_entity_to_list(e, to);
-}
-
-void remove_actual_fromlist(entity_list_t **entity)
-{
-    entity_t *e = pop_actual_fromlist(entity);
-
-    free_entity(e);
-}
-
-entity_t *pop_actual_fromlist(entity_list_t **list)
-{
-    entity_t *to_pop = (*list)->entity;
-    entity_list_t *to_delete = (*list);
-
-    if((*list)->back && (*list)->next) {
-        (*list)->back->next = (*list)->next;
-        (*list) = (*list)->back;
-    } else if ((*list)->back) {
-        (*list)->back->next = NULL;
-        (*list) = (*list)->back;
-    } else {
-        (*list) = (*list)->next;
-    }
-    to_delete->next = NULL;
-    to_delete->back = NULL;
-    to_delete->entity = NULL;
-    free(to_delete);
-    return to_pop;
-}
-
-void remove_entity(entity_t *entity)
-{
-    entity_t *to_delete = entity;
-
-    if (entity->back && entity->next)
-        entity->back->next = entity->next;
-    if (!entity->back) {
-        entity = entity->next;
-        entity->back = NULL;
-    }
-    if (!entity->next)
-        entity = entity->back;
-    if (to_delete->children)
-        free_entity_list(entity->children);
-    free_entity(to_delete);
-}
-
-entity_t *get_entity(entity_t *entity, const char *name)
+entity_t *get_entity_name(entity_t *entity, const char *name)
 {
     entity_t *children = entity->children;
     entity_t *to_return = NULL;
@@ -73,9 +21,9 @@ entity_t *get_entity(entity_t *entity, const char *name)
     if (entity != NULL && my_strcmp(entity->name, name))
         return entity;
     else if (children != NULL)
-        to_return = get_entity(children->next, name);
+        to_return = get_entity_name(children->next, name);
     if (entity->next && !to_return)
-        return get_entity(entity->next, name);
+        return get_entity_name(entity->next, name);
     return to_return;
 }
 
@@ -95,9 +43,13 @@ void init_list(entity_t *entity, entity_list_t **list)
         (*list) = malloc_list_node();
         (*list)->entity = entity;
     } else {
-        (*list)->next = malloc_list_node();
-        (*list)->next->entity = entity;
-        (*list)->next->back = (*list);
+        if (!(*list)->entity)
+            (*list)->entity = entity;
+        else {
+            (*list)->next = malloc_list_node();
+            (*list)->next->entity = entity;
+            (*list)->next->back = (*list);
+        }
     }
 }
 

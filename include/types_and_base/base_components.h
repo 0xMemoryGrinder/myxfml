@@ -22,8 +22,8 @@ struct collider_s{
     toggle_t is_rs_linked;
     sfVector2f position;
     sfVector2f dimensions;
-    void (* on_collison)(entity_t *self, entity_t *collider,
-    game_data_t *data, entity_list_t *list);
+    void (* on_collison)(entity_list_t *self, entity_list_t *collider,
+    game_data_t *data);
 };
 
 

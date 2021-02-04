@@ -21,12 +21,16 @@ void free_scripts(script_t *scripts)
         free(scripts->data);
     if (scripts != NULL)
         free(scripts);
+    scripts = NULL;
 }
 
 void free_script_list(script_list_t *scripts)
 {
     if (scripts->list)
         free_scripts(scripts->list);
+    if (scripts != NULL)
+        free(scripts);
+    scripts = NULL;
 }
 
 void free_frames_tab(frame_t **frames)
@@ -37,6 +41,7 @@ void free_frames_tab(frame_t **frames)
     }
     if (frames != NULL)
         free(frames);
+    frames = NULL;
 }
 
 void free_anim_list(anim_t *animation)
@@ -47,6 +52,7 @@ void free_anim_list(anim_t *animation)
         free_frames_tab(animation->frame);
     if (animation != NULL)
         free(animation);
+    animation = NULL;
 }
 
 void free_animation(animation_t *animation)
@@ -55,4 +61,5 @@ void free_animation(animation_t *animation)
         free_anim_list(animation->list);
     if (animation != NULL)
         free(animation);
+    animation = NULL;
 }

@@ -14,32 +14,19 @@
 #include "../../include/my.h"
 #include "../../include/converter.h"
 
-entity_list_t *get_colliders(entity_t *e)
-{
-    entity_t *entity = e;
-    entity_list_t *colliders;
-
-    while(1)
-        if (entity->components->collider && E_COLLIDER->toggle)
-    return colliders;
-}
-
-void inverse_move(entity_t *entity)
-{
-    E_TRANSFORM->position.x -= E_TRANSFORM->velocity.x;
-    E_TRANSFORM->position.y -= E_TRANSFORM->velocity.y;
-}
-
 void check_collision(entity_list_t *entity, entity_list_t *collider,
-game_data_t *data, entity_list_t *list)
+game_data_t *data)
 {
     sfIntRect intersect;
-    sfIntRect e1 = get_rect(E_COLLIDER->position, E_COLLIDER->dimensions);
-    sfIntRect e2 = get_rect(C_COLLIDER->position, C_COLLIDER->dimensions);
+    sfIntRect e1 = get_rect(entity->E_COLLIDER->position,
+    entity->E_COLLIDER->dimensions);
+    sfIntRect e2 = get_rect(collider->E_COLLIDER->position,
+    collider->E_COLLIDER->dimensions);
 
     if (sfIntRect_intersects(&e1, &e2, &intersect)) {
-        E_COLLIDER->on_collison(entity, collider, data);
-        C_COLLIDER->on_collison(collider, entity, data);
+        entity->E_COLLIDER->on_collison(entity, collider, data);
+        if (collider != NULL && entity != NULL)
+            collider->E_COLLIDER->on_collison(collider, entity, data);
     }
 }
 
@@ -55,7 +42,7 @@ void collide_physics(scene_t *scene, game_data_t *data)
     for (; entity; entity = entity->next) {
         colliders = entity->next;
         for (; colliders; colliders = colliders->next) {
-
+            check_collision(entity, colliders, data);
         }
     }
 }

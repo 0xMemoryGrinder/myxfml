@@ -28,6 +28,7 @@ void free_text(texts_t *texts)
         free(texts->text);
     if (texts != NULL)
         free(texts);
+    texts = NULL;
 }
 
 void free_rendersprite(render_sprite_t *render)
@@ -38,6 +39,7 @@ void free_rendersprite(render_sprite_t *render)
         sfTexture_destroy(render->texture);
     if (render != NULL)
         free(render);
+    render = NULL;
 }
 
 void free_sound_list(sfx_list_t *sounds)
@@ -54,4 +56,5 @@ void free_sound_list(sfx_list_t *sounds)
         free(sounds->sfx);
     if (sounds != NULL)
         free(sounds);
+    sounds = NULL;
 }

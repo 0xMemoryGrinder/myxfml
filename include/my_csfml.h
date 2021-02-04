@@ -1,6 +1,6 @@
 /*
 ** EPITECH PROJECT, 2020
-** my_csfml.h
+** src.h
 ** File description:
 ** header for my_csfml_lib
 */
@@ -58,21 +58,25 @@ typedef enum anim_e{
 //
 //  COMPONENTS TYPES
 //
-typedef struct action_trigger_s action_trigger_t;
+//  Collider
 typedef struct collider_s collider_t;
-typedef struct crop_s crop_t;
+//  Render Sprite
 typedef struct render_sprite_s render_sprite_t;
+//  Transform
 typedef struct transform_s transform_t;
+//  Sounds
 typedef struct sound_s sound_t;
 typedef struct sfx_list_s sfx_list_t;
+//  Texts
 typedef struct text_s text_t;
 typedef struct texts_s texts_t;
+//  Interact
 typedef struct interact_s interact_t;
-typedef struct tag_s tag_t;
-typedef struct tag_list_s tag_list_t;
+//  Animmation
 typedef struct animation_s animation_t;
 typedef struct anim_s anim_t;
-typedef struct anim_trigger_s anim_trigger_t;
+typedef struct frame_s frame_t;
+//  Scripts
 typedef struct script_s script_t;
 typedef struct script_list_s script_list_t;
 
@@ -84,6 +88,7 @@ typedef struct script_list_s script_list_t;
 typedef struct entity_s entity_t;
 typedef struct entity_list_s entity_list_t;
 typedef struct components_s components_t;
+typedef struct dependencies_s dependent_t;
 
 
 
@@ -95,7 +100,6 @@ typedef struct global_stats_s global_stats_t;
 typedef struct settings_s settings_t;
 typedef struct game_stats_s game_stats_t;
 typedef struct time_stats_s time_stats_t;
-typedef struct camera_s camera_t;
 
 
 //
@@ -109,6 +113,7 @@ typedef struct key_input_s key_input_t;
 //
 //  SCENE TYPES
 //
+typedef struct scene_objects_s scene_objects_t;
 typedef struct scene_s scene_t;
 
 
@@ -117,7 +122,7 @@ typedef struct scene_s scene_t;
 //  VIDEO TYPES
 //
 typedef struct video_data_s video_data_t;
-
+typedef struct camera_s camera_t;
 
 
 //

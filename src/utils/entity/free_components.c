@@ -6,11 +6,11 @@
 */
 
 #include <stdlib.h>
-#include "../../my_csfml.h"
-#include "../../entity.h"
-#include "../../scene.h"
-#include "../../base_components.h"
-#include "../../struct_shortcuts.h"
+#include "../../../include/my_csfml.h"
+#include "../../../include/types_and_base/entity.h"
+#include "../../../include/types_and_base/scene.h"
+#include "../../../include/types_and_base/base_components.h"
+#include "../../../include/types_and_base/struct_shortcuts.h"
 #include "../../../include/my.h"
 
 void free_text(texts_t *texts)
@@ -54,22 +54,4 @@ void free_sound_list(sfx_list_t *sounds)
         free(sounds->sfx);
     if (sounds != NULL)
         free(sounds);
-}
-
-void free_anim_list(anim_t *animation)
-{
-    if (animation->next)
-        free_anim_list(animation->next);
-    if (animation->anim)
-        free(animation->anim);
-    if (animation != NULL)
-        free(animation);
-}
-
-void free_animation(animation_t *animation)
-{
-    if (animation->list)
-        free_anim_list(animation->list);
-    if (animation != NULL)
-        free(animation);
 }

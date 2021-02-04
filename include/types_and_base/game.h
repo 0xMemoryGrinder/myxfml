@@ -8,7 +8,7 @@
 #ifndef LIBCSFML_GAME_H
 #define LIBCSFML_GAME_H
 
-#include "my_csfml.h"
+#include "../my_csfml.h"
 
 //
 //  Camera info

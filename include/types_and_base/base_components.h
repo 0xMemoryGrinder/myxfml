@@ -8,52 +8,11 @@
 #ifndef LIBCSFML_BASE_COMPONENTS_H
 #define LIBCSFML_BASE_COMPONENTS_H
 
-#include "my_csfml.h"
+#include "../my_csfml.h"
 
         ////////////////////////////////
         //      BASE COMPONENTS       //
         ////////////////////////////////
-
-
-//
-//  Action_trigger_component
-//
-struct action_trigger_s{
-    toggle_t toggle;
-    char *action_name;
-    id type;
-    int trigger;
-    int actual;
-};
-struct trigger_s{
-    action_trigger_t *trigger;
-    int count;
-    int actual;
-};
-
-
-//
-//  tag_components
-//
-struct tag_s{
-    toggle_t toggle;
-    char *tag;
-    id type;
-    void *action;
-    struct tag_s *next;
-};
-
-struct tag_list_s{
-    toggle_t toggle;
-    tag_t *list;
-    tag_t *(*get_tag)(struct tag_list_s *tags, char *tag);
-    void (*add_tag)(struct tag_list_s *tags, char *tag);
-    sfBool (*remove_tag)(struct tag_list_s *tags, char *tag);
-    sfBool (*is_tag)(struct tag_list_s *tags, char *tag);
-    int count;
-};
-
-
 
 //
 //  Collider_Component
@@ -64,7 +23,7 @@ struct collider_s{
     sfVector2f position;
     sfVector2f dimensions;
     void (* on_collison)(entity_t *self, entity_t *collider,
-            game_data_t *data, entity_list_t *list);
+    game_data_t *data, entity_list_t *list);
 };
 
 
@@ -139,9 +98,9 @@ struct interact_s{
     toggle_t click;
     toggle_t hoover;
     toggle_t key;
-    void (* click_action)(entity_t *entity, game_data_t *data);
-    void (* hoover_action)(entity_t *entity, game_data_t *data);
-    void (* key_action)(entity_t *entity, game_data_t *data);
+    void (* click_action)(entity_t *entity, game_data_t *data, animation_t *);
+    void (* hoover_action)(entity_t *entity, game_data_t *data, animation_t *);
+    void (* key_action)(entity_t *entity, game_data_t *data, animation_t *);
 };
 
 
@@ -161,15 +120,15 @@ struct anim_s{
     toggle_t toggle;
     int frames_count;
     anim name;
-    frame_t *anim;
+    frame_t **frame;
     void (* frame_action)(game_data_t *data, entity_t *entity, animation_t *a);
     anim_t *next;
 };
 
 struct frame_s{
     sfIntRect crop;
-    int trigger;
-    int actual;
+    sfInt64 trigger;
+    sfInt64 actual;
 };
 
 //
@@ -178,14 +137,31 @@ struct frame_s{
 struct script_s{
     toggle_t toggle;
     toggle_t time_dependent;
-    int trigger;
-    int actual;
+    sfInt64 trigger;
+    sfInt64 actual;
     char *name;
     void *data;
     void *(*update)(void *data, game_data_t *game, entity_t *entity);
     script_t *next;
 };
 
+struct script_list_s{
+    toggle_t toggle;
+    script_t *list;
+    int count;
+};
+
+
+//
+//  free components
+//
+void free_scripts(script_t *scripts);
+void free_script_list(script_list_t *scripts);
+void free_text(texts_t *texts);
+void free_rendersprite(render_sprite_t *render);
+void free_sound_list(sfx_list_t *sounds);
+void free_anim_list(anim_t *animation);
+void free_animation(animation_t *animation);
 
 
 

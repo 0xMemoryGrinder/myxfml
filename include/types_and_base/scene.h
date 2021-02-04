@@ -8,18 +8,22 @@
 #ifndef LIBCSFML_SCENE_H
 #define LIBCSFML_SCENE_H
 
-#include "my_csfml.h"
+#include "../my_csfml.h"
+
+
+struct scene_objects_s{
+    entity_t *list;
+    entity_list_t *colliders;
+    entity_list_t *render;
+    entity_list_t *scripts;
+    entity_list_t *interact;
+    entity_list_t *text;
+};
+
 
 struct scene_s{
-    id sid;
     char *name;
-    entity_t *list;
-    entity_t *outsight_list;
-    int outsight_count;
-    action_trigger_t *scene_time;
-    int elapsed_time;
-    tag_list_t *tags;
-    audio_data_t *scene_musics;
+    scene_objects_t *objects;
     events_action_t *events;
     struct scene_s *paused_scene;
 };

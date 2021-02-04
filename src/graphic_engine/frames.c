@@ -6,17 +6,18 @@
 */
 
 #include <stdlib.h>
-#include "base_components.h"
-#include "entity.h"
-#include "video.h"
-#include "game.h"
-#include "scene.h"
-#include "struct_shortcuts.h"
+#include "../../include/types_and_base/base_components.h"
+#include "../../include/types_and_base/entity.h"
+#include "../../include/types_and_base/video.h"
+#include "../../include/types_and_base/game.h"
+#include "../../include/types_and_base/scene.h"
+#include "../../include/types_and_base/struct_shortcuts.h"
 
 static void get_entity_update(entity_t *entity , sfRenderWindow *w)
 {
     if (E_RSPRITE->toggle) {
-        sfSprite_setTextureRect(E_RSPRITE->sprite, E_RSPRITEcrop);
+        sfSprite_setTextureRect(E_RSPRITE->sprite,
+        E_ANIMATION->actual->frame[E_ANIMATION->actual_frame]->crop);
         sfSprite_setPosition(E_RSPRITE->sprite, E_TRANSFORM->position);
         sfRenderWindow_drawSprite(w, E_RSPRITE->sprite, NULL);
     }

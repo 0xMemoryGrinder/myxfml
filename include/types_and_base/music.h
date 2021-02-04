@@ -8,7 +8,7 @@
 #ifndef LIBCSFML_MUSIC_H
 #define LIBCSFML_MUSIC_H
 
-#include "my_csfml.h"
+#include "../my_csfml.h"
 
 struct music_s{
     char *name;

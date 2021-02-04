@@ -8,7 +8,7 @@
 #ifndef LIBCSFML_ENTITY_H
 #define LIBCSFML_ENTITY_H
 
-#include "my_csfml.h"
+#include "../my_csfml.h"
 
 //
 // entity test
@@ -21,12 +21,21 @@ struct components_s{
     collider_t *collider;
     animation_t *animation;
     interact_t *interact;
-    script_t *scripts;
+    script_list_t *scripts;
+};
+
+struct dependencies_s{
+   sfBool collider;
+   sfBool render;
+   sfBool script;
+   sfBool interact;
+   sfBool text;
 };
 
 struct entity_s{
     char *name;
     id type;
+    dependent_t is_in;
     components_t *components;
     entity_t *children;
     entity_t *parent;
@@ -49,24 +58,23 @@ void free_entity(entity_t *entity);
 void free_entity_list(entity_t* entity);
 
 
+
+//
+//  Alloc entity
+//
+entity_t *malloc_entity_node(void);
+entity_list_t *malloc_list_node(void);
+
+
+
 //
 //  Utils Entity
 //
 void add_entity(entity_t *entity, entity_t **list);
 void add_entity_to_list(entity_t *entity, entity_list_t **list);
 void remove_entity(entity_t *entity);
-void remove_entity_fromlist(entity_list_t *entity);
-
-
-
-//
-//  free components
-//
-void free_scripts(script_t *scripts);
-void free_text(texts_t *texts);
-void free_rendersprite(render_sprite_t *render);
-void free_sound_list(sfx_list_t *sounds);
-void free_anim_list(anim_t *animation);
-void free_animation(animation_t *animation);
+entity_t *pop_actual_fromlist(entity_list_t **entity);
+void remove_actual_fromlist(entity_list_t **entity);
+void swap_actual_tolist(entity_list_t **from, entity_list_t **to);
 
 #endif //LIBCSFML_ENTITY_H

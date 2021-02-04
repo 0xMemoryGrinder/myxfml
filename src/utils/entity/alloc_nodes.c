@@ -12,16 +12,21 @@
 #include "../../../include/types_and_base/base_components.h"
 #include "../../../include/types_and_base/struct_shortcuts.h"
 #include "../../../include/my.h"
+#include "../my_puterr.h"
 
 entity_t *malloc_entity_node(void)
 {
-    entity_t *new = malloc(sizeof(entity_t));
+    entity_t *entity = malloc(sizeof(entity_t));
 
-    if (!new)
-        exit(84);
-    new->next = NULL;
-    new->back = NULL;
-    return new;
+    if (entity == NULL)
+        my_puterr("Error allocating entity");
+    entity->name = NULL;
+    entity->path = NULL;
+    entity->parent = NULL;
+    entity->children = NULL;
+    entity->next = NULL;
+    entity->back = NULL;
+    return entity;
 }
 
 entity_list_t *malloc_list_node(void)
@@ -29,7 +34,7 @@ entity_list_t *malloc_list_node(void)
     entity_list_t *new = malloc(sizeof(entity_list_t));
 
     if (!new)
-        exit(84);
+        my_puterr("Error allocating entity list node");
     new->next = NULL;
     new->back = NULL;
     new->entity = NULL;

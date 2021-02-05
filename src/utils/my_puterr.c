@@ -9,6 +9,8 @@
 #include <stdlib.h>
 #include "../../include/my.h"
 
+void my_putstr_err(char *str);
+
 void my_puterr(char *str)
 {
     my_putstr_err(str);

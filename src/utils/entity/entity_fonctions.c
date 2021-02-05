@@ -18,7 +18,7 @@ entity_t *get_entity_name(entity_t *entity, const char *name)
     entity_t *children = entity->children;
     entity_t *to_return = NULL;
 
-    if (entity != NULL && my_strcmp(entity->name, name))
+    if (entity != NULL && !my_strcmp(entity->name, name))
         return entity;
     else if (children != NULL)
         to_return = get_entity_name(children->next, name);

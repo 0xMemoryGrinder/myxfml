@@ -30,13 +30,15 @@ struct dependencies_s{
    sfBool script;
    sfBool interact;
    sfBool text;
+   sfBool sfx;
 };
 
 struct entity_s{
     char *name;
-    id type;
+    entity_id type;
     dependent_t is_in;
     components_t *components;
+    char *path;
     entity_t *children;
     entity_t *parent;
     entity_t *next;
@@ -56,8 +58,7 @@ struct entity_list_s{
 //
 void free_entity(entity_t *entity);
 void free_entity_list(entity_t* entity);
-
-
+void free_entites_list(entity_list_t *entity);
 
 //
 //  Alloc entity
@@ -65,8 +66,10 @@ void free_entity_list(entity_t* entity);
 entity_t *malloc_entity_node(void);
 entity_list_t *malloc_list_node(void);
 
-
-
+//
+//  Sort entity_list_t
+//
+entity_list_t *mergeSort(entity_list_t *head);
 //
 //  Utils Entity
 //

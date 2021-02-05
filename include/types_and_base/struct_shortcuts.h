@@ -31,6 +31,17 @@
 #define C_SCRIPT collider->components->scripts
 #define C_ANIMATION collider->components->animation
 
+
+//
+//  Animation component
+//
+//  FROM : ANIMATION
+#define ACTUAL_FRAME E_ANIMATION->actual_frame
+#define A_CROP E_ANIMATION->actual->frame
+#define ACTUAL_CROP E_ANIMATION->actual->frame[ACTUAL_FRAME]
+
+
+
 //
 //  Entity List Shortcuts
 //
@@ -50,6 +61,8 @@
 #define G_PAUSE_SCENE data->scene->paused_scene
 #define G_WINDOW data->game_settings->video->window
 
-#define onCollision() on_collision(self, collider, data)
+#define G_CLOCK data->stats->time->game_clock
+
+
 
 #endif //LIBCSFML_STRUCT_SHORTCUTS_H

@@ -18,14 +18,30 @@ struct scene_objects_s{
     entity_list_t *scripts;
     entity_list_t *interact;
     entity_list_t *text;
+    entity_list_t *sfx;
 };
 
 
-struct scene_s{
+struct scene_array_s{
     char *name;
+    scene_id id;
+    toggle_t toggle;
     scene_objects_t *objects;
-    events_action_t *events;
-    struct scene_s *paused_scene;
+    script_t *scene_scripts;
 };
+
+struct scenes_s{
+    scene_id actual;
+    int count;
+    scene_array_t *list;
+    events_action_t *events;
+};
+
+
+//
+//  create scenes
+//
+scene_array_t *malloc_scene_array(int size);
+scenes_t *malloc_scene_struct(void);
 
 #endif //LIBCSFML_SCENE_H

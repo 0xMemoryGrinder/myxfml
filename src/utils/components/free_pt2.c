@@ -33,12 +33,8 @@ void free_script_list(script_list_t *scripts)
     scripts = NULL;
 }
 
-void free_frames_tab(frame_t **frames)
+void free_frames_tab(frame_t *frames)
 {
-    for (int i = 0; frames[i] != NULL; ) {
-        free(frames[i]);
-        i++;
-    }
     if (frames != NULL)
         free(frames);
     frames = NULL;

@@ -26,6 +26,12 @@ entity_t *malloc_entity_node(void)
     entity->children = NULL;
     entity->next = NULL;
     entity->back = NULL;
+    entity->is_in.text = sfFalse;
+    entity->is_in.render = sfFalse;
+    entity->is_in.collider = sfFalse;
+    entity->is_in.script = sfFalse;
+    entity->is_in.sfx = sfFalse;
+    entity->is_in.interact = sfFalse;
     return entity;
 }
 

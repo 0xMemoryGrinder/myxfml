@@ -27,25 +27,14 @@ struct camera_s{
 
 struct time_stats_s{
     sfClock *game_clock;
-};
-
-struct global_stats_s {
-    char *actual_scene;
-    int mile_stones;
-    text_t *total_time;
-    text_t *progression;
-    text_t *difficulty;
-    int diff_mult;
+    sfInt64 time;
 };
 
 struct game_stats_s{
     time_stats_t *time;
-    global_stats_t *global;
     sfEvent *event;
     camera_t *camera;
 };
-
-
 
 struct settings_s{
     video_data_t *video;
@@ -56,7 +45,7 @@ struct game_data_s{
     entity_t *global_entity;
     entity_t *gui;
     entity_t *player;
-    scene_t *scene;
+    scenes_t *scenes;
     game_stats_t *stats;
     settings_t *game_settings;
 };

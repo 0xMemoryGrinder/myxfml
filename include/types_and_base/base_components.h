@@ -58,8 +58,8 @@ struct sound_s{
     anim type;
     sfSound *sfx;
     sfSoundBuffer *buff;
-    int actual;
-    int trigger;
+    sfInt64 actual;
+    sfInt64 trigger;
 };
 
 struct sfx_list_s{
@@ -98,9 +98,9 @@ struct interact_s{
     toggle_t click;
     toggle_t hoover;
     toggle_t key;
-    void (* click_action)(entity_t *entity, game_data_t *data, animation_t *);
-    void (* hoover_action)(entity_t *entity, game_data_t *data, animation_t *);
-    void (* key_action)(entity_t *entity, game_data_t *data, animation_t *);
+    void (* click_action)(entity_list_t *e, game_data_t *d, animation_t *);
+    void (* hoover_action)(entity_list_t *e, game_data_t *d, animation_t *);
+    void (* key_action)(entity_list_t *e, game_data_t *d, animation_t *);
 };
 
 
@@ -120,16 +120,18 @@ struct anim_s{
     toggle_t toggle;
     int frames_count;
     anim name;
-    frame_t **frame;
-    void (* frame_action)(game_data_t *data, entity_t *entity, animation_t *a);
+    sfInt64 actual_time;
+    frame_t *frame;
+    void (* frame_action)(game_data_t *d, entity_list_t *e, animation_t *a);
     anim_t *next;
 };
 
 struct frame_s{
     sfIntRect crop;
     sfInt64 trigger;
-    sfInt64 actual;
 };
+
+
 
 //
 //  Script Component
@@ -141,7 +143,7 @@ struct script_s{
     sfInt64 actual;
     char *name;
     void *data;
-    void *(*update)(void *data, game_data_t *game, entity_t *entity);
+    void *(*update)(void *d, game_data_t *g, entity_list_t *e);
     script_t *next;
 };
 
@@ -150,6 +152,9 @@ struct script_list_s{
     script_t *list;
     int count;
 };
+
+
+
 
 
 //
@@ -166,6 +171,36 @@ void free_animation(animation_t *animation);
 
 
 //
+//  create components
+//
+components_t *malloc_components(void);
+
+render_sprite_t *malloc_rendersprite(void);
+transform_t *malloc_transform(void);
+script_list_t *malloc_script_list(void);
+interact_t *malloc_interact(void);
+collider_t *malloc_collider(void);
+animation_t *malloc_animations(void);
+sfx_list_t *malloc_sfx_list(void);
+texts_t *malloc_text_struct(void);
+
+
+
+
+sound_t *malloc_sfx_array(int size);
+
+script_t *malloc_script_node(void);
+
+frame_t *malloc_frames_array(int count);
+anim_t *malloc_anim_frame(void);
+
+text_t *malloc_text_array(int size);
+
+
+
+
+
+
 //  Script Initialization Exemple
 //
 

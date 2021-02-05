@@ -13,9 +13,13 @@
 #include <SFML/Window.h>
 #include <SFML/Audio.h>
 
-typedef enum {A, B, C, D, E} id;
+typedef enum {
+    SCENE_1, SCENE_2, SCENE_3, SCENE_4
+} scene_id;
 
-typedef enum toggle_e{ON, OFF}toggle_t;
+typedef enum toggle_e{OFF, ON}toggle_t;
+
+typedef enum {MOB, PNJ, PLAYER, WALL} entity_id;
 
 typedef enum anim_type_e{
     IDLE, ATTACK, DEFENSE, MOVING, HURT,
@@ -114,7 +118,8 @@ typedef struct key_input_s key_input_t;
 //  SCENE TYPES
 //
 typedef struct scene_objects_s scene_objects_t;
-typedef struct scene_s scene_t;
+typedef struct scenes_s scenes_t;
+typedef struct scene_array_s scene_array_t;
 
 
 

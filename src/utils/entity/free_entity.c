@@ -17,6 +17,8 @@ static void free_independant_components(entity_t *entity)
 {
     if (entity->name)
         free(entity->name);
+    if (entity->path)
+        free(entity->path);
     if (E_TRANSFORM)
         free(E_TRANSFORM);
     if (E_COLLIDER)
@@ -28,7 +30,7 @@ static void free_independant_components(entity_t *entity)
 
 void free_entity(entity_t *entity)
 {
-    if (entity != NULL) {
+    if (entity != NULL && entity->components != NULL) {
         free_independant_components(entity);
         if (E_TEXT)
             free_text(E_TEXT);
@@ -40,6 +42,7 @@ void free_entity(entity_t *entity)
             free_script_list(E_SCRIPT);
         if (E_ANIMATION)
             free_animation(E_ANIMATION);
+        free(entity->components);
         free(entity);
     }
     entity = NULL;
@@ -61,6 +64,9 @@ void free_entites_list(entity_list_t *entity)
         return;
     if (entity->next)
         free_entites_list(entity->next);
-    free(entity);
+    if (entity->entity)
+        free_entity(entity->entity);
+    if (entity != NULL)
+        free(entity);
     entity = NULL;
 }

@@ -21,6 +21,6 @@
 //
 #define SECONDS(seconds) (seconds * 1000000)
 
-sfBool my_timer(sfClock *clock, int trigger, int *actual);
+sfBool my_timer(sfClock *clock, sfInt64 trigger, sfInt64 *actual);
 
 #endif //LIBCSFML_CLOCK_H

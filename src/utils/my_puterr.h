@@ -8,6 +8,6 @@
 #ifndef LIB_MYCSFML_MY_PUTERR_H
 #define LIB_MYCSFML_MY_PUTERR_H
 
-void my_puterr(char *str);
+void my_puterr(char *str,  char *filename, int line);
 
 #endif //LIB_MYCSFML_MY_PUTERR_H

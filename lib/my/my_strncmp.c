@@ -9,7 +9,8 @@ int my_strncmp(char const *s1, char const *s2, int n)
 {
     int cmp = 0;
     int i;
-    for (i = 0; s1[i] == s2[i] && i < n; i++)
+
+    for (i = 0; s1[i] == s2[i] && i < (n - 1) && s1[i] && s2[i]; i++);
     if (s1[i] > s2[i])
         cmp = s1[i] - s2[i];
     if (s1[i] < s2[i])

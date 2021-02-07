@@ -5,7 +5,7 @@
 ** header for clock.c
 */
 
-#include "../../../include/my_csfml.h"
+#include "../../../include/types.h"
 
 sfBool my_timer(sfClock *clock, sfInt64 trigger, sfInt64 *actual)
 {

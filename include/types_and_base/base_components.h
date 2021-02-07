@@ -8,7 +8,7 @@
 #ifndef LIBCSFML_BASE_COMPONENTS_H
 #define LIBCSFML_BASE_COMPONENTS_H
 
-#include "../my_csfml.h"
+#include "../types.h"
 
         ////////////////////////////////
         //      BASE COMPONENTS       //

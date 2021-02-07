@@ -8,7 +8,7 @@
 #ifndef LIBCSFML_SCENE_H
 #define LIBCSFML_SCENE_H
 
-#include "../my_csfml.h"
+#include "../types.h"
 
 
 struct scene_objects_s{
@@ -42,5 +42,13 @@ struct scenes_s{
 //
 scene_array_t *malloc_scene_array(int size);
 scenes_t *malloc_scene_struct(void);
+
+
+
+//
+//  destroy game scene
+//
+void destroy_game_scenes(scenes_t *scenes);
+
 
 #endif //LIBCSFML_SCENE_H

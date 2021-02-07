@@ -8,7 +8,7 @@
 #ifndef LIBCSFML_GAME_H
 #define LIBCSFML_GAME_H
 
-#include "../my_csfml.h"
+#include "../types.h"
 
 //
 //  Camera info
@@ -49,5 +49,28 @@ struct game_data_s{
     game_stats_t *stats;
     settings_t *game_settings;
 };
+
+
+
+//
+//  Create game data
+//
+audio_data_t *malloc_audio_data(void);
+video_data_t *malloc_video_data(void);
+music_t *malloc_music_array(int size);
+game_data_t *malloc_game_data(void);
+game_stats_t *malloc_game_stats(void);
+settings_t *malloc_settings(void);
+
+
+
+//
+//  Destroy game data
+//
+void free_video_data(video_data_t *video_data);
+void free_audio_data(audio_data_t *audio_data);
+void destroy_game_settings(settings_t *settings);
+void destroy_game_stats(game_stats_t *stats);
+void destroy_game(game_data_t *data);
 
 #endif //LIBCSFML_GAME_H

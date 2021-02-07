@@ -10,7 +10,7 @@
 #include "../../../include/types_and_base/base_components.h"
 #include "../../../include/types_and_base/entity.h"
 #include "../../../include/types_and_base/game.h"
-#include "../../../include/my_csfml.h"
+#include "../../../include/types.h"
 #include "../my_puterr.h"
 
 game_data_t *malloc_game_data(void)

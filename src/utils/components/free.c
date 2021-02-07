@@ -6,13 +6,12 @@
 */
 
 #include <stdlib.h>
-#include "../../../include/my_csfml.h"
+#include "../../../include/types.h"
 #include "../../../include/types_and_base/base_components.h"
 #include "../../../include/my.h"
 
 void free_text(texts_t *texts)
 {
-
     for (int i = 0; i < texts->count; i++) {
         if (texts->text[i].string)
             free(texts->text[i].string);

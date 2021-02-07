@@ -8,7 +8,7 @@
 #ifndef LIBCSFML_EVENTS_H
 #define LIBCSFML_EVENTS_H
 
-#include "../my_csfml.h"
+#include "../types.h"
 
 struct events_action_s{
     sfEventType type;

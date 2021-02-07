@@ -8,7 +8,7 @@
 #ifndef LIBCSFML_ENTITY_H
 #define LIBCSFML_ENTITY_H
 
-#include "../my_csfml.h"
+#include "../types.h"
 
 //
 // entity test

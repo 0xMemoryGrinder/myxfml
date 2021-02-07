@@ -8,7 +8,7 @@
 #ifndef LIBCSFML_RENDER_FONCTIONS_H
 #define LIBCSFML_RENDER_FONCTIONS_H
 
-#include "../my_csfml.h"
+#include "../types.h"
 
 
 //

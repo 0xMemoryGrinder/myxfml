@@ -8,7 +8,7 @@
 #ifndef LIBCSFML_VIDEO_H
 #define LIBCSFML_VIDEO_H
 
-#include "../my_csfml.h"
+#include "../types.h"
 
 struct video_data_s{
     int fps;

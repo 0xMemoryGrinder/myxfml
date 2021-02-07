@@ -7,7 +7,7 @@
 
 #include <stdlib.h>
 #include "../../../include/types_and_base/scene.h"
-#include "../../../include/my_csfml.h"
+#include "../../../include/types.h"
 #include "../my_puterr.h"
 
 

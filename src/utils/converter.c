@@ -5,7 +5,7 @@
 ** header for converter.c
 */
 
-#include "../../include/my_csfml.h"
+#include "../../include/types.h"
 
 sfIntRect get_rect(sfVector2f pos, sfVector2f dim,
 sfVector2f ant)

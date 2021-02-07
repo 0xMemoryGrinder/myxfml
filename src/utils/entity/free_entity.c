@@ -64,8 +64,6 @@ void free_entites_list(entity_list_t *entity)
         return;
     if (entity->next)
         free_entites_list(entity->next);
-    if (entity->entity)
-        free_entity(entity->entity);
     if (entity != NULL)
         free(entity);
     entity = NULL;

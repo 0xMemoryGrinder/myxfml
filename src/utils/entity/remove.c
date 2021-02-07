@@ -23,13 +23,25 @@ void remove_actual_fromlist(entity_list_t **entity)
 {
     entity_t *e = pop_actual_fromlist(entity);
 
-    free_entity(e);
+    remove_entity(e);
+}
+
+entity_t *pop_entity_fromlist(entity_t *entity, entity_list_t **list)
+{
+    entity_list_t *entity_list = *list;
+
+    while (entity_list && entity_list->entity != entity)
+        entity_list = entity_list->next;
+    if (entity_list != NULL)
+        return pop_actual_fromlist(&entity_list);
+    return NULL;
 }
 
 entity_t *pop_actual_fromlist(entity_list_t **list)
 {
     entity_t *to_pop = (*list)->entity;
     entity_list_t *to_delete = (*list);
+
 
     if((*list)->back && (*list)->next) {
         (*list)->back->next = (*list)->next;

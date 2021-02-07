@@ -60,6 +60,7 @@ void free_entity(entity_t *entity);
 void free_entity_list(entity_t* entity);
 void free_entites_list(entity_list_t *entity);
 
+
 //
 //  Alloc entity
 //
@@ -70,6 +71,9 @@ entity_list_t *malloc_list_node(void);
 //  Sort entity_list_t
 //
 entity_list_t *mergeSort(entity_list_t *head);
+
+
+
 //
 //  Utils Entity
 //
@@ -79,5 +83,7 @@ void remove_entity(entity_t *entity);
 entity_t *pop_actual_fromlist(entity_list_t **entity);
 void remove_actual_fromlist(entity_list_t **entity);
 void swap_actual_tolist(entity_list_t **from, entity_list_t **to);
+entity_t *pop_entity_fromlist(entity_t *entity, entity_list_t **list);
+
 
 #endif //LIBCSFML_ENTITY_H

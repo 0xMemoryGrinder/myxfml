@@ -12,6 +12,7 @@
 #include "../../include/types_and_base/scene.h"
 #include "../../include/types_and_base/base_components.h"
 #include "../../include/types_and_base/struct_shortcuts.h"
+#include "../../include/types_and_base/game.h"
 #include "../../include/my.h"
 #include "../../include/converter.h"
 
@@ -24,15 +25,15 @@ game_data_t *data)
     sfIntRect e2 = get_rect(collider->E_COLLIDER->position,
     collider->E_COLLIDER->dimensions, collider->E_TRANSFORM->velocity);
 
-    if (collider->E_COLLIDER->toggle == OFF)
+    if (collider->E_COLLIDER == NULL || entity->E_COLLIDER->toggle == OFF)
         return;
     if (sfIntRect_intersects(&e1, &e2, &intersect)) {
-        if (entity->E_COLLIDER->on_collison != NULL) {
-            entity->E_COLLIDER->on_collison(entity, collider, data);
-        }
+        if (entity->E_COLLIDER->on_collison != NULL)
+            entity->E_COLLIDER->on_collison(entity, collider, data, intersect);
         if (collider != NULL && entity != NULL &&
         collider->E_COLLIDER->on_collison != NULL)
-            collider->E_COLLIDER->on_collison(collider, entity, data);
+            collider->E_COLLIDER->on_collison(collider, entity, data,
+            intersect);
     }
 }
 
@@ -41,14 +42,10 @@ void physics_update(entity_list_t *list, game_data_t *data)
     entity_list_t *entity = list;
     entity_list_t *colliders;
 
-    if (!entity->entity || !entity->next) {
-        printf("NO COLLIDERS ...\n");
+    if (!entity || !entity->next)
         return;
-    }
     for (; entity; entity = entity->next) {
-        if (entity->E_COLLIDER->toggle == OFF)
-            continue;
-        colliders = entity->next;
+         colliders = entity->next;
         for (; colliders; colliders = colliders->next) {
             check_collision(entity, colliders, data);
         }

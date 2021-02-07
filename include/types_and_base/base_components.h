@@ -23,7 +23,7 @@ struct collider_s{
     sfVector2f position;
     sfVector2f dimensions;
     void (* on_collison)(entity_list_t *self, entity_list_t *collider,
-    game_data_t *data);
+    game_data_t *data, sfIntRect intersect);
 };
 
 
@@ -143,7 +143,7 @@ struct script_s{
     sfInt64 actual;
     char *name;
     void *data;
-    void *(*update)(void *d, game_data_t *g, entity_list_t *e);
+    void *(*update)(void **d, game_data_t *g, entity_list_t *e);
     script_t *next;
 };
 

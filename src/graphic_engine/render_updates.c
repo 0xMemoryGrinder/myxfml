@@ -19,23 +19,26 @@ void apply_force(entity_t *entity)
 {
     E_TRANSFORM->position.x += E_TRANSFORM->velocity.x;
     E_TRANSFORM->position.y += E_TRANSFORM->velocity.y;
-
-
     if (E_COLLIDER) {
         E_COLLIDER->position.x += E_TRANSFORM->velocity.x;
         E_COLLIDER->position.y += E_TRANSFORM->velocity.y;
     }
-
+    E_TRANSFORM->velocity.x = 0;
+    E_TRANSFORM->velocity.y = 0;
 }
 
 void get_render_updates(game_data_t *data, entity_list_t *renders)
 {
     entity_list_t *entity = renders;
+
     for (; entity; entity = entity->next) {
+        if (entity->E_RSPRITE == NULL && entity->E_RSPRITE->toggle == OFF)
+            continue;
+        sfSprite_move(entity->E_RSPRITE->sprite,
+        entity->E_TRANSFORM->velocity);
         apply_force(entity->entity);
-        sfSprite_setPosition(entity->E_RSPRITE->sprite,
-        entity->E_TRANSFORM->position);
-        sfRenderWindow_drawSprite(G_WINDOW, entity->E_RSPRITE->sprite, NULL);
+        sfRenderWindow_drawSprite(G_WINDOW, entity->E_RSPRITE->sprite,
+        NULL);
     }
 }
 

@@ -10,5 +10,5 @@
 
 #include "my_csfml.h"
 
-sfIntRect get_rect(sfVector2f pos, sfVector2f dim, sfVector2f anticipation);
+sfIntRect get_rect(sfVector2f pos, sfVector2f dim, sfVector2f);
 #endif //LIBCSFML_CONVERTER_H

@@ -21,7 +21,7 @@ void update_script(game_data_t *data, entity_list_t *entity, script_t *script)
     my_timer(G_CLOCK, script->trigger, &script->actual )) {
         script->update(script->data, data, entity);
     } else if (script->time_dependent == OFF) {
-        script->update(script->data, data, entity);
+        script->update(&script->data, data, entity);
     }
 }
 

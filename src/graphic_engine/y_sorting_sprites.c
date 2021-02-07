@@ -15,10 +15,11 @@
 
 entity_list_t *split(entity_list_t *head);
 
-int get_y_pivot(entity_t *entity)
+int get_y_pivot(entity_list_t *entity)
 {
-    return E_TRANSFORM->position.y + (ACTUAL_CROP.crop.height *
-    E_TRANSFORM->scale.y);
+    return entity->E_TRANSFORM->position.y +
+    (entity->E_ANIMATION->actual->frame[entity->ACTUAL_FRAME].crop.height *
+    entity->E_TRANSFORM->scale.y);
 }
 
 static entity_list_t *merge(entity_list_t *first, entity_list_t *second)
@@ -30,9 +31,9 @@ static entity_list_t *merge(entity_list_t *first, entity_list_t *second)
         return second;
     if (!second)
         return first;
-    f = get_y_pivot(first->entity);
-    s = get_y_pivot(second->entity);
-    if (f < s) {
+    f = get_y_pivot(first);
+    s = get_y_pivot(second);
+    if (f <= s) {
         first->next = merge(first->next, second);
         first->next->back = first;
         first->back = NULL;

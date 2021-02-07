@@ -27,7 +27,7 @@ struct camera_s{
 
 struct time_stats_s{
     sfClock *game_clock;
-    sfInt64 time;
+    sfInt32 time;
 };
 
 struct game_stats_s{

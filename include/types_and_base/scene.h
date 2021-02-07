@@ -27,14 +27,13 @@ struct scene_array_s{
     scene_id id;
     toggle_t toggle;
     scene_objects_t *objects;
-    script_t *scene_scripts;
+    script_list_t *scene_scripts;
 };
 
 struct scenes_s{
     scene_id actual;
     int count;
     scene_array_t *list;
-    events_action_t *events;
 };
 
 

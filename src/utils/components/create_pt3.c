@@ -17,7 +17,7 @@ sfx_list_t *malloc_sfx_list(void)
     sfx_list_t *new = malloc(sizeof(sfx_list_t));
 
     if (new == NULL)
-        my_puterr("Error : malloc sfx_list structure");
+        my_puterr("Error : malloc sfx_list structure", __FILE__, __LINE__);
     new->toggle = OFF;
     new->sfx_count = 0;
     new->sfx = NULL;
@@ -29,7 +29,7 @@ sound_t *malloc_sfx_array(int size)
     sound_t *new = malloc(sizeof(sound_t) * (size + 1));
 
     if (new == NULL)
-        my_puterr("Error : malloc sfx node");
+        my_puterr("Error : malloc sfx node", __FILE__, __LINE__);
     for (int i = 0; i < size; i++) {
         new[i].sfx = NULL;
         new[i].buff = NULL;
@@ -46,7 +46,7 @@ texts_t *malloc_text_struct(void)
     texts_t *texts = malloc(sizeof(text_t));
 
     if (texts == NULL)
-        my_puterr("Error : malloc textS structure");
+        my_puterr("Error : malloc textS structure", __FILE__, __LINE__);
     texts->toggle = OFF;
     texts->count = 0;
     texts->text = NULL;
@@ -58,7 +58,7 @@ text_t *malloc_text_array(int size)
     text_t *new = malloc(sizeof(text_t) * (size + 1));
 
     if (new == NULL)
-        my_puterr("Error : malloc text array");
+        my_puterr("Error : malloc text array", __FILE__, __LINE__);
     for (int i = 0 ; i < size; i++) {
         new[i].size = 0;
         new[i].text = NULL;

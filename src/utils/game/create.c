@@ -35,9 +35,18 @@ game_stats_t *malloc_game_stats(void)
     if (new == NULL)
         my_puterr("Error malloc game stats", __FILE__, __LINE__);
     new->time = NULL;
-    new->event = malloc(sizeof(sfEvent));
-    if (new->event == NULL)
-        my_puterr("Error malloc sfEvent", __FILE__, __LINE__);
+    new->event = NULL;
     new->camera = NULL;
+    return new;
+}
+
+settings_t *malloc_settings(void)
+{
+    settings_t *new = malloc(sizeof(settings_t));
+
+    if (new == NULL)
+        my_puterr("Error malloc game settings", __FILE__, __LINE__);
+    new->video = NULL;
+    new->audio = NULL;
     return new;
 }

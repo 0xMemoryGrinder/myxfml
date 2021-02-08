@@ -12,7 +12,6 @@
 
 struct music_s{
     char *name;
-    id type;
     sfMusic *music;
     int volume;
 };

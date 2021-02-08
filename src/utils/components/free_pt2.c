@@ -26,10 +26,11 @@ void free_scripts(script_t *scripts)
 
 void free_script_list(script_list_t *scripts)
 {
+    if (scripts == NULL)
+        return;
     if (scripts->list)
         free_scripts(scripts->list);
-    if (scripts != NULL)
-        free(scripts);
+    free(scripts);
     scripts = NULL;
 }
 

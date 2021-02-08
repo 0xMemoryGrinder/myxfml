@@ -15,9 +15,7 @@
 //
 struct camera_s{
     sfView *camera;
-    sfFloatRect transform;
-    int insight_count;
-    entity_t *insight_object;
+    transform_t *transform;
 };
 
 
@@ -61,7 +59,14 @@ music_t *malloc_music_array(int size);
 game_data_t *malloc_game_data(void);
 game_stats_t *malloc_game_stats(void);
 settings_t *malloc_settings(void);
+time_stats_t *malloc_time_stats(void);
+camera_t *malloc_game_camera(void);
 
+
+//
+//  Init
+//
+void init_scenes(scenes_t *scenes);
 
 
 //

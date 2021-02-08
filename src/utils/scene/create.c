@@ -29,7 +29,7 @@ scene_objects_t *malloc_scene_objects(void)
 
 scene_array_t *malloc_scene_array(int size)
 {
-    scene_array_t *new = malloc(sizeof(scene_array_t) * (size + 1));
+    scene_array_t *new = malloc(sizeof(scene_array_t) * (size));
 
     if (new == NULL)
         my_puterr("Error : malloc scene array", __FILE__, __LINE__);
@@ -37,7 +37,7 @@ scene_array_t *malloc_scene_array(int size)
         new[i].toggle = ON;
         new[i].name = NULL;
         new[i].id = i;
-        new[i].objects = NULL;
+        new[i].objects = malloc_scene_objects();
         new[i].scene_scripts = NULL;
     }
     return new;

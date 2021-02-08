@@ -46,6 +46,8 @@ struct transform_s {
     sfVector2f position;
     sfVector2f scale;
     sfVector2f velocity;
+    float speed;
+    float rotation;
 };
 
 

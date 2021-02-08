@@ -84,6 +84,6 @@ entity_t *pop_actual_fromlist(entity_list_t **entity);
 void remove_actual_fromlist(entity_list_t **entity);
 void swap_actual_tolist(entity_list_t **from, entity_list_t **to);
 entity_t *pop_entity_fromlist(entity_t *entity, entity_list_t **list);
-
+entity_t *get_entity_name(entity_t *entity, const char *name);
 
 #endif //LIBCSFML_ENTITY_H

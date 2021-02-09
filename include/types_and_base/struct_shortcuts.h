@@ -60,6 +60,8 @@
 #define G_SCENE data->scene
 #define G_PAUSE_SCENE data->scene->paused_scene
 #define G_WINDOW data->game_settings->video->window
+#define G_VIEW data->stats->camera->camera
+#define G_CAMERA data->stats->camera
 
 #define G_CLOCK data->stats->time->game_clock
 

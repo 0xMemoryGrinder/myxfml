@@ -6,13 +6,7 @@
 */
 
 #include <stdlib.h>
-#include "../../../include/types_and_base/scene.h"
-#include "../../../include/types_and_base/base_components.h"
-#include "../../../include/types_and_base/entity.h"
-#include "../../../include/types_and_base/game.h"
-#include "../../../include/types_and_base/video.h"
-#include "../../../include/types_and_base/music.h"
-#include "../../../include/types.h"
+#include "../../../include/my_csfml.h"
 #include "../my_puterr.h"
 
 audio_data_t *malloc_audio_data(void)
@@ -25,6 +19,19 @@ audio_data_t *malloc_audio_data(void)
     new->master_volume = 0;
     new->musics = NULL;
     new->musics_count = 0;
+    return new;
+}
+
+camera_t *malloc_game_camera(void)
+{
+    camera_t *new = malloc(sizeof(camera_t));
+
+    if (new == NULL)
+        my_puterr("Error malloc game camera", __FILE__ ,__LINE__);
+    new->transform = malloc(sizeof(transform_t));
+    if (new->transform == NULL)
+        my_puterr("Error malloc camera tranform", __FILE__, __LINE__);
+    new->camera = sfView_create();
     return new;
 }
 
@@ -46,13 +53,12 @@ video_data_t *malloc_video_data(void)
 
 music_t *malloc_music_array(int size)
 {
-    music_t *new = malloc(sizeof(music_t) * (size + 1));
+    music_t *new = malloc(sizeof(music_t) * (size));
 
     if (new == NULL)
         my_puterr("Error malloc music array", __FILE__, __LINE__);
     for (int i = 0; i < size; i++) {
         new[i].name = NULL;
-        new[i].type = 0;
         new[i].music = NULL;
         new[i].volume = 0;
     }

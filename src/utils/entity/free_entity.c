@@ -50,6 +50,8 @@ void free_entity(entity_t *entity)
 
 void free_entity_list(entity_t *entity)
 {
+    if (entity == NULL)
+        return;
     if (entity->children)
         free_entity_list(entity->children);
     if (entity->next)

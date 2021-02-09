@@ -6,11 +6,7 @@
 */
 
 #include <stdlib.h>
-#include "../../../include/types_and_base/scene.h"
-#include "../../../include/types_and_base/base_components.h"
-#include "../../../include/types_and_base/entity.h"
-#include "../../../include/types_and_base/game.h"
-#include "../../../include/types.h"
+#include "../../../include/my_csfml.h"
 #include "../my_puterr.h"
 
 game_data_t *malloc_game_data(void)
@@ -48,5 +44,16 @@ settings_t *malloc_settings(void)
         my_puterr("Error malloc game settings", __FILE__, __LINE__);
     new->video = NULL;
     new->audio = NULL;
+    return new;
+}
+
+time_stats_t *malloc_time_stats(void)
+{
+    time_stats_t *new = malloc(sizeof(time_stats_t));
+
+    if (new == NULL)
+        my_puterr("Error malloc time stats", __FILE__, __LINE__);
+    new->time = 0;
+    new->game_clock = NULL;
     return new;
 }

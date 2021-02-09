@@ -6,14 +6,7 @@
 */
 
 #include <stdlib.h>
-#include "../../../include/types_and_base/scene.h"
-#include "../../../include/types_and_base/base_components.h"
-#include "../../../include/types_and_base/entity.h"
-#include "../../../include/types_and_base/game.h"
-#include "../../../include/types_and_base/video.h"
-#include "../../../include/types_and_base/music.h"
-#include "../../../include/types.h"
-#include "../my_puterr.h"
+#include "../../../include/my_csfml.h"
 
 
 void destroy_game_stats(game_stats_t *stats)

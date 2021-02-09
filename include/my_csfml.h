@@ -8,9 +8,9 @@
 #ifndef LIBCSFML_MY_CSFML_H
 #define LIBCSFML_MY_CSFML_H
 
-#include "types.h"
 #include "types_and_base/entity.h"
 #include "types_and_base/events.h"
+#include "types_and_base/clock.h"
 #include "types_and_base/base_components.h"
 #include "types_and_base/game.h"
 #include "types_and_base/video.h"

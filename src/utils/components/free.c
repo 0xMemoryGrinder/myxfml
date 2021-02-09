@@ -40,6 +40,8 @@ void free_rendersprite(render_sprite_t *render)
 
 void free_sound_list(sfx_list_t *sounds)
 {
+    if (sounds == NULL)
+        return;
     for (int i = 0; i < sounds->sfx_count; i++) {
         if (sounds->sfx[i].name)
             free(sounds->sfx[i].name);

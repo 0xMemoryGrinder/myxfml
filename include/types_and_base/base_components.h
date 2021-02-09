@@ -47,6 +47,7 @@ struct transform_s {
     sfVector2f scale;
     sfVector2f velocity;
     float speed;
+    float rotation;
 };
 
 
@@ -69,6 +70,7 @@ struct sfx_list_s{
     sound_t *sfx;
     int sfx_count;
 };
+
 
 
 //

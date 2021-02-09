@@ -27,6 +27,9 @@ typedef enum anim_type_e{
 } anim_type;
 
 typedef enum anim_e{
+    //DEFAULT
+    DEFAULT,
+
     //  ATTACKS
     ATTACK_SWORD, ATTACK_HAMMER ,ATTACK_BOW, ATTACK_MAGIC, ATTACK_MELEE,
     ATTACK_DASH, ATTACK_CIRCLE, ATTACK_BACKSTAB,
@@ -36,7 +39,7 @@ typedef enum anim_e{
     DEFENSE_AVOID_TOP, DEFENSE_AVOID_BOTTOM,
 
     //  HURT
-    HURT_PHYISIC, HURT_KNOCKBACK,
+    HURT_PHYSIC, HURT_KNOCKBACK,
 
     //  IDLE
     IDLE_STATIC, IDLE_TALK, IDLE_BORED,
@@ -45,7 +48,7 @@ typedef enum anim_e{
     MOVING_WALK, MOVING_RUN, MOVING_DASH, MOVING_CLIMB,
 
     //  HOOVER
-    HOOVER_ON, HOOVER_OFF,
+    HOVER_ON, HOVER_OFF,
 
     //  CLICK
     CLICK_ON, CLICK_OFF,

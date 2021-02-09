@@ -63,6 +63,7 @@ text_t *malloc_text_array(int size)
         new[i].size = 0;
         new[i].text = NULL;
         new[i].toggle = OFF;
+        new[i].rs_linked = OFF;
         new[i].font = NULL;
         new[i].string = NULL;
         new[i].pos = (sfVector2f){0, 0};

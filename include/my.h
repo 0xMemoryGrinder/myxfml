@@ -43,5 +43,7 @@ char *my_revstr (char *str);
 int my_str_isprintable(char const *str);
 char **str_to_tab(char *str, const char separator);
 char *my_realloc(char *src);
+
 void my_putstr_err(char *str);
 char *my_strndup(char *str, int n);
+char **my_str_to_tab(const char *str, char separator);

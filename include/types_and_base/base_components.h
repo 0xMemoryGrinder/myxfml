@@ -46,6 +46,7 @@ struct transform_s {
     sfVector2f position;
     sfVector2f scale;
     sfVector2f velocity;
+    float speed;
 };
 
 
@@ -54,6 +55,7 @@ struct transform_s {
 // Sound_component
 //
 struct sound_s{
+    toggle_t toggle;
     char *name;
     anim type;
     sfSound *sfx;
@@ -69,12 +71,12 @@ struct sfx_list_s{
 };
 
 
-
 //
 // Text_component
 //
 struct text_s{
     toggle_t toggle;
+    toggle_t rs_linked;
     sfText *text;
     sfFont *font;
     char *string;

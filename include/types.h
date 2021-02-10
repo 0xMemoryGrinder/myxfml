@@ -139,5 +139,9 @@ typedef struct camera_s camera_t;
 typedef struct audio_data_s audio_data_t;
 typedef struct music_s music_t;
 
+//
+// GLOBAL TAB
+//
+typedef struct global_func_ptr_tab_s global_func_ptr_tab_t;
 
 #endif //LIBCSFML_TYPES_H

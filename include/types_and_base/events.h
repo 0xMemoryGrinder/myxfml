@@ -16,9 +16,4 @@ struct events_action_s{
     struct events_action_s *next;
 };
 
-struct key_input_s{
-    sfKeyCode key;
-    void *(* action)(game_data_t *data);
-};
-
 #endif //LIBCSFML_EVENTS_H

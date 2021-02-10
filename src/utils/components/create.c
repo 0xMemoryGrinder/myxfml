@@ -39,7 +39,6 @@ collider_t *malloc_collider(void)
     new->position = (sfVector2f){0, 0};
     new->dimensions = (sfVector2f){0, 0};
     new->on_collison = NULL;
-    new->is_rs_linked = OFF;
     return new;
 }
 

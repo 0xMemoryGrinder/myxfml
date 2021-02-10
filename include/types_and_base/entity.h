@@ -35,6 +35,7 @@ struct dependencies_s{
 
 struct entity_s{
     char *name;
+    toggle_t toggle;
     entity_id type;
     dependent_t is_in;
     components_t *components;

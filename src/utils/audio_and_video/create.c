@@ -16,9 +16,11 @@ audio_data_t *malloc_audio_data(void)
     if (new == NULL)
         my_puterr("Error malloc audio data", __FILE__, __LINE__);
     new->sounds = NULL;
-    new->master_volume = 0;
+    new->sfx_volume = 0;
+    new->music_volume = 0;
     new->musics = NULL;
     new->musics_count = 0;
+    new->actual_theme = -1;
     return new;
 }
 
@@ -60,7 +62,6 @@ music_t *malloc_music_array(int size)
     for (int i = 0; i < size; i++) {
         new[i].name = NULL;
         new[i].music = NULL;
-        new[i].volume = 0;
     }
     return new;
 }

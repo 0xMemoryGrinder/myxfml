@@ -31,6 +31,10 @@ struct time_stats_s{
 struct game_stats_s{
     time_stats_t *time;
     sfEvent *event;
+    toggle_t is_rclick;
+    toggle_t is_lclick;
+    sfVector2i rclick;
+    sfVector2i lclick;
     camera_t *camera;
 };
 

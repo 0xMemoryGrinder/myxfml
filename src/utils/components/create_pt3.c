@@ -33,8 +33,6 @@ sound_t *malloc_sfx_array(int size)
     for (int i = 0; i < size; i++) {
         new[i].sfx = NULL;
         new[i].buff = NULL;
-        new[i].actual = 0;
-        new[i].trigger = 0;
         new[i].name = NULL;
         new[i].type = 0;
     }
@@ -63,9 +61,12 @@ text_t *malloc_text_array(int size)
         new[i].size = 0;
         new[i].text = NULL;
         new[i].toggle = OFF;
+        new[i].is_rslinked = sfFalse;
         new[i].font = NULL;
         new[i].string = NULL;
+        new[i].id = NULL;
         new[i].pos = (sfVector2f){0, 0};
+        new[i].offset = (sfVector2f){0, 0};
     }
     return new;
 }

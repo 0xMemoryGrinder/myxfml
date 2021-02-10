@@ -57,14 +57,25 @@
 //
 //  Main shortcuts
 //
-#define G_SCENE data->scene
-#define G_PAUSE_SCENE data->scene->paused_scene
 #define G_WINDOW data->game_settings->video->window
+
+//  CAMERA
 #define G_VIEW data->stats->camera->camera
 #define G_CAMERA data->stats->camera
 
+
+//  CLOCK
 #define G_CLOCK data->stats->time->game_clock
 
 
+//  AUDIO
+#define G_AUDIO data->game_settings->audio
+#define G_SFXV data->game_settings->audio->sfx_volume
+#define G_MUSCIV data->game_settings->audio->music_volume
+
+
+// SCENE
+#define G_ACTUAL_SCENE data->scenes->list[data->scenes->actual]
+#define G_ACTUAL_SCENEOBJS data->scenes->list[data->scenes->actual].objects
 
 #endif //LIBCSFML_STRUCT_SHORTCUTS_H

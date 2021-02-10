@@ -12,14 +12,16 @@
 
 struct music_s{
     char *name;
+    char *path;
     sfMusic *music;
-    int volume;
 };
 
 
 struct audio_data_s{
-    int master_volume;
+    int music_volume;
+    int sfx_volume;
     int musics_count;
+    int actual_theme;
     music_t *musics;
     sfx_list_t *sounds;
 };

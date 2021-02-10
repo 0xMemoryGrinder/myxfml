@@ -13,12 +13,14 @@
 
 struct scene_objects_s{
     entity_t *list;
+    entity_t *background;
     entity_list_t *colliders;
     entity_list_t *render;
     entity_list_t *scripts;
     entity_list_t *interact;
     entity_list_t *text;
     entity_list_t *sfx;
+    entity_list_t *transforms;
 };
 
 

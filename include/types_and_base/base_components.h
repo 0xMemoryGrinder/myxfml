@@ -19,7 +19,6 @@
 //
 struct collider_s{
     toggle_t toggle;
-    toggle_t is_rs_linked;
     sfVector2f position;
     sfVector2f dimensions;
     void (* on_collison)(entity_list_t *self, entity_list_t *collider,
@@ -43,6 +42,7 @@ struct render_sprite_s {
 //  Transform_Component
 //
 struct transform_s {
+    toggle_t toggle;
     sfVector2f position;
     sfVector2f scale;
     sfVector2f velocity;
@@ -56,12 +56,12 @@ struct transform_s {
 // Sound_component
 //
 struct sound_s{
+    toggle_t toggle;
     char *name;
+    char *path;
     anim type;
     sfSound *sfx;
     sfSoundBuffer *buff;
-    sfInt64 actual;
-    sfInt64 trigger;
 };
 
 struct sfx_list_s{
@@ -80,8 +80,11 @@ struct text_s{
     sfText *text;
     sfFont *font;
     char *string;
+    char *id;
     int size;
     sfVector2f pos;
+    sfVector2f offset;
+    toggle_t is_rslinked;
 };
 
 struct texts_s{
@@ -97,12 +100,10 @@ struct texts_s{
 //
 struct interact_s{
     toggle_t toggle;
-    toggle_t click;
-    toggle_t hoover;
-    toggle_t key;
-    void (* click_action)(entity_list_t *e, game_data_t *d, animation_t *);
-    void (* hoover_action)(entity_list_t *e, game_data_t *d, animation_t *);
-    void (* key_action)(entity_list_t *e, game_data_t *d, animation_t *);
+    toggle_t click_right;
+    toggle_t click_left;
+    sfVector2i right_pos;
+    sfVector2i left_pos;
 };
 
 
@@ -114,6 +115,7 @@ struct animation_s{
     toggle_t toggle;
     int actual_frame;
     anim_type type;
+    anim actual_anim;
     anim_t *list;
     anim_t *actual;
 };

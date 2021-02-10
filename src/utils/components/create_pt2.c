@@ -19,7 +19,7 @@ render_sprite_t *malloc_rendersprite(void)
     if (render == NULL)
         my_puterr("Malloc error rendersprite structure", __FILE__, __LINE__);
     render->texture = NULL;
-    render->sprite = NULL;
+    render->sprite = sfSprite_create();
     render->toggle = OFF;
     return render;
 }
@@ -32,7 +32,9 @@ transform_t *malloc_transform(void)
         my_puterr("Error : malloc transform structure", __FILE__, __LINE__);
     transform->velocity = (sfVector2f){0, 0};
     transform->position = (sfVector2f){0, 0};
-    transform->scale = (sfVector2f){0, 0};
+    transform->scale = (sfVector2f){1, 1};
+    transform->speed = 0;
+    transform->rotation = 0;
     return transform;
 }
 
@@ -70,11 +72,9 @@ interact_t *malloc_interact(void)
 
     if (new == NULL)
         my_puterr("Error : malloc interact structure", __FILE__, __LINE__);
-    new->click_action = NULL;
-    new->hoover_action = NULL;
-    new->key_action = NULL;
-    new->click = OFF;
-    new->hoover = OFF;
-    new->key = OFF;
+    new->click_left = OFF;
+    new->click_right = OFF;
+    new->right_pos = (sfVector2i){0, 0};
+    new->left_pos = (sfVector2i){0, 0};
     return new;
 }

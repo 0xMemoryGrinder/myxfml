@@ -77,6 +77,7 @@ struct sfx_list_s{
 //
 struct text_s{
     toggle_t toggle;
+    toggle_t rs_linked;
     sfText *text;
     sfFont *font;
     char *string;

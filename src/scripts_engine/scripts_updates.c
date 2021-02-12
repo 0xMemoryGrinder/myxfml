@@ -31,7 +31,8 @@ void get_scripts_updates(game_data_t *data, entity_list_t *list)
     script_t *scripts;
 
     for (; entities; entities = entities->next) {
-        if (entities->E_SCRIPT->toggle == OFF)
+        if (entities->entity->toggle == OFF
+        || entities->E_SCRIPT->toggle == OFF)
             continue;
         scripts = entities->E_SCRIPT->list;
         for (; scripts; scripts = scripts->next) {

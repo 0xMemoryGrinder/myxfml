@@ -111,4 +111,38 @@ static const struct conf_tag_action_s video_conf_tags[]= {
 void get_video_data(char *content, int *i, game_data_t *data);
 
 
+// AUDIO SETTINGS
+void set_music_volume(char *content, int *i, game_data_t *data);
+void set_sfx_volume(char *content, int *i, game_data_t *data);
+void get_music_count(char *content, int *i, game_data_t *data);
+void set_actual_theme(char *content, int *i, game_data_t *data);
+void get_music_array(char *content, int *i, game_data_t *data);
+
+static const struct conf_tag_action_s audio_conf_tags[]= {
+        {"<music_volume>",14, (void *(*)()) &set_music_volume},
+        {"<sfx_volume>",12, (void *(*)()) &set_sfx_volume},
+        {"<music_count>",13, (void *(*)()) &get_music_count},
+        {"<actual_theme>",14, (void *(*)()) &set_actual_theme},
+        {"<mslist>",8, (void *(*)()) &get_music_array}
+};
+
+void get_audio_data(char *content, int *i, game_data_t *data);
+
+static const struct conf_tag_action_s settings_conf_tags[]= {
+        {"<video>",7, (void *(*)()) &get_video_data},
+        {"<audio>",7, (void *(*)()) &get_audio_data}
+};
+
+void get_settings(char *content, int *i, game_data_t *data);
+
+static const struct conf_tag_action_s game_conf_tags[]= {
+        {"<globals>",9, (void *(*)()) &get_global_entities},
+        {"<gui>",5, (void *(*)()) &get_gui_entities},
+        {"<player>",8, (void *(*)()) &get_player_entities},
+        {"<scenes>",8, (void *(*)()) &get_game_scenes},
+        {"<camera>",8, (void *(*)()) &get_canvas_size},
+        {"<game_settings>",15, (void *(*)()) &get_settings}
+};
+
+
 #endif //LIBCSFML_INIT_XFML_H

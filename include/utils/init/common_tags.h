@@ -8,10 +8,13 @@
 #ifndef LIB_MYCSFML_COMMON_TAGS_H
 #define LIB_MYCSFML_COMMON_TAGS_H
 
+#include "my_csfml.h"
+
 toggle_t fill_toogle(char *content, int *i);
 int fill_enum(char *content, int *i);
 
 typedef void *(*func_ptr_t)();
-func_ptr_t fill_function(char *content, int *i, const global_func_ptr_tab_t *tab)
+func_ptr_t fill_function(char *content, int *i,
+const global_func_ptr_tab_t *tab);
 
 #endif //LIB_MYCSFML_COMMON_TAGS_H

@@ -102,9 +102,8 @@ struct interact_s {
     toggle_t toggle;
     toggle_t click_right;
     toggle_t click_left;
-    toggle_t is_click;
-    sfVector2i right_pos;
-    sfVector2i left_pos;
+    toggle_t is_lclick;
+    toggle_t is_rclick;
 };
 
 

@@ -19,7 +19,7 @@ int length_of_tag_value(char *content, int i)
     int tmp = i;
     int k;
 
-    skip_to_next_tag(content, &i, true);
+    skip_to_next_tag(content, &i, CLOSE);
     k = i;
     return k - tmp;
 }
@@ -49,21 +49,28 @@ char *exract_attribute(char *content, int *i)
 
 }
 
-void skip_to_next_tag(char const *content, int *i, bool closing_tag)
+void skip_to_next_tag(char const *content, int *i, next_tag_type_t type)
 {
-    if (closing_tag) {
+    if (type == CLOSE) {
         for (; content[*i + 1]; *(i) += 1) {
             if (content[*i] == '<' && content[*i + 1] == '/')
                 break;
         }
         if (!content[*i + 1])
             my_puterr("Error with entity config file", __FILE__, __LINE__);
-    } else {
+    } else if (type == OPEN){
         for (; content[*i + 1]; *(i) += 1) {
-            if (content[*i] != '<' && content[*i + 1] != '/')
+            if (content[*i] == '<' && content[*i + 1] != '/')
                 break;
         }
         if (!content[*i + 1])
+            my_puterr("Error with entity config file", __FILE__, __LINE__);
+    } else {
+        for (; content[*i]; *(i) += 1) {
+            if (content[*i] == '<')
+                break;
+        }
+        if (!content[*i])
             my_puterr("Error with entity config file", __FILE__, __LINE__);
     }
 }

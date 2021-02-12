@@ -15,17 +15,11 @@
 
 toggle_t fill_toogle(char *content, int *i)
 {
-    int toogle_len;
-    char *toogle_val = NULL;
-    //*i += 8; TODO verify necessity
-    toogle_len = length_of_tag_value(content, *i);
-    toogle_val = my_strndup(content + *i, toogle_len);
+    char *toggle_val = extract_value(content, i);
 
-    if (toogle_val == NULL)
-        my_puterr("My_strndup malloc error", __FILE__, __LINE__);
-    if (!my_strcmp(toogle_val, "ON"))
+    if (!my_strcmp(toggle_val, "ON"))
         return ON;
-    else if (!my_strcmp(toogle_val, "OFF"))
+    else if (!my_strcmp(toggle_val, "OFF"))
         return OFF;
     else
         my_puterr("Unknown toggle value", __FILE__, __LINE__);

@@ -11,24 +11,25 @@
 #include "../../../../../include/types_and_base/base_components.h"
 #include "../../../../../include/utils/init/load_file.h"
 #include "../../../../../include/my.h"
-#include "my_puterr.h"
+#include "../../../../../include/my_puterr.h"
 
 void load_components(char *content, int *i, entity_t *entity)
 {
     int k;
     entity->components = malloc_components();
-    
-    while (my_strncmp(content + *i, "</components>", 8)) {
+
+    skip_to_next_tag(content, i, NEXT);
+    while (my_strncmp(content + *i, "</components>", 13)) {
         k = 0;
+        skip_to_next_tag(content, i, OPEN);
         while (components_conf_tag_action[k].tag && my_strncmp(content + *i,
         components_conf_tag_action[k].tag, components_conf_tag_action[k].tag_len))
             k++;
         if (!components_conf_tag_action[k].tag)
-            my_puterr("Unrecognized texts tag", __FILE__, __LINE__);
+            my_puterr("Unrecognized component tag", __FILE__, __LINE__);
         *i += components_conf_tag_action[k].tag_len;
         components_conf_tag_action[k].action(content, i, entity->components);
         *i += components_conf_tag_action[k].tag_len + 1;
-        skip_to_next_tag(content, i, false);
+        skip_to_next_tag(content, i, NEXT);
     }
-
 }

@@ -23,7 +23,7 @@ typedef enum {MOB, PNJ, PLAYER, WALL} entity_id;
 
 typedef enum anim_type_e{
     IDLE, ATTACK, DEFENSE, MOVING, HURT,
-    DEAD, DYING, HOOVER, CLICK, CUT_SCENE
+    DEAD, DYING, HOVER, CLICK, CUT_SCENE
 } anim_type;
 
 typedef enum anim_e{

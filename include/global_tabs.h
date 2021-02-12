@@ -8,13 +8,13 @@
 #ifndef LIB_MYCSFML_GLOBAL_TABS_H
 #define LIB_MYCSFML_GLOBAL_TABS_H
 
-#include "my_csfml.h"
+#include "types.h"
 
-struct global_enum_tab_s {
+typedef struct global_enum_tab_s {
     char *str;
     int len;
     int enum_nb;
-};
+} global_enum_tab_t;
 
 struct global_func_ptr_tab_s {
     char *str;
@@ -22,7 +22,7 @@ struct global_func_ptr_tab_s {
     void *(*func_ptr)();
 };
 
-static const struct global_enum_tab_s global_enum_tab[] = {
+static const global_enum_tab_t global_enum_tab[] = {
         //
         //  entity_type
         //
@@ -30,6 +30,20 @@ static const struct global_enum_tab_s global_enum_tab[] = {
         {"PNJ", 3, PNJ},
         {"PLAYER", 6, PLAYER},
         {"WALL", 4, WALL},
+
+        //
+        // anim_type
+        //
+        {"IDLE", 4, IDLE},
+        {"ATTACK", 6, ATTACK},
+        {"DEFENSE", 7, DEFENSE},
+        {"MOVING", 6, MOVING},
+        {"HURT", 4, HURT},
+        {"DEAD", 4, DEAD},
+        {"DYING", 5, DYING},
+        {"HOVER", 5, HOVER},
+        {"CLICK", 5, CLICK},
+        {"CUT_SCENE", 9, CUT_SCENE},
 
         //
         // anim
@@ -73,10 +87,17 @@ static const struct global_enum_tab_s global_enum_tab[] = {
 };
 
 static const struct global_func_ptr_tab_s scripts_func_ptr_tab[] = {
+        {"my_putchar", 10, (void *(*)()) &my_putchar},
         {NULL, 0, NULL}
 };
 
 static const struct global_func_ptr_tab_s collider_func_ptr_tab[] = {
+        {"my_putchar", 10, (void *(*)()) &my_putchar},
+        {NULL, 0, NULL}
+};
+
+static const struct global_func_ptr_tab_s anim_func_ptr_tab[] = {
+        {"my_putchar", 10, (void *(*)()) &my_putchar},
         {NULL, 0, NULL}
 };
 

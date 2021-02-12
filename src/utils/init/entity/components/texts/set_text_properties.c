@@ -19,12 +19,7 @@ void set_text_toggle(char *content, int *i, text_t *text)
 
 void set_text_font(char *content, int *i, text_t *text)
 {
-    int path_len = length_of_tag_value(content, *i);
-    char *path = my_strndup(content + *i, path_len);
-
-    if (path == NULL)
-        my_puterr("Malloc error in strndup", __FILE__, __LINE__);
-    *i += path_len;
+    char *path = extract_value(content, i);
     text->font = sfFont_createFromFile(path);
 
     free(path);
@@ -32,19 +27,14 @@ void set_text_font(char *content, int *i, text_t *text)
 
 void set_text_position(char *content, int *i, text_t *text)
 {
-    int path_len = length_of_tag_value(content, *i);
-    char *path = my_strndup(content + *i, path_len);
-    char **pos = NULL;
+    char *path = extract_value(content, i);
+    char **pos = my_str_to_tab(path, ' ');
     int j = 0;
-    *i += path_len;
 
-    if (path == NULL)
-        my_puterr("Malloc error in strndup", __FILE__, __LINE__);
-    pos = my_str_to_tab(path, ' ');
     if (pos == NULL)
         my_puterr("Malloc error in my_str_to_tab", __FILE__, __LINE__);
     for (; pos[j]; j++);
-    if (j != 3)
+    if (j != 2)
         my_puterr("Incorrect position coords", __FILE__, __LINE__);
     text->pos.x = (float)my_getnbr(pos[0]);
     text->pos.y = (float)my_getnbr(pos[1]);

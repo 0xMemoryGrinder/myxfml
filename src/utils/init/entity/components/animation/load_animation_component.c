@@ -9,45 +9,52 @@
 #include "../../../../../../include/my_csfml.h"
 #include "../../../../../../include/utils/init/load_file.h"
 #include "../../../../../../include/my.h"
-#include "utils/init/common_tags.h"
 #include "my_puterr.h"
-#include "../scripts/set_script_properties.h"
+#include "set_anim_properties.h"
 
-
-script_t *load_script(char *content, int *i)
+anim_t *load_anim(char *content, int *i)
 {
-    script_t *script = malloc_script_node();
+    anim_t *anim = malloc_anim_frame();
     int k;
 
-    skip_to_next_tag(content, i, false);
-    while (my_strncmp(content + *i, "</script>", 9)) {
+    skip_to_next_tag(content, i, NEXT);
+    while (my_strncmp(content + *i, "</anim>", 7)) {
         k = 0;
-        while (script_conf_tag_action[k].tag && my_strncmp(content + *i,
-        script_conf_tag_action[k].tag, script_conf_tag_action[k].tag_len))
+        skip_to_next_tag(content, i, OPEN);
+        while (anim_conf_tag_action[k].tag && my_strncmp(content + *i,
+        anim_conf_tag_action[k].tag, anim_conf_tag_action[k].tag_len))
             k++;
-        if (!script_conf_tag_action[k].tag)
-            my_puterr("Unrecognized script tag", __FILE__, __LINE__);
-        *i += script_conf_tag_action[k].tag_len;
-        script_conf_tag_action[k].action(content, i, script);
-        *i += script_conf_tag_action[k].tag_len + 1;
-        skip_to_next_tag(content, i, false);
+        if (!anim_conf_tag_action[k].tag)
+            my_puterr("Unrecognized anim tag", __FILE__, __LINE__);
+        *i += anim_conf_tag_action[k].tag_len;
+        anim_conf_tag_action[k].action(content, i, anim);
+        *i += anim_conf_tag_action[k].tag_len + 1;
+        skip_to_next_tag(content, i, NEXT);
     }
-    return script;
+    return anim;
 }
 
-void load_texts_list(char *content, int *i, script_list_t *scripts)
+void load_anim_list(char *content, int *i, animation_t *animation)
 {
-    scripts->count = my_getnbr(content + *i);
-    script_t *current = scripts->list;
+    int count = my_getnbr(content + *i);
+    anim_t *current = NULL;
 
-    skip_to_next_tag(content, i, false);
-    for (int n = 0; n < scripts->count; n++, current = current->next) {
+    for (int n = 0; n < count; n++) {
+        *i += 1;
+        skip_to_next_tag(content, i, NEXT);
+        *i += 1;
+        skip_to_next_tag(content, i, OPEN);
         if (n == 0) {
-            scripts->list = load_script(content, i);
-            current = scripts->list;
-        } else
-            current = load_script(content, i);
+            animation->list = load_anim(content, i);
+            current = animation->list;
+        } else {
+            current->next = load_anim(content, i);
+            current = current->next;
+        }
+        skip_to_next_tag(content, i, CLOSE);
     }
+    *i += 1;
+    skip_to_next_tag(content, i, CLOSE);
 }
 
 void load_animation_component(char *content, int *i, components_t *components)
@@ -55,17 +62,18 @@ void load_animation_component(char *content, int *i, components_t *components)
     components->animation = malloc_animations();
     int k;
 
-    skip_to_next_tag(content, i, false);
-    while (my_strncmp(content + *i, "</scripts>", 8)) {
+    skip_to_next_tag(content, i, NEXT);
+    while (my_strncmp(content + *i, "</animation>", 12)) {
         k = 0;
+        skip_to_next_tag(content, i, OPEN);
         while (animation_conf_tag_action[k].tag && my_strncmp(content + *i,
         animation_conf_tag_action[k].tag, animation_conf_tag_action[k].tag_len))
             k++;
         if (!animation_conf_tag_action[k].tag)
-            my_puterr("Unrecognized scripts tag", __FILE__, __LINE__);
+            my_puterr("Unrecognized animation tag", __FILE__, __LINE__);
         *i += animation_conf_tag_action[k].tag_len;
         animation_conf_tag_action[k].action(content, i, components->animation);
         *i += animation_conf_tag_action[k].tag_len + 1;
-        skip_to_next_tag(content, i, false);
+        skip_to_next_tag(content, i, NEXT);
     }
 }

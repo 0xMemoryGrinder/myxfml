@@ -21,7 +21,7 @@ static struct conf_tag_action_s collider_conf_tag_action[] = {
         {"<toggle>", 8, (void *(*)()) &load_collider_toggle},
         {"<action>", 8, (void *(*)()) &load_collider_action},
         {"<position>", 10, (void *(*)()) &load_collider_position},
-        {"<dimension>", 11, (void *(*)()) &load_collider_dimensions},
+        {"<dimensions>", 11, (void *(*)()) &load_collider_dimensions},
         {NULL, 0, NULL}
 };
 

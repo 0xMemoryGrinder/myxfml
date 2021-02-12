@@ -48,3 +48,4 @@ void my_putstr_err(char *str);
 char *my_strndup(char *str, int n);
 char **my_str_to_tab(const char *str, char separator);
 float my_getnbr_f(char *str);
+char *my_strcat_m(char *s1, char *s2);

@@ -20,7 +20,7 @@ void load_transform_position(char *content, int *i, transform_t *transform)
     if (pos == NULL)
         my_puterr("Malloc error in my_str_to_tab", __FILE__, __LINE__);
     for (; pos[j]; j++);
-    if (j != 3)
+    if (j != 2)
         my_puterr("Incorrect position coords", __FILE__, __LINE__);
     transform->position.x = (float)my_getnbr(pos[0]);
     transform->position.y = (float)my_getnbr(pos[1]);
@@ -39,7 +39,7 @@ void load_transform_scale(char *content, int *i, transform_t *transform)
     if (pos == NULL)
         my_puterr("Malloc error in my_str_to_tab", __FILE__, __LINE__);
     for (; pos[j]; j++);
-    if (j != 3)
+    if (j != 2)
         my_puterr("Incorrect scale values", __FILE__, __LINE__);
     transform->velocity.x = (float)my_getnbr_f(pos[0]);
     transform->velocity.y = (float)my_getnbr_f(pos[1]);
@@ -58,7 +58,7 @@ void load_transform_velocity(char *content, int *i, transform_t *transform)
     if (pos == NULL)
         my_puterr("Malloc error in my_str_to_tab", __FILE__, __LINE__);
     for (; pos[j]; j++);
-    if (j != 3)
+    if (j != 2)
         my_puterr("Incorrect velocity values", __FILE__, __LINE__);
     transform->velocity.x = (float)my_getnbr(pos[0]);
     transform->velocity.y = (float)my_getnbr(pos[1]);
@@ -81,9 +81,10 @@ void load_transform_component(char *content, int *i, components_t *components)
     components->transform = malloc_transform();
     int k;
 
-    skip_to_next_tag(content, i, false);
+    skip_to_next_tag(content, i, NEXT);
     while (my_strncmp(content + *i, "</transform>", 12)) {
         k = 0;
+        skip_to_next_tag(content, i, OPEN);
         while (transform_conf_tag_action[k].tag && my_strncmp(content + *i,
         transform_conf_tag_action[k].tag, transform_conf_tag_action[k].tag_len))
             k++;
@@ -92,6 +93,6 @@ void load_transform_component(char *content, int *i, components_t *components)
         *i += transform_conf_tag_action[k].tag_len;
         transform_conf_tag_action[k].action(content, i, components->transform);
         *i += transform_conf_tag_action[k].tag_len + 1;
-        skip_to_next_tag(content, i, false);
+        skip_to_next_tag(content, i, NEXT);
     }
 }

@@ -28,7 +28,7 @@ void load_collider_position(char *content, int *i, collider_t *collider)
     if (pos == NULL)
         my_puterr("Malloc error in my_str_to_tab", __FILE__, __LINE__);
     for (; pos[j]; j++);
-    if (j != 3)
+    if (j != 2)
         my_puterr("Incorrect position coords", __FILE__, __LINE__);
     collider->position.x = (float)my_getnbr(pos[0]);
     collider->position.y = (float)my_getnbr(pos[1]);
@@ -47,7 +47,7 @@ void load_collider_dimensions(char *content, int *i, collider_t *collider)
     if (pos == NULL)
         my_puterr("Malloc error in my_str_to_tab", __FILE__, __LINE__);
     for (; pos[j]; j++);
-    if (j != 3)
+    if (j != 2)
         my_puterr("Incorrect dimensions values", __FILE__, __LINE__);
     collider->dimensions.x = (float)my_getnbr(pos[0]);
     collider->dimensions.y = (float)my_getnbr(pos[1]);
@@ -69,9 +69,10 @@ void load_collider_component(char *content, int *i, components_t *components)
     components->collider = malloc_collider();
     int k;
 
-    skip_to_next_tag(content, i, false);
+    skip_to_next_tag(content, i, NEXT);
     while (my_strncmp(content + *i, "</collider>", 11)) {
         k = 0;
+        skip_to_next_tag(content, i, OPEN);
         while (collider_conf_tag_action[k].tag && my_strncmp(content + *i,
         collider_conf_tag_action[k].tag, collider_conf_tag_action[k].tag_len))
             k++;
@@ -80,6 +81,6 @@ void load_collider_component(char *content, int *i, components_t *components)
         *i += collider_conf_tag_action[k].tag_len;
         collider_conf_tag_action[k].action(content, i, components->collider);
         *i += collider_conf_tag_action[k].tag_len + 1;
-        skip_to_next_tag(content, i, false);
+        skip_to_next_tag(content, i, NEXT);
     }
 }

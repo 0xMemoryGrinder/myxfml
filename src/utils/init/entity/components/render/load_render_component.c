@@ -29,18 +29,19 @@ void load_render_component(char *content, int *i, components_t *components)
     components->render = malloc_rendersprite();
     int k;
 
-    skip_to_next_tag(content, i, false);
+    skip_to_next_tag(content, i, NEXT);
     while (my_strncmp(content + *i, "</render>", 9)) {
         k = 0;
+        skip_to_next_tag(content, i, OPEN);
         while (render_conf_tag_action[k].tag && my_strncmp(content + *i,
         render_conf_tag_action[k].tag, render_conf_tag_action[k].tag_len))
             k++;
         if (!render_conf_tag_action[k].tag)
-            my_puterr("Unrecognized sounds tag", __FILE__, __LINE__);
+            my_puterr("Unrecognized render tag", __FILE__, __LINE__);
         *i += render_conf_tag_action[k].tag_len;
-        render_conf_tag_action[k].action(content, i, components->sounds);
+        render_conf_tag_action[k].action(content, i, components->render);
         *i += render_conf_tag_action[k].tag_len + 1;
-        skip_to_next_tag(content, i, false);
+        skip_to_next_tag(content, i, NEXT);
     }
     if (components->render->sprite == NULL)
         my_puterr("Unrecognized sprite", __FILE__, __LINE__);

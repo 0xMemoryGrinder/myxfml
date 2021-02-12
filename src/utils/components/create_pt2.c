@@ -74,7 +74,5 @@ interact_t *malloc_interact(void)
         my_puterr("Error : malloc interact structure", __FILE__, __LINE__);
     new->click_left = OFF;
     new->click_right = OFF;
-    new->right_pos = (sfVector2i){0, 0};
-    new->left_pos = (sfVector2i){0, 0};
     return new;
 }

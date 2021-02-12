@@ -52,13 +52,33 @@ void get_audio_data(char *content, int *i, game_data_t *data)
         skip_to_next_tag(content, i, false);
         k = 0;
         while (audio_conf_tags[k].tag && my_strncmp(content + *i,
-                                                    audio_conf_tags[k].tag, audio_conf_tags[k].tag_len))
+        audio_conf_tags[k].tag, audio_conf_tags[k].tag_len))
             k++;
         if (!audio_conf_tags[k].tag)
             my_puterr("Unrecognized entity tag", __FILE__, __LINE__);
         *i += audio_conf_tags[k].tag_len;
         audio_conf_tags[k].action(content, i, data);
         *i += audio_conf_tags[k].tag_len + 1;
+        skip_to_next_tag(content, i, true);
+    }
+}
+
+void get_settings(char *content, int *i, game_data_t *data)
+{
+    int k;
+
+    while (my_strncmp(content + *i, "</audio>", 8)) {
+        skip_to_next_tag(content, i, false);
+        k = 0;
+        while (settings_conf_tags[k].tag && my_strncmp(content + *i,
+        settings_conf_tags[k].tag,
+        settings_conf_tags[k].tag_len))
+            k ++;
+        if (! settings_conf_tags[k].tag)
+            my_puterr("Unrecognized entity tag", __FILE__, __LINE__);
+        *i += settings_conf_tags[k].tag_len;
+        settings_conf_tags[k].action(content, i, data);
+        *i += settings_conf_tags[k].tag_len + 1;
         skip_to_next_tag(content, i, true);
     }
 }

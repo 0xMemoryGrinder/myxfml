@@ -1,0 +1,42 @@
+
+<scene>
+    <name>first</name>
+    <toggle>ON</toggle>
+    <insert>
+        <global>
+            <entity>merchent</entity>
+            <entity>gate_keeper1</entity>
+            <entity>gate_keeper2</entity>
+            <entity>boss_end</entity>
+            <entity>boss1</entity>
+        </global>
+        <player>all</player>
+        <gui>all</gui>
+    </insert>
+    <scripts>
+        <toggle>ON</toggle>
+        <count>1</count>
+        <script>
+            <toggle>ON</toggle>
+            <time_dependent>ON</time_dependent>
+            <update>environement_script</update>
+            <name>rdm_spwning</name>
+            <data>data_path</data>
+        </script>
+    </scripts>
+    <background>background/path</background>
+    <entities>
+        <entity count="12">mobs/zombie</entity>
+        <entity count="1">wall</entity>
+        <entity count="1">pnj1</entity>
+        <entity count="1">pnj2</entity>
+        <entity count="1">pnj3</entity>
+        <entity count="1">house1</entity>
+        <entity count="1">house2</entity>
+        <entity count="1">dungeon_trigger</entity>
+        <entity count="1">tree1</entity>
+        <entity count="1">tree2</entity>
+        <entity count="1">rock1</entity>
+        <entity count="1">grass3</entity>
+    </entities>
+</scene>

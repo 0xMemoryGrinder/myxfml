@@ -8,7 +8,7 @@
 #include <stdlib.h>
 #include "../../../include/types_and_base/scene.h"
 #include "../../../include/types.h"
-#include "../my_puterr.h"
+#include "my_puterr.h"
 
 
 scene_objects_t *malloc_scene_objects(void)
@@ -16,7 +16,7 @@ scene_objects_t *malloc_scene_objects(void)
     scene_objects_t *new = malloc(sizeof(scene_objects_t));
 
     if (new == NULL)
-        my_puterr("Error : malloc scene objects", __FILE__, __LINE__);
+        my_puterr("Error : malloc scene entity_templates", __FILE__, __LINE__);
     new->list = NULL;
     new->interact = NULL;
     new->render = NULL;

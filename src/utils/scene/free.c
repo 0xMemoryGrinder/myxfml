@@ -11,7 +11,7 @@
 #include "../../../include/types_and_base/entity.h"
 #include "../../../include/types_and_base/events.h"
 #include "../../../include/types.h"
-#include "../my_puterr.h"
+#include "my_puterr.h"
 
 
 void destroy_scene_array(scene_array_t *list, int size)

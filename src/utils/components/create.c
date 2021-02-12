@@ -11,7 +11,7 @@
 #include "../../../include/types_and_base/base_components.h"
 #include "../../../include/types_and_base/entity.h"
 #include "../../../include/my.h"
-#include "../my_puterr.h"
+#include "my_puterr.h"
 
 components_t *malloc_components(void)
 {

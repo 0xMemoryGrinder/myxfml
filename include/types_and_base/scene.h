@@ -10,8 +10,7 @@
 
 #include "../types.h"
 
-
-struct scene_objects_s{
+struct scene_objects_s {
     entity_t *list;
     entity_t *background;
     entity_list_t *colliders;
@@ -23,7 +22,6 @@ struct scene_objects_s{
     entity_list_t *transforms;
 };
 
-
 struct scene_array_s{
     char *name;
     scene_id id;
@@ -34,6 +32,7 @@ struct scene_array_s{
 
 struct scenes_s{
     scene_id actual;
+
     int count;
     scene_array_t *list;
 };
@@ -52,5 +51,13 @@ scenes_t *malloc_scene_struct(void);
 //
 void destroy_game_scenes(scenes_t *scenes);
 
+
+//
+//  SCENE UTILS
+//
+void insert_entities_inlists(entity_t *list, scene_objects_t *objects
+, sfBool is_gui);
+void insert_entity_inlists(entity_t *entity, scene_objects_t *objects
+, sfBool is_gui);
 
 #endif //LIBCSFML_SCENE_H

@@ -17,7 +17,7 @@
 //
 //  Collider_Component
 //
-struct collider_s{
+struct collider_s {
     toggle_t toggle;
     sfVector2f position;
     sfVector2f dimensions;
@@ -55,7 +55,7 @@ struct transform_s {
 //
 // Sound_component
 //
-struct sound_s{
+struct sound_s {
     toggle_t toggle;
     char *name;
     char *path;
@@ -64,7 +64,7 @@ struct sound_s{
     sfSoundBuffer *buff;
 };
 
-struct sfx_list_s{
+struct sfx_list_s {
     toggle_t toggle;
     sound_t *sfx;
     int sfx_count;
@@ -75,9 +75,8 @@ struct sfx_list_s{
 //
 // Text_component
 //
-struct text_s{
+struct text_s {
     toggle_t toggle;
-    toggle_t rs_linked;
     sfText *text;
     sfFont *font;
     char *string;
@@ -99,10 +98,11 @@ struct texts_s{
 //
 //  Interact_component
 //
-struct interact_s{
+struct interact_s {
     toggle_t toggle;
     toggle_t click_right;
     toggle_t click_left;
+    toggle_t is_click;
     sfVector2i right_pos;
     sfVector2i left_pos;
 };
@@ -112,7 +112,7 @@ struct interact_s{
 //
 //  Animation_component
 //
-struct animation_s{
+struct animation_s {
     toggle_t toggle;
     int actual_frame;
     anim_type type;
@@ -121,7 +121,7 @@ struct animation_s{
     anim_t *actual;
 };
 
-struct anim_s{
+struct anim_s {
     toggle_t toggle;
     int frames_count;
     anim name;
@@ -131,7 +131,7 @@ struct anim_s{
     anim_t *next;
 };
 
-struct frame_s{
+struct frame_s {
     sfIntRect crop;
     sfInt64 trigger;
 };
@@ -141,7 +141,7 @@ struct frame_s{
 //
 //  Script Component
 //
-struct script_s{
+struct script_s {
     toggle_t toggle;
     toggle_t time_dependent;
     sfInt64 trigger;
@@ -189,9 +189,6 @@ animation_t *malloc_animations(void);
 sfx_list_t *malloc_sfx_list(void);
 texts_t *malloc_text_struct(void);
 
-
-
-
 sound_t *malloc_sfx_array(int size);
 
 script_t *malloc_script_node(void);
@@ -201,31 +198,21 @@ anim_t *malloc_anim_frame(void);
 
 text_t *malloc_text_array(int size);
 
-
-
-
-
-
-//  Script Initialization Exemple
 //
-
-/*
-typedef struct attack_stats attact_stats_t;
-typedef struct defense_stats defense_stats_t;
-typedef struct support_stats support_stats_t;
-typedef struct crowd_control_control crowd_control_t;
-
-typedef struct ability_s ability_t;
-typedef enum ability_typ {MAGIC_ATTACK}ability_type;
-// donnee type
-struct ability_s{
-    ability_type type;
-    attact_stats_t *attack;
-    defense_stats_t *defense;
-    support_stats_t *support;
-    crowd_control_t *cc_stats;
-};
-*/
+//  SCRIPT UTILS
+//
+// Get Script by Name From Actual entity
+script_t *get_script_from_actual(entity_t *entity, char *name);
+//  Get Script by Name From Entity list By Entity Name
+script_t *get_script_from_elist(entity_t *list, char *ename, char *sname);
+// Toggle Script by Name From Entity list By Entity Name
+void toggle_entity_script(entity_t *list, char *ename,
+char *sname ,toggle_t toggle);
+//  Get Script DATA By Name From Actual Entity
+void *get_script_data_fromactual(entity_t *entity, char *sname);
+//  Get Script DATA by Name From Entity List by Entity Name
+void *get_entity_script_data_fromlist(entity_t *entity,
+char *ename, char *sname);
 
 
 #endif //LIBCSFML_BASE_COMPONENTS_H

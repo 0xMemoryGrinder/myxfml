@@ -7,7 +7,7 @@
 
 #include <stdlib.h>
 #include "../../../include/my_csfml.h"
-#include "../my_puterr.h"
+#include "my_puterr.h"
 
 audio_data_t *malloc_audio_data(void)
 {
@@ -34,6 +34,8 @@ camera_t *malloc_game_camera(void)
     if (new->transform == NULL)
         my_puterr("Error malloc camera tranform", __FILE__, __LINE__);
     new->camera = sfView_create();
+    if (new->camera == NULL)
+        my_puterr("Error creating camera view", __FILE__, __LINE__);
     return new;
 }
 

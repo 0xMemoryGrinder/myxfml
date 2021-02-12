@@ -15,6 +15,7 @@ struct video_data_s{
     int width;
     int height;
     int scale_factor;
+    toggle_t is_fullscreen;
     char *game_title;
     sfVideoMode mode;
     sfRenderWindow *window;

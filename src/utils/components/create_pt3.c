@@ -10,7 +10,7 @@
 #include "../../../include/types.h"
 #include "../../../include/types_and_base/base_components.h"
 #include "../../../include/my.h"
-#include "../my_puterr.h"
+#include "my_puterr.h"
 
 sfx_list_t *malloc_sfx_list(void)
 {

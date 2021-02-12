@@ -43,7 +43,7 @@ struct settings_s{
     audio_data_t *audio;
 };
 
-struct game_data_s{
+struct game_data_s {
     entity_t *global_entity;
     entity_t *gui;
     entity_t *player;

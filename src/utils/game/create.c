@@ -7,7 +7,7 @@
 
 #include <stdlib.h>
 #include "../../../include/my_csfml.h"
-#include "../my_puterr.h"
+#include "my_puterr.h"
 
 game_data_t *malloc_game_data(void)
 {

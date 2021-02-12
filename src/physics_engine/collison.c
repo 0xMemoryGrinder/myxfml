@@ -45,6 +45,8 @@ void physics_update(entity_list_t *list, game_data_t *data)
     if (!entity || !entity->next)
         return;
     for (; entity; entity = entity->next) {
+        if (entity->entity->toggle == OFF || entity->E_COLLIDER->toggle == OFF)
+            continue;
          colliders = entity->next;
         for (; colliders; colliders = colliders->next) {
             check_collision(entity, colliders, data);

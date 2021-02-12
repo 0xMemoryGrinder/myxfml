@@ -1,0 +1,25 @@
+/*
+** EPITECH PROJECT, 2020
+** collision.h
+** File description:
+** header for collision.c
+*/
+
+#ifndef LIBCSFML_PHYSICS_H
+#define LIBCSFML_PHYSICS_H
+
+#include "../types.h"
+
+void physics_update(entity_list_t *list, game_data_t *data);
+void check_collision(entity_list_t *entity, entity_list_t *collider,
+                     game_data_t *data);
+
+
+void transform_rendersprite(entity_t *entity);
+void transform_collider(entity_t *entity);
+void reset_transform(entity_t *entity);
+void transform_updates(game_data_t *data, entity_list_t *transforms);
+
+sfVector3f get_direction(sfVector2f position, float speed, sfVector2f target);
+
+#endif //LIBCSFML_PHYSICS_H

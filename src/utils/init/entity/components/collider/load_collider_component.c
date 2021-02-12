@@ -10,8 +10,8 @@
 #include "../../../../../../include/my_csfml.h"
 #include "../../../../../../include/utils/init/load_file.h"
 #include "../../../../../../include/my.h"
-#include "../../../common_tags.h"
-#include "../../../../my_puterr.h"
+#include "../../../../../../include/utils/init/common_tags.h"
+#include "my_puterr.h"
 #include "../../../../../../include/global_tabs.h"
 
 void load_collider_toggle(char *content, int *i, collider_t *collider)

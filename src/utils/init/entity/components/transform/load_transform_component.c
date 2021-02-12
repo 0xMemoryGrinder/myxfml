@@ -9,7 +9,7 @@
 #include "../../../../../../include/my_csfml.h"
 #include "../../../../../../include/utils/init/load_file.h"
 #include "../../../../../../include/my.h"
-#include "../../../../my_puterr.h"
+#include "my_puterr.h"
 
 void load_transform_position(char *content, int *i, transform_t *transform)
 {

@@ -7,10 +7,10 @@
 
 #include <stdlib.h>
 #include "../../../include/my_csfml.h"
-#include "common_tags.h"
+#include "../../../include/utils/init/common_tags.h"
 #include "../../../include/utils/init/load_file.h"
 #include "../../../include/my.h"
-#include "../my_puterr.h"
+#include "my_puterr.h"
 #include "../../../include/global_tabs.h"
 
 toggle_t fill_toogle(char *content, int *i)
@@ -51,7 +51,8 @@ int fill_enum(char *content, int *i)
     return global_enum_tab[k].enum_nb;
 }
 
-func_ptr_t fill_function(char *content, int *i,  global_func_ptr_tab_t *tab)
+func_ptr_t fill_function(char *content, int *i,
+const global_func_ptr_tab_t *tab)
 {
     int k = 0;
     int func_len;

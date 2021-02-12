@@ -10,8 +10,8 @@
 #include "../../../../include/utils/init/load_file.h"
 #include "../../../../include/my.h"
 #include "../../../../include/global_tabs.h"
-#include "../../my_puterr.h"
-#include "../common_tags.h"
+#include "my_puterr.h"
+#include "../../../../include/utils/init/common_tags.h"
 
 void set_entity_name(char *content, int *i, entity_t *entity)
 {

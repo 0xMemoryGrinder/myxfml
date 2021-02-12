@@ -11,7 +11,7 @@
 #include <fcntl.h>
 #include <stdbool.h>
 #include "../../../include/utils/init/load_file.h"
-#include "../my_puterr.h"
+#include "my_puterr.h"
 #include "../../../include/my.h"
 
 int length_of_tag_value(char *content, int i)
@@ -33,6 +33,20 @@ char *extract_value(char *content, int *i)
     if (value == NULL)
         my_puterr("Malloc error in strndup", __FILE__, __LINE__);
     return value;
+}
+
+int my_strlen_blocker(char *str, char blocker)
+{
+    int i = 0;
+
+    for (;str[i] && str[i] != blocker; i++);
+    return i;
+}
+
+char *exract_attribute(char *content, int *i)
+{
+    int len = my_strlen_blocker(content, '\"');
+
 }
 
 void skip_to_next_tag(char const *content, int *i, bool closing_tag)
@@ -63,6 +77,7 @@ char *load_file(char *filepath)
     if (stat(filepath, &st) == -1 || !S_ISREG(st.st_mode) || fd < 0)
         my_puterr("Filepath is not a file", __FILE__, __LINE__);
     content = malloc(sizeof(char) * (st.st_size + 1));
+    content[st.st_size] = '\0';
     if (content == NULL)
         my_puterr("Error mallocing file content", __FILE__, __LINE__);
     if (read(fd, content, st.st_size) == -1)

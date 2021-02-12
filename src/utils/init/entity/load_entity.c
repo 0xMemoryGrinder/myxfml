@@ -9,7 +9,7 @@
 #include "../../../../include/utils/init/entity/load_entity.h"
 #include "../../../../include/utils/init/load_file.h"
 #include "../../../../include/types_and_base/entity.h"
-#include "../../my_puterr.h"
+#include "my_puterr.h"
 #include "../../../../include/my.h"
 
 void iterate_entity_file(char *content, int *i, entity_t *entity)
@@ -45,8 +45,7 @@ entity_t *load_entity(char *filepath, entity_t *parent)
 }
 
 
-int main(int ac, char **av)
-{
+//int main(int ac, char **av)
+//{
     //load_entity("../lib_myCSFML/config/main_menu/test1.xml", NULL);
-    printf("%f\n", my_getnbr_f("1842.898"));
-}
+//}

@@ -16,6 +16,7 @@ void set_animation_toggle(char *content, int *i, animation_t *animation);
 void set_animation_actual_frame(char *content, int *i, animation_t *animation);
 void set_animation_anim_type(char *content, int *i, animation_t *animation);
 void set_animation_actual_anim(char *content, int *i, animation_t *animation);
+void load_animation_list(char *content, int *i, animation_t *animation);
 
 static struct conf_tag_action_s animation_conf_tag_action[] = {
         {"<toggle>", 8, (void *(*)()) &set_animation_toggle},

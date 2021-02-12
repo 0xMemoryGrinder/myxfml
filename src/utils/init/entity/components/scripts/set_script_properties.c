@@ -9,9 +9,9 @@
 #include "set_script_properties.h"
 #include "../../../../../../include/my_csfml.h"
 #include "../../../../../../include/my.h"
-#include "../../../../my_puterr.h"
+#include "my_puterr.h"
 #include "../../../../../../include/utils/init/load_file.h"
-#include "../../../common_tags.h"
+#include "../../../../../../include/utils/init/common_tags.h"
 #include "../../../../../../include/global_tabs.h"
 
 void set_script_toggle(char *content, int *i, script_t *script)

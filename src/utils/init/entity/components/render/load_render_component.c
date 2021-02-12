@@ -9,8 +9,8 @@
 #include "../../../../../../include/utils/init/load_file.h"
 #include "../../../../../../include/my.h"
 #include "../../../../../../include/my_csfml.h"
-#include "../../../../my_puterr.h"
-#include "../../../common_tags.h"
+#include "my_puterr.h"
+#include "../../../../../../include/utils/init/common_tags.h"
 
 void load_render_toggle(char *content, int *i, render_sprite_t *render)
 {

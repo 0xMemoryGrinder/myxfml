@@ -6,11 +6,11 @@
 */
 
 #include "set_sound_properties.h"
-#include "../../../common_tags.h"
+#include "../../../../../../include/utils/init/common_tags.h"
 #include "../../../../../../include/my_csfml.h"
 #include "../../../../../../include/my.h"
 #include "../../../../../../include/utils/init/load_file.h"
-#include "../../../../my_puterr.h"
+#include "my_puterr.h"
 
 void set_sound_toggle(char *content, int *i, sound_t *sound)
 {
@@ -29,8 +29,5 @@ void set_sound_name(char *content, int *i, sound_t *sound)
 
 void set_sound_music(char *content, int *i, sound_t *sound)
 {
-    char *path = extract_value(content, i);
-    sound->buff = sfSoundBuffer_createFromFile(path);
-    sfSound_setBuffer(sound->sfx, sound->buff);
-    free(path);
+    sound->path = extract_value(content, i);
 }

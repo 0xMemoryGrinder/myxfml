@@ -9,8 +9,8 @@
 #include "../../../../../../include/my_csfml.h"
 #include "../../../../../../include/utils/init/load_file.h"
 #include "../../../../../../include/my.h"
-#include "../../../common_tags.h"
-#include "../../../../my_puterr.h"
+#include "../../../../../../include/utils/init/common_tags.h"
+#include "my_puterr.h"
 #include "set_script_properties.h"
 
 void set_scripts_toggle(char *content, int *i, script_list_t *scripts)

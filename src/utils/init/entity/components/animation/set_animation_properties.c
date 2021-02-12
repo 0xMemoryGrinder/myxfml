@@ -8,7 +8,7 @@
 #include <stdlib.h>
 #include "set_animation_properties.h"
 #include "../../../../../../include/my_csfml.h"
-#include "../../../common_tags.h"
+#include "../../../../../../include/utils/init/common_tags.h"
 #include "../../../../../../include/utils/init/load_file.h"
 #include "../../../../../../include/my.h"
 

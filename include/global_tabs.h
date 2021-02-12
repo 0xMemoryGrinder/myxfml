@@ -24,7 +24,7 @@ struct global_func_ptr_tab_s {
 
 static const struct global_enum_tab_s global_enum_tab[] = {
         //
-        //  entity_ids
+        //  entity_type
         //
         {"MOB", 3, MOB},
         {"PNJ", 3, PNJ},
@@ -77,6 +77,10 @@ static const struct global_func_ptr_tab_s scripts_func_ptr_tab[] = {
 };
 
 static const struct global_func_ptr_tab_s collider_func_ptr_tab[] = {
+        {NULL, 0, NULL}
+};
+
+static const struct global_func_ptr_tab_s collider_func_ptr_tab2[] = {
         {NULL, 0, NULL}
 };
 

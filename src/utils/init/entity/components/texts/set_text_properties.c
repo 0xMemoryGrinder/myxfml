@@ -9,8 +9,8 @@
 #include "../../../../../../include/utils/init/load_file.h"
 #include "../../../../../../include/my.h"
 #include "set_text_properties.h"
-#include "../../../../my_puterr.h"
-#include "../../../common_tags.h"
+#include "my_puterr.h"
+#include "../../../../../../include/utils/init/common_tags.h"
 
 void set_text_toggle(char *content, int *i, text_t *text)
 {

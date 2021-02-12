@@ -9,9 +9,9 @@
 #include "../../../../../../include/my_csfml.h"
 #include "../../../../../../include/utils/init/load_file.h"
 #include "../../../../../../include/my.h"
-#include "../../../common_tags.h"
-#include "../../../../my_puterr.h"
-
+#include "utils/init/common_tags.h"
+#include "my_puterr.h"
+#include "../scripts/set_script_properties.h"
 
 
 script_t *load_script(char *content, int *i)

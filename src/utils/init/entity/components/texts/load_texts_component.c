@@ -9,8 +9,8 @@
 #include "../../../../../../include/utils/init/entity/components/texts/load_texts_component.h"
 #include "../../../../../../include/utils/init/load_file.h"
 #include "../../../../../../include/my.h"
-#include "../../../../my_puterr.h"
-#include "../../../common_tags.h"
+#include "my_puterr.h"
+#include "../../../../../../include/utils/init/common_tags.h"
 #include "set_text_properties.h"
 
 void set_texts_toggle(char *content, int *i, texts_t *texts)
@@ -20,7 +20,7 @@ void set_texts_toggle(char *content, int *i, texts_t *texts)
 
 void set_text_rs_linked(char *content, int *i, text_t *text)
 {
-    text->rs_linked = fill_toogle(content, i);
+    text->is_rslinked = fill_toogle(content, i);
 }
 
 text_t load_text(char *content, int *i)

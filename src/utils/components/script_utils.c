@@ -5,8 +5,12 @@
 ** header for script_utils.c
 */
 
+#include <graphic_engine/render_fonctions.h>
 #include "../../../include/my_csfml.h"
 #include "../../../include/my.h"
+
+#define G_LIST_FROM(scene_id) data->scenes->list[scene_id].objects->list
+#define S_LIST_FROM(scene_id) scenes->list[scene_id].objects->list
 
 script_t *get_script_from_actual(entity_t *entity, char *name)
 {
@@ -95,6 +99,11 @@ void toggle_rendersprite_fromlist(entity_t *list, char *name, toggle_t toggle)
     E_RSPRITE->toggle = toggle;
 }
 
+
+
+
+
+// TOGGLE TRANSFORM
 void toggle_transform_fromlist(entity_t *list, char *name, toggle_t toggle)
 {
     entity_t *entity = get_entity_name(list, name);
@@ -103,7 +112,13 @@ void toggle_transform_fromlist(entity_t *list, char *name, toggle_t toggle)
         return;
     E_TRANSFORM->toggle = toggle;
 }
+// END OF TOGGLE TRANSFROM
 
+
+
+
+
+// TOGGLE SOUND
 // TODO : TOGGLE FOR SPECIFIC SOUND
 void toggle_sfxlist_fromlist(entity_t *list, char *name, toggle_t toggle)
 {
@@ -114,6 +129,32 @@ void toggle_sfxlist_fromlist(entity_t *list, char *name, toggle_t toggle)
     E_SOUND->toggle = toggle;
 }
 
+void toggle_sfx_fromactual(entity_t *entity, char *sname, toggle_t toggle)
+{
+    if (entity == NULL || E_SOUND == NULL)
+        return;
+    for (int i = 0; i < E_SOUND->sfx_count; i++) {
+        if (!my_strcmp(sname, E_SOUND->sfx[i].name))
+            E_SOUND->sfx[i].toggle = toggle;
+    }
+}
+
+void toggle_sfx_fromlist(entity_t *list, char *ename,
+char *sname, toggle_t toggle)
+{
+    entity_t *entity = get_entity_name(list, ename);
+
+    if (entity == NULL)
+        return;
+    toggle_sfx_fromactual(entity, sname, toggle);
+}
+// END OF TOGGLE SOUND
+
+
+
+
+
+// TEXT TOGGLE
 // TODO : TOGGLE FOR SPECIFIC TEXT
 void toggle_textlist_fromlist(entity_t *list, char *name, toggle_t toggle)
 {
@@ -124,6 +165,47 @@ void toggle_textlist_fromlist(entity_t *list, char *name, toggle_t toggle)
     E_TEXT->toggle = toggle;
 }
 
+int get_text_idx_fromactual(entity_t *entity, char *id)
+{
+    int i = 0;
+
+    for (;i < E_TEXT->count; i++) {
+        if (!my_strcmp(E_TEXT->text[i].id, id))
+            return i;
+    }
+    return -1;
+}
+
+void toggle_text_fromactual(entity_t *entity, char *id, toggle_t toggle)
+{
+    int idx = get_text_idx_fromactual(entity, id);
+
+    if (idx == -1)
+        return;
+    E_TEXT->text[idx].toggle = toggle;
+}
+
+void toggle_text_fromlist(entity_t *list, char *ename,
+char *id, toggle_t toggle)
+{
+    entity_t *entity = get_entity_name(list, ename);
+
+    if (entity == NULL)
+        return;
+    toggle_text_fromactual(entity, id, toggle);
+}
+
+// END OFF TEXT TOGGLE
+
+
+
+
+
+
+
+
+
+//  TOGGLE AND UPDATE ANIMATION
 // TODO : TOGGLE FOR SPECIFIC ANIM
 void toggle_animlist_fromlist(entity_t *list, char *name, toggle_t toggle)
 {
@@ -134,3 +216,21 @@ void toggle_animlist_fromlist(entity_t *list, char *name, toggle_t toggle)
     E_ANIMATION->toggle = toggle;
 }
 
+void change_anim_fromactual(entity_t *entity, anim name, anim_type type)
+{
+    E_ANIMATION->actual_anim = name;
+    if (type != -1)
+        E_ANIMATION->type = type;
+    update_anim_state(entity);
+}
+
+void change_anim_fromlist(entity_t *list, char *ename,
+anim name, anim_type type)
+{
+    entity_t *entity = get_entity_name(list, ename);
+
+    if (entity == NULL)
+        return;
+    change_anim_fromactual(entity, name, type);
+}
+// END OF ANIMATION UPDATE

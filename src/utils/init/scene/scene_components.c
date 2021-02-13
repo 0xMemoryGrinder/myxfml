@@ -22,7 +22,7 @@ void get_scene_toggle(char *content, int *i, scene_id id, game_data_t *data)
 }
 
 void get_scene_background(char *content, int *i,
-                          scene_id id, game_data_t *data)
+scene_id id, game_data_t *data)
 {
     char *path = extract_value(content, i);
 
@@ -36,9 +36,11 @@ void init_entities_list(char *content, int *i, scene_id id, game_data_t *data)
     char *name = NULL;
     int j = 0;
     entity_t *entity = NULL;
+
     data->scenes->list[id].objects->list = malloc_entity_node();
+    skip_to_next_tag(content, i, NEXT);
     while (my_strncmp(content + *i, "</entities>", 11)) {
-        skip_to_next_tag(content, i, false);
+        skip_to_next_tag(content, i, OPEN);
         *i += 15;
         count = my_getnbr(content + *i);
         while (content[*i] != '>')
@@ -50,6 +52,6 @@ void init_entities_list(char *content, int *i, scene_id id, game_data_t *data)
             add_entity(entity, &data->scenes->list[id].objects->list);
         }
         *i += 9;
-        skip_to_next_tag(content, i, true);
+        skip_to_next_tag(content, i, NEXT);
     }
 }

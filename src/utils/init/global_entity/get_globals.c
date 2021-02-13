@@ -12,6 +12,7 @@
 #define GLOBAL_PATH "conf/global_entities/"
 #define PLAYER_PATH "conf/player/"
 #define GUI_PATH "conf/gui/"
+#define XML ".xml"
 
 //
 //  Game Globals
@@ -20,19 +21,24 @@ void get_global_entities(char *content, int *i, game_data_t *data)
 {
     char *name = NULL;
     char *path;
+    char *paht2;
     data->global_entity = malloc_entity_node();
     entity_t *recept = NULL;
 
+    skip_to_next_tag(content, i, NEXT);
     while (my_strncmp(content + *i, "</globals>", 10)) {
-        skip_to_next_tag(content, i, false);
+        skip_to_next_tag(content, i, OPEN);
         *i += entity_tag.tag_len;
         name = extract_value(content , i);
         *i += entity_tag.tag_len + 1;
         path = my_strcat(GLOBAL_PATH, name);
-        recept = load_entity(path, NULL);
+        paht2  =my_strcat(path, XML);
+        recept = load_entity(paht2, NULL);
         free(name);
+        free(path);
+        free(paht2);
         add_entity(recept, &data->global_entity);
-        skip_to_next_tag(content, i, true);
+        skip_to_next_tag(content, i, NEXT);
     }
     //*i += 10; TODO : CHECK IT
 }
@@ -41,20 +47,24 @@ void get_player_entities(char *content, int *i, game_data_t *data)
 {
     char *name = NULL;
     char *path;
+    char *path2;
     data->player = malloc_entity_node();
     entity_t *recept = NULL;
 
+    skip_to_next_tag(content, i, NEXT);
     while (my_strncmp(content + *i, "</player>", 9)) {
-        skip_to_next_tag(content, i, false);
+        skip_to_next_tag(content, i, OPEN);
         *i += entity_tag.tag_len;
         name = extract_value(content , i);
         *i += entity_tag.tag_len + 1;
         path = my_strcat(PLAYER_PATH, name);
-        recept = load_entity(path, NULL);
+        path2 = my_strcat(path, XML);
+        recept = load_entity(path2, NULL);
         free(name);
         free(path);
+        free(path2);
         add_entity(recept, &data->player);
-        skip_to_next_tag(content, i, true);
+        skip_to_next_tag(content, i, NEXT);
     }
     //*i += 9; TODO CHECK NESCECITY
 }
@@ -63,20 +73,24 @@ void get_gui_entities(char *content, int *i, game_data_t *data)
 {
     char *name = NULL;
     char *path;
+    char *path2;
     data->gui = malloc_entity_node();
     entity_t *recept = NULL;
 
+    skip_to_next_tag(content, i, NEXT);
     while (my_strncmp(content + *i, "</gui>", 6)) {
-        skip_to_next_tag(content, i, false);
+        skip_to_next_tag(content, i, OPEN);
         *i += entity_tag.tag_len;
         name = extract_value(content , i);
         *i += entity_tag.tag_len + 1;
         path = my_strcat(GUI_PATH, name);
-        recept = load_entity(path, NULL);
+        path2 = my_strcat(path, XML);
+        recept = load_entity(path2, NULL);
         free(name);
         free(path);
+        free(path2);
         add_entity(recept, &data->gui);
-        skip_to_next_tag(content, i, true);
+        skip_to_next_tag(content, i, NEXT);
     }
     //*i += 6; TODO : CHECK NESCECITY
 }

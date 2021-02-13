@@ -47,18 +47,17 @@ void set_actual_theme(char *content, int *i, game_data_t *data)
 void get_music_array(char *content, int *i, game_data_t *data)
 {
     int j = 0;
-    int k;
 
-    skip_to_next_tag(content, i, false);
+    skip_to_next_tag(content, i, NEXT);
     while (my_strncmp(content + *i, "</mlist>", 8)) {
-        skip_to_next_tag(content, i, false);
+        skip_to_next_tag(content, i, OPEN);
         *i += 6;
         data->game_settings->audio->musics[j].name = extract_value(content, i);
         *i += 7;
-        skip_to_next_tag(content, i, false);
+        skip_to_next_tag(content, i, OPEN);
         *i += 6;
         data->game_settings->audio->musics[j].path = extract_value(content, i);
         *i += 7;
-        skip_to_next_tag(content, i, false);
+        skip_to_next_tag(content, i, NEXT);
     }
 }

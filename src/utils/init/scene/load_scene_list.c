@@ -20,19 +20,20 @@ void get_scenes_list(char *content, int *i, game_data_t *data)
     char *path;
     char *path2;
 
+    skip_to_next_tag(content, i, NEXT);
     while (my_strncmp(content + *i, "</list>", 7)) {
-        skip_to_next_tag(content, i, false);
+        skip_to_next_tag(content, i, OPEN);
         *i += 7;
         name = extract_value(content, i);
         *i += 8;
         path = my_strcat(SCENE_PATH, name);
         path2 = my_strcat(path, "/.xml");
-        load_scene(path, j, data);
+        load_scene(path2, j, data);
         j++;
         free(name);
         free(path);
         free(path2);
-        skip_to_next_tag(content, i, true);
+        skip_to_next_tag(content, i, NEXT);
     }
 }
 
@@ -57,8 +58,9 @@ void get_game_scenes(char *content, int *i, game_data_t *data)
 {
     int k;
 
+    skip_to_next_tag(content, i, NEXT);
     while (my_strncmp(content + *i, "</scenes>", 9)) {
-        skip_to_next_tag(content, i, false);
+        skip_to_next_tag(content, i, OPEN);
         k = 0;
         while (scene_conf_tags[k].tag && my_strncmp(content + *i,
         scene_conf_tags[k].tag, scene_conf_tags[k].tag_len))
@@ -68,6 +70,6 @@ void get_game_scenes(char *content, int *i, game_data_t *data)
         *i += scene_conf_tags[k].tag_len;
         scene_conf_tags[k].action(content, i, data);
         *i += scene_conf_tags[k].tag_len + 1;
-        skip_to_next_tag(content, i, true);
+        skip_to_next_tag(content, i, NEXT);
     }
 }

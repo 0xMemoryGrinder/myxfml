@@ -25,11 +25,9 @@ entity_t *get_entity_name(entity_t *entity, const char *name)
 
 void add_entity(entity_t *entity, entity_t **list)
 {
-    if (*list != NULL) {
-        entity->next = *list;
-        (*list)->back = entity;
-    }
-    *list = entity;
+    (*list)->back = entity;
+    (*list) = (*list)->back;
+
 }
 
 

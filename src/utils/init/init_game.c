@@ -18,8 +18,9 @@ void iterate_game_cfg_file(char *content, int *i, game_data_t *data)
 {
     int k;
 
+    skip_to_next_tag(content, i, NEXT);
     while (my_strncmp(content + *i, "</entity>", 9)) {
-        skip_to_next_tag(content, i, false);
+        skip_to_next_tag(content, i, OPEN);
         k = 0;
         while (game_conf_tags[k].tag && my_strncmp(content + *i,
         game_conf_tags[k].tag, game_conf_tags[k].tag_len))
@@ -29,7 +30,7 @@ void iterate_game_cfg_file(char *content, int *i, game_data_t *data)
         *i += game_conf_tags[k].tag_len;
         game_conf_tags[k].action(content, i, data);
         *i += game_conf_tags[k].tag_len + 1;
-        skip_to_next_tag(content, i, true);
+        skip_to_next_tag(content, i, NEXT);
     }
 }
 

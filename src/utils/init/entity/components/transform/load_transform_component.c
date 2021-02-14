@@ -5,7 +5,7 @@
 ** load_transform_component.c
 */
 
-#include "load_transform_component.h"
+#include "utils/init/entity/components/transform/load_transform_component_tabs.h"
 #include "../../../../../../include/my_csfml.h"
 #include "../../../../../../include/utils/init/load_file.h"
 #include "../../../../../../include/my.h"
@@ -41,8 +41,8 @@ void load_transform_scale(char *content, int *i, transform_t *transform)
     for (; pos[j]; j++);
     if (j != 2)
         my_puterr("Incorrect scale values", __FILE__, __LINE__);
-    transform->velocity.x = (float)my_getnbr_f(pos[0]);
-    transform->velocity.y = (float)my_getnbr_f(pos[1]);
+    transform->scale.x = (float)my_getnbr_f(pos[0]);
+    transform->scale.y = (float)my_getnbr_f(pos[1]);
     free(path);
     free(pos[0]);
     free(pos[1]);

@@ -5,12 +5,12 @@
 ** load_animation_component.c
 */
 
-#include "load_animation_component.h"
-#include "../../../../../../include/my_csfml.h"
-#include "../../../../../../include/utils/init/load_file.h"
-#include "../../../../../../include/my.h"
+#include "utils/init/entity/components/animation/load_animation_component.h"
+#include "my_csfml.h"
+#include "utils/init/load_file.h"
+#include "my.h"
 #include "my_puterr.h"
-#include "set_anim_properties.h"
+#include "utils/init/entity/components/animation/load_animation_component_tabs.h"
 
 anim_t *load_anim(char *content, int *i)
 {

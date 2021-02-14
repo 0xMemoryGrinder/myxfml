@@ -1,23 +1,23 @@
 /*
 ** EPITECH PROJECT, 2020
-** load_texts_list.c
+** load_texts_properties.c
 ** File description:
-** load_texts_list.c
+** load_texts_properties.c
 */
 
-#include "../../../../../../include/my_csfml.h"
-#include "../../../../../../include/utils/init/load_file.h"
-#include "../../../../../../include/my.h"
-#include "set_text_properties.h"
+#include <stdlib.h>
+#include "my_csfml.h"
+#include "utils/init/load_file.h"
+#include "my.h"
 #include "my_puterr.h"
-#include "../../../../../../include/utils/init/common_tags.h"
+#include "utils/init/common_tags.h"
 
-void set_text_toggle(char *content, int *i, text_t *text)
+void load_text_toggle(char *content, int *i, text_t *text)
 {
     text->toggle = fill_toogle(content, i);
 }
 
-void set_text_font(char *content, int *i, text_t *text)
+void load_text_font(char *content, int *i, text_t *text)
 {
     char *path = extract_value(content, i);
     text->font = sfFont_createFromFile(path);
@@ -25,7 +25,7 @@ void set_text_font(char *content, int *i, text_t *text)
     free(path);
 }
 
-void set_text_position(char *content, int *i, text_t *text)
+void load_text_position(char *content, int *i, text_t *text)
 {
     char *path = extract_value(content, i);
     char **pos = my_str_to_tab(path, ' ');
@@ -44,7 +44,7 @@ void set_text_position(char *content, int *i, text_t *text)
     free(pos);
 }
 
-void set_text_font_size(char *content, int *i, text_t *text)
+void load_text_font_size(char *content, int *i, text_t *text)
 {
     int path_len = length_of_tag_value(content, *i);
     char *path = my_strndup(content + *i, path_len);
@@ -56,7 +56,7 @@ void set_text_font_size(char *content, int *i, text_t *text)
     free(path);
 }
 
-void set_text_string(char *content, int *i, text_t *text)
+void load_text_string(char *content, int *i, text_t *text)
 {
     int path_len = length_of_tag_value(content, *i);
     char *path = my_strndup(content + *i, path_len);

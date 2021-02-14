@@ -5,15 +5,14 @@
 ** load_sounds_component.c
 */
 
-#include "load_sounds_component.h"
-#include "../../../../../../include/my_csfml.h"
-#include "../../../../../../include/utils/init/common_tags.h"
-#include "../../../../../../include/utils/init/load_file.h"
-#include "../../../../../../include/my.h"
+#include "utils/init/entity/components/sounds/load_sounds_component_tabs.h"
+#include "my_csfml.h"
+#include "utils/init/common_tags.h"
+#include "utils/init/load_file.h"
+#include "my.h"
 #include "my_puterr.h"
-#include "set_sound_properties.h"
 
-void set_sounds_toggle(char *content, int *i, sfx_list_t *sounds)
+void load_sounds_toggle(char *content, int *i, sfx_list_t *sounds)
 {
     sounds->toggle = fill_toogle(content, i);
 }

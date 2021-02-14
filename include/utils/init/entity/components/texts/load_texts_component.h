@@ -8,16 +8,17 @@
 #ifndef LIB_MYCSFML_LOAD_TEXTS_COMPONENT_H
 #define LIB_MYCSFML_LOAD_TEXTS_COMPONENT_H
 
-#include "../../../conf_tag_action_struct.h"
-#include "../../../../../my_csfml.h"
-#include <stdlib.h>
+#include "my_csfml.h"
 
-void set_texts_toggle(char *content, int *i, texts_t *texts);
+void load_texts_toggle(char *content, int *i, texts_t *texts);
 void load_texts_list(char *content, int *i, texts_t *texts);
+void load_text_id(char *content, int *i, text_t *text);
+void load_text_toggle(char *content, int *i, text_t *text);
+void load_text_font(char *content, int *i, text_t *text);
+void load_text_position(char *content, int *i, text_t *text);
+void load_text_offset(char *content, int *i, text_t *text);
+void load_text_font_size(char *content, int *i, text_t *text);
+void load_text_string(char *content, int *i, text_t *text);
+void load_text_rs_linked(char *content, int *i, text_t *text);
 
-static struct conf_tag_action_s texts_conf_tag_action[] = {
-        {"<toggle>", 8, (void *(*)()) &set_texts_toggle},
-        {"<list count=\"", 13, (void *(*)()) &load_texts_list},
-        {NULL, 0, NULL}
-};
 #endif //LIB_MYCSFML_LOAD_TEXTS_COMPONENT_H

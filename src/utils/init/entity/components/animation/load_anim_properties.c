@@ -5,12 +5,9 @@
 ** set_anim_properties.c
 */
 
-#include "set_anim_properties.h"
-#include "../../../../../../include/my_csfml.h"
+#include "my_csfml.h"
 #include "utils/init/common_tags.h"
-#include "../../../../../../include/utils/init/load_file.h"
-#include "../../../../../../include/my.h"
-#include "../../../../../../include/global_tabs.h"
+#include "my.h"
 
 void load_anim_toggle(char *content, int *i, anim_t *anim)
 {
@@ -19,7 +16,7 @@ void load_anim_toggle(char *content, int *i, anim_t *anim)
 
 void load_anim_name(char *content, int *i, anim_t *anim)
 {
-    anim->name = fill_enum(content, i);
+    anim->name = fill_enum(content, i, anim_enum_tab);
 }
 
 void load_anim_frame_action(char *content, int *i, anim_t *anim)

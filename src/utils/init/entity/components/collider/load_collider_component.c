@@ -6,13 +6,12 @@
 */
 
 #include <stdlib.h>
-#include "load_collider_component.h"
-#include "../../../../../../include/my_csfml.h"
-#include "../../../../../../include/utils/init/load_file.h"
-#include "../../../../../../include/my.h"
-#include "../../../../../../include/utils/init/common_tags.h"
+#include "utils/init/entity/components/collider/load_collider_component_tabs.h"
+#include "my_csfml.h"
+#include "utils/init/load_file.h"
+#include "my.h"
+#include "utils/init/common_tags.h"
 #include "my_puterr.h"
-#include "../../../../../../include/global_tabs.h"
 
 void load_collider_toggle(char *content, int *i, collider_t *collider)
 {

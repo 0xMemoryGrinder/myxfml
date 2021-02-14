@@ -5,15 +5,14 @@
 ** load_scripts_components.c
 */
 
-#include "load_scripts_components.h"
-#include "../../../../../../include/my_csfml.h"
-#include "../../../../../../include/utils/init/load_file.h"
-#include "../../../../../../include/my.h"
-#include "../../../../../../include/utils/init/common_tags.h"
+#include "utils/init/entity/components/scripts/load_scripts_components_tabs.h"
+#include "my_csfml.h"
+#include "utils/init/load_file.h"
+#include "my.h"
+#include "utils/init/common_tags.h"
 #include "my_puterr.h"
-#include "set_script_properties.h"
 
-void set_scripts_toggle(char *content, int *i, script_list_t *scripts)
+void load_scripts_toggle(char *content, int *i, script_list_t *scripts)
 {
     scripts->toggle = fill_toogle(content, i);
 }

@@ -5,12 +5,12 @@
 ** load_interactive_component.c
 */
 
-#include "load_interactive_component.h"
-#include "../../../../../../include/my_csfml.h"
-#include "../../../../../../include/utils/init_xfml.h"
-#include "../../../../../../include/my.h"
-#include "../../../../../../include/my_puterr.h"
+#include "my_csfml.h"
+#include "utils/init_xfml.h"
+#include "my.h"
+#include "my_puterr.h"
 #include "utils/init/common_tags.h"
+#include "utils/init/entity/components/interactive/load_interactive_component_tabs.h"
 
 void load_interact_toggle(char *content, int *i, interact_t *interact)
 {

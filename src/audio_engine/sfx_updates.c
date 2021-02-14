@@ -21,7 +21,7 @@ void check_sound_state(game_data_t *data, sfx_list_t *list, int i)
             sfSound_setVolume(list->sfx[i].sfx, G_SFXV);
             sfSound_play(list->sfx[i].sfx);
             list->sfx[i].toggle = OFF;
-        } else {
+        } else if (list->sfx[i].buff != NULL){
             sfSoundBuffer_destroy(list->sfx[i].buff);
             sfSound_destroy(list->sfx[i].sfx);
             list->sfx[i].sfx = sfSound_create();
@@ -40,6 +40,8 @@ void sfx_engine(game_data_t *data, entity_list_t *list)
 {
     entity_list_t *sfx_list = list;
 
+    if (list->entity == NULL)
+        return;
     for (; sfx_list; sfx_list = sfx_list->next) {
         if (sfx_list->entity->toggle == OFF ||
         sfx_list->E_SOUND->toggle == OFF)

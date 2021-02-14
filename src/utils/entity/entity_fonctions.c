@@ -51,24 +51,19 @@ void add_entity_to_list(entity_t *entity, entity_list_t **list)
 {
     entity_list_t *new;
 
-    if (!(*list) || (!(*list)->next && !(*list)->back)) {
-        init_list(entity, list);
+    if (!(*list)->entity) {
+        (*list)->entity = entity;
         return;
-    } new = malloc_list_node();
-    new->entity = entity;
-    if ((*list)->back && (*list)->next) {
-        new->next = (*list);
-        (*list)->back->next = new;
-        (*list)->back = new;
-        new->back = (*list)->back;
+    }
+    if (!(*list)->back) {
+        (*list)->back = malloc_list_node();
+        (*list)->back->next = (*list);
         (*list) = (*list)->back;
-    } else if (!(*list)->back) {
-        new->next = (*list);
-        (*list)->back = new;
-        (*list) = (*list)->back;
-    } else {
-        new->back = (*list);
-        (*list)->next = new;
+        (*list)->entity = entity;
+    } else if (!(*list)->next) {
+        (*list)->next = malloc_list_node();
+        (*list)->next->entity = entity;
+        (*list)->next->back = (*list);
     }
 }
 

@@ -5,6 +5,7 @@
 ** load_animation_component.c
 */
 
+#include <graphic_engine/render_fonctions.h>
 #include "load_animation_component.h"
 #include "../../../../../../include/my_csfml.h"
 #include "../../../../../../include/utils/init/load_file.h"

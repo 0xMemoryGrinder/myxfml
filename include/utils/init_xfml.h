@@ -65,11 +65,14 @@ void get_scene_background(char *content, int *i,
 scene_id id, game_data_t *data);
 void init_entities_list(char *content, int *i, scene_id id, game_data_t *data);
 
+void load_scene_scripts(char *content, int *i,
+scene_id id, game_data_t *data);
+
 static const struct conf_tag_action_s scene_tags[]= {
         {"<name>",6, (void *(*)()) &get_scene_name},
         {"<toggle>",8, (void *(*)()) &get_scene_toggle},
         {"<insert>",8, (void *(*)()) &insert_globals_in_scene},
-        {"<scripts>",9 },//(void *(*)()) &get_scene_scripts},TODO !!!!!!
+        {"<scripts>",9, (void *(*)()) &load_scene_scripts},
         {"<background>",12, (void *(*)()) &get_scene_background},
         {"<entities>",10, (void *(*)()) &init_entities_list},
         {NULL}
@@ -126,9 +129,9 @@ void get_music_array(char *content, int *i, game_data_t *data);
 static const struct conf_tag_action_s audio_conf_tags[]= {
         {"<music_volume>",14, (void *(*)()) &set_music_volume},
         {"<sfx_volume>",12, (void *(*)()) &set_sfx_volume},
-        {"<music_count>",13, (void *(*)()) &get_music_count},
+        {"<musics_count>",14, (void *(*)()) &get_music_count},
         {"<actual_theme>",14, (void *(*)()) &set_actual_theme},
-        {"<mslist>",8, (void *(*)()) &get_music_array},
+        {"<mlist>",7, (void *(*)()) &get_music_array},
         {NULL}
 };
 

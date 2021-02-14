@@ -5,6 +5,7 @@
 ** header for scene_components.c
 */
 
+#include <sys/stat.h>
 #include "utils/init_xfml.h"
 #include "my.h"
 #include "my_csfml.h"
@@ -24,9 +25,18 @@ void get_scene_toggle(char *content, int *i, scene_id id, game_data_t *data)
 void get_scene_background(char *content, int *i,
 scene_id id, game_data_t *data)
 {
-    char *path = extract_value(content, i);
 
-    data->scenes->list[id].objects->background = load_entity(path, NULL);
+    char *name = extract_value(content, i);
+    char *path = my_strcat("conf/scenes/", data->scenes->list[id].name);
+    char *path2 = my_strcat(path, "/");
+    char *path3 = my_strcat(path2, name);
+    char *path4 = my_strcat(path3, ".xml");
+    data->scenes->list[id].objects->background = load_entity(path4, NULL);
+    free(path);
+    free(name);
+    free(path2);
+    free(path3);
+    free(path4);
 }
 
 
@@ -36,6 +46,10 @@ void init_entities_list(char *content, int *i, scene_id id, game_data_t *data)
     char *name = NULL;
     int j = 0;
     entity_t *entity = NULL;
+    char *path = my_strcat("conf/scenes/", data->scenes->list[id].name);
+    char *path2 = my_strcat(path, "/");
+    char *path3 = NULL;
+    char *path4 = NULL;
 
     data->scenes->list[id].objects->list = malloc_entity_node();
     skip_to_next_tag(content, i, NEXT);
@@ -47,10 +61,15 @@ void init_entities_list(char *content, int *i, scene_id id, game_data_t *data)
             *i += 1;
         *i += 1;
         name = extract_value(content, i);
+        path3 = my_strcat(path2, name);
+        path4 = my_strcat(path3, ".xml");
         for (j = 0; j < count; j++) {
-            entity = load_entity(name, NULL);
+            entity = load_entity(path4, NULL);
             add_entity(entity, &data->scenes->list[id].objects->list);
         }
+        free(name);
+        free(path3);
+        free(path4);
         *i += 9;
         skip_to_next_tag(content, i, NEXT);
     }

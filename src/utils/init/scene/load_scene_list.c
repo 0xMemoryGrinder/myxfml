@@ -16,7 +16,6 @@
 void get_scenes_list(char *content, int *i, game_data_t *data)
 {
     int j = 0;
-    char *name = NULL;
     char *path;
     char *path2;
 
@@ -24,13 +23,12 @@ void get_scenes_list(char *content, int *i, game_data_t *data)
     while (my_strncmp(content + *i, "</list>", 7)) {
         skip_to_next_tag(content, i, OPEN);
         *i += 7;
-        name = extract_value(content, i);
+        data->scenes->list[j].name = extract_value(content, i);;
         *i += 8;
-        path = my_strcat(SCENE_PATH, name);
+        path = my_strcat(SCENE_PATH, data->scenes->list[j].name);
         path2 = my_strcat(path, "/.xml");
         load_scene(path2, j, data);
         j++;
-        free(name);
         free(path);
         free(path2);
         skip_to_next_tag(content, i, NEXT);

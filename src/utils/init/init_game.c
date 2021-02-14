@@ -19,7 +19,7 @@ void iterate_game_cfg_file(char *content, int *i, game_data_t *data)
     int k;
 
     skip_to_next_tag(content, i, NEXT);
-    while (my_strncmp(content + *i, "</entity>", 9)) {
+    while (my_strncmp(content + *i, "</game_config>", 14)) {
         skip_to_next_tag(content, i, OPEN);
         k = 0;
         while (game_conf_tags[k].tag && my_strncmp(content + *i,
@@ -53,11 +53,8 @@ game_data_t *create_game(void)
     data->game_settings->video->mode.height =
     data->game_settings->video->height;
     data->game_settings->video->mode.bitsPerPixel = 32;
-    if (data->game_settings->video->is_fullscreen)
-        G_WINDOW = sfRenderWindow_create(data->game_settings->video->mode,
-        data->game_settings->video->game_title, sfFullscreen, NULL);
-    else
-        G_WINDOW = sfRenderWindow_create(data->game_settings->video->mode,
-        data->game_settings->video->game_title, sfClose, NULL);
+    data->stats->event = malloc(sizeof(sfEvent));
+    if (data->stats->event == NULL)
+        my_puterr("Error mallocing event struct", __FILE__, __LINE__);
     return data;
 }

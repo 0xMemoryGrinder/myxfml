@@ -25,6 +25,7 @@ scene_objects_t *malloc_scene_objects(void)
     new->sfx = malloc_list_node();
     new->scripts = malloc_list_node();
     new->colliders = malloc_list_node();
+    new->transforms = malloc_list_node();
     return new;
 }
 

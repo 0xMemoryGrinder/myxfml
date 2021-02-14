@@ -56,7 +56,7 @@ void get_audio_data(char *content, int *i, game_data_t *data)
         audio_conf_tags[k].tag, audio_conf_tags[k].tag_len))
             k++;
         if (!audio_conf_tags[k].tag)
-            my_puterr("Unrecognized entity tag", __FILE__, __LINE__);
+            my_puterr("Unrecognized audio_settings tag", __FILE__, __LINE__);
         *i += audio_conf_tags[k].tag_len;
         audio_conf_tags[k].action(content, i, data);
         *i += audio_conf_tags[k].tag_len + 1;
@@ -69,7 +69,7 @@ void get_settings(char *content, int *i, game_data_t *data)
     int k;
 
     skip_to_next_tag(content, i, NEXT);
-    while (my_strncmp(content + *i, "</audio>", 8)) {
+    while (my_strncmp(content + *i, "</game_settings>", 16)) {
         skip_to_next_tag(content, i, OPEN);
         k = 0;
         while (settings_conf_tags[k].tag && my_strncmp(content + *i,

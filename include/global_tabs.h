@@ -101,8 +101,4 @@ static const struct global_func_ptr_tab_s anim_func_ptr_tab[] = {
         {NULL, 0, NULL}
 };
 
-static const struct global_func_ptr_tab_s collider_func_ptr_tab2[] = {
-        {NULL, 0, NULL}
-};
-
 #endif //LIB_MYCSFML_GLOBAL_TABS_H

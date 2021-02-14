@@ -50,14 +50,22 @@ void get_music_array(char *content, int *i, game_data_t *data)
 
     skip_to_next_tag(content, i, NEXT);
     while (my_strncmp(content + *i, "</mlist>", 8)) {
+        *i += 7;
         skip_to_next_tag(content, i, OPEN);
         *i += 6;
         data->game_settings->audio->musics[j].name = extract_value(content, i);
         *i += 7;
+        skip_to_next_tag(content, i, NEXT);
         skip_to_next_tag(content, i, OPEN);
         *i += 6;
         data->game_settings->audio->musics[j].path = extract_value(content, i);
         *i += 7;
         skip_to_next_tag(content, i, NEXT);
+        *i += 8;
+        if (j + 1 == data->game_settings->audio->musics_count)
+            skip_to_next_tag(content, i, CLOSE);
+        else
+            skip_to_next_tag(content, i, NEXT);
+        j++;
     }
 }

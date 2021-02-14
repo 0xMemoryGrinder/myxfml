@@ -37,6 +37,8 @@ sound_t load_sound(char *content, int *i)
         *i += sound_conf_tag_action[k].tag_len + 1;
         skip_to_next_tag(content, i, NEXT);
     }
+    sound.buff = NULL;
+    sound.sfx = sfSound_create();
     return sound;
 }
 

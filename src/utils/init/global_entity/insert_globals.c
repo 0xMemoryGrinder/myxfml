@@ -21,15 +21,16 @@ scene_id id, game_data_t *data)
                                 data->scenes->list[id].objects, sfFalse);
         return;
     }
+    skip_to_next_tag(content, i, NEXT);
     while(my_strncmp(content + *i, "</globals>", 10)) {
-        skip_to_next_tag(content, i, false);
+        skip_to_next_tag(content, i, OPEN);
         *i += 8;
         name = extract_value(content, i);
-        i += 9;
+        *i += 9;
         entity = get_entity_name(data->global_entity, name);
         insert_entity_inlists(entity, data->scenes->list[id].objects, sfFalse);
         free(name);
-        skip_to_next_tag(content, i, true);
+        skip_to_next_tag(content, i, NEXT);
     }
 }
 
@@ -41,18 +42,19 @@ scene_id id, game_data_t *data)
 
     if (content[*i] != '\n' && ! my_strncmp(content + *i, "all", 3)) {
         insert_entities_inlists(data->player,
-                                data->scenes->list[id].objects, sfFalse);
+        data->scenes->list[id].objects, sfFalse);
         return;
     }
+    skip_to_next_tag(content, i, NEXT);
     while(my_strncmp(content + *i, "</player>", 9)) {
-        skip_to_next_tag(content, i, false);
+        skip_to_next_tag(content, i, OPEN);
         *i += 8;
         name = extract_value(content, i);
-        i += 9;
+        *i += 9;
         entity = get_entity_name(data->player, name);
         insert_entity_inlists(entity, data->scenes->list[id].objects, sfFalse);
         free(name);
-        skip_to_next_tag(content, i, true);
+        skip_to_next_tag(content, i, NEXT);
     }
 }
 
@@ -67,15 +69,16 @@ scene_id id, game_data_t *data)
         data->scenes->list[id].objects, sfTrue);
         return;
     }
+    skip_to_next_tag(content, i, NEXT);
     while(my_strncmp(content + *i, "</gui>", 6)) {
-        skip_to_next_tag(content, i, false);
+        skip_to_next_tag(content, i, OPEN);
         *i += 8;
         name = extract_value(content, i);
-        i += 9;
+        *i += 9;
         entity = get_entity_name(data->global_entity, name);
         insert_entity_inlists(entity, data->scenes->list[id].objects, sfTrue);
         free(name);
-        skip_to_next_tag(content, i, true);
+        skip_to_next_tag(content, i, NEXT);
     }
 }
 
@@ -84,17 +87,18 @@ scene_id id ,game_data_t *data)
 {
     int k;
 
+    skip_to_next_tag(content, i, NEXT);
     while (my_strncmp(content + *i, "</insert>", 9)) {
         k = 0;
-        skip_to_next_tag(content, i, false);
+        skip_to_next_tag(content, i, OPEN);
         while (insert_conf_tags[k].tag && my_strncmp(content + *i,
         insert_conf_tags[k].tag, insert_conf_tags[k].tag_len))
             k++;
         if (!insert_conf_tags[k].tag)
-            my_puterr("Unrecognized scene tag", __FILE__, __LINE__);
+            my_puterr("Unrecognized insert tag", __FILE__, __LINE__);
         *i += insert_conf_tags[k].tag_len;
         insert_conf_tags[k].action(content, i, id, data);
         *i += insert_conf_tags[k].tag_len + 1;
-        skip_to_next_tag(content, i, true);
+        skip_to_next_tag(content, i, NEXT);
     }
 }

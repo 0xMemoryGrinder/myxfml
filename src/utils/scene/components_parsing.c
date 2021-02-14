@@ -35,7 +35,7 @@ sfBool is_gui)
     entity_t *entity = list;
 
     for (; entity; entity = entity->next) {
-        if (list->children)
+        if (list->children != NULL)
             insert_entities_inlists(entity->children, objects, is_gui);
         insert_entity_inlists(entity, objects, is_gui);
         if (E_TRANSFORM)

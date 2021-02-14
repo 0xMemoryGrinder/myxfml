@@ -6,6 +6,7 @@
 */
 
 #include <stdlib.h>
+#include "my_csfml.h"
 #include "../../../include/types_and_base/scene.h"
 #include "../../../include/types.h"
 #include "my_puterr.h"
@@ -18,12 +19,13 @@ scene_objects_t *malloc_scene_objects(void)
     if (new == NULL)
         my_puterr("Error : malloc scene entity_templates", __FILE__, __LINE__);
     new->list = NULL;
-    new->interact = NULL;
-    new->render = NULL;
-    new->text = NULL;
-    new->sfx = NULL;
-    new->scripts = NULL;
-    new->colliders = NULL;
+    new->interact = malloc_list_node();
+    new->render = malloc_list_node();
+    new->text = malloc_list_node();
+    new->sfx = malloc_list_node();
+    new->scripts = malloc_list_node();
+    new->colliders = malloc_list_node();
+    new->transforms = malloc_list_node();
     return new;
 }
 

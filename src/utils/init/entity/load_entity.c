@@ -6,6 +6,7 @@
 */
 
 #include <stdlib.h>
+#include "graphic_engine/render_fonctions.h"
 #include "../../../../include/utils/init/entity/load_entity.h"
 #include "../../../../include/utils/init/load_file.h"
 #include "../../../../include/types_and_base/entity.h"
@@ -42,12 +43,13 @@ entity_t *load_entity(char *filepath, entity_t *parent)
         entity->parent = parent;
     iterate_entity_file(content, &i, entity);
     free(content);
+    update_anim_state(entity);
     return entity;
 }
 
 
-int main(int ac, char **av)
-{
-    entity_t *test = load_entity("../lib_myCSFML/config/main_menu/test1.xml", NULL);
-    return 0;
-}
+//int main(int ac, char **av)
+//{
+  //  entity_t *test = load_entity("../lib_myCSFML/config/main_menu/test1.xml", NULL);
+    //return 0;
+//}

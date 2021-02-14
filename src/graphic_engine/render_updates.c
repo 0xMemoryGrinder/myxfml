@@ -14,6 +14,8 @@ void get_render_updates(game_data_t *data, entity_list_t *renders)
 {
     entity_list_t *entity = renders;
 
+    if (entity->entity == NULL)
+        return;
     for (; entity; entity = entity->next) {
         if (entity->entity->toggle == OFF || entity->E_RSPRITE->toggle == OFF)
             continue;

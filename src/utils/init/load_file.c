@@ -35,20 +35,6 @@ char *extract_value(char *content, int *i)
     return value;
 }
 
-int my_strlen_blocker(char *str, char blocker)
-{
-    int i = 0;
-
-    for (;str[i] && str[i] != blocker; i++);
-    return i;
-}
-
-char *exract_attribute(char *content, int *i)
-{
-    int len = my_strlen_blocker(content, '\"');
-
-}
-
 void skip_to_next_tag(char const *content, int *i, next_tag_type_t type)
 {
     if (type == CLOSE) {

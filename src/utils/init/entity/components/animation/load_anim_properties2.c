@@ -6,9 +6,9 @@
 */
 
 #include <stdlib.h>
-#include "../../../../../../include/my_csfml.h"
-#include "../../../../../../include/my.h"
-#include "../../../../../../include/utils/init/load_file.h"
+#include "my_csfml.h"
+#include "my.h"
+#include "utils/init/load_file.h"
 #include "my_puterr.h"
 
 char **load_tab(char *str, char sep, int nb)
@@ -45,13 +45,13 @@ frame_t load_anim_frame(char *content, int *i)
     return frame;
 }
 
-void set_anim_frames(char *content, int *i, anim_t *anim)
+void load_anim_frames(char *content, int *i, anim_t *anim)
 {
     anim->frames_count = my_getnbr(content + *i);
     anim->frame = malloc_frames_array(anim->frames_count);
 
     for (int n = 0; n < anim->frames_count; n++) {
-        skip_to_next_tag(content, i, false);
+        skip_to_next_tag(content, i, OPEN);
         if (my_strncmp(content + *i, "<frame>", 7))
             my_puterr("Error in anim frame config", __FILE__, __LINE__);
         *i += 7;

@@ -23,17 +23,7 @@ void set_entity_name(char *content, int *i, entity_t *entity)
 
 void set_entity_type(char *content, int *i, entity_t *entity)
 {
-    int type_len = length_of_tag_value(content, *i);
-    char *type = my_strndup(content + *i, type_len);
-    int k = 0;
-
-    while (global_enum_tab[k].str && my_strncmp(global_enum_tab[k].str,
-    content + *i, global_enum_tab[k].len))
-        k++;
-    if (!global_enum_tab[k].str)
-        my_puterr("Unknown entity id", __FILE__, __LINE__);
-    entity->type = global_enum_tab[k].enum_nb;
-    *i += type_len;
+    entity->type = fill_enum(content, i, entity_type_enum_tab);
 }
 
 void set_entity_toggle(char *content, int *i, entity_t *entity)

@@ -25,7 +25,7 @@ toggle_t fill_toogle(char *content, int *i)
         my_puterr("Unknown toggle value", __FILE__, __LINE__);
 }
 
-int fill_enum(char *content, int *i)
+int fill_enum(char *content, int *i, const global_enum_tab_t *tab)
 {
     int k = 0;
     int enum_len;
@@ -36,13 +36,12 @@ int fill_enum(char *content, int *i)
 
     if (enum_val == NULL)
         my_puterr("My_strndup malloc error", __FILE__, __LINE__);
-    while (global_enum_tab[k].str && my_strncmp(enum_val,
-    global_enum_tab[k].str, global_enum_tab[k].len))
+    while (tab[k].str && my_strncmp(enum_val, tab[k].str, tab[k].len))
         k++;
-    if (!global_enum_tab[k].str)
+    if (!tab[k].str)
         my_puterr("Unknown enum", __FILE__, __LINE__);
     free(enum_val);
-    return global_enum_tab[k].enum_nb;
+    return tab[k].enum_nb;
 }
 
 func_ptr_t fill_function(char *content, int *i,

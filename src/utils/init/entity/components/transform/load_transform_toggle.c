@@ -6,7 +6,7 @@
 */
 
 #include "utils/init_xfml.h"
-#include "load_transform_component.h"
+#include "utils/init/entity/components/transform/load_transform_component.h"
 #include "../../../../../../include/my.h"
 
 void load_transform_toggle(char *content, int *i, transform_t *transform)

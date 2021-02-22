@@ -5,20 +5,18 @@
 ** load_text_component.c
 */
 
-#include <stdbool.h>
-#include "utils/init/entity/components/texts/load_texts_component.h"
+#include "utils/init/entity/components/texts/load_texts_component_tabs.h"
 #include "utils/init/load_file.h"
 #include "my.h"
 #include "my_puterr.h"
 #include "utils/init/common_tags.h"
-#include "set_text_properties.h"
 
-void set_texts_toggle(char *content, int *i, texts_t *texts)
+void load_texts_toggle(char *content, int *i, texts_t *texts)
 {
     texts->toggle = fill_toogle(content, i);
 }
 
-void set_text_rs_linked(char *content, int *i, text_t *text)
+void load_text_rs_linked(char *content, int *i, text_t *text)
 {
     text->is_rslinked = fill_toogle(content, i);
 }

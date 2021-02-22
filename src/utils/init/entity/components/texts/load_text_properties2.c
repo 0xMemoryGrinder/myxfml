@@ -6,17 +6,17 @@
 */
 
 #include <stdlib.h>
-#include "../../../../../../include/my_csfml.h"
-#include "../../../../../../include/utils/init/load_file.h"
-#include "../../../../../../include/my.h"
+#include "my_csfml.h"
+#include "utils/init/load_file.h"
+#include "my.h"
 #include "my_puterr.h"
 
-void set_text_id(char *content, int *i, text_t *text)
+void load_text_id(char *content, int *i, text_t *text)
 {
     text->id = extract_value(content, i);
 }
 
-void set_text_offset(char *content, int *i, text_t *text)
+void load_text_offset(char *content, int *i, text_t *text)
 {
     char *path = extract_value(content, i);
     char **pos = my_str_to_tab(path, ' ');

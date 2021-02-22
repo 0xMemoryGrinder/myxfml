@@ -19,4 +19,14 @@
 #include "types_and_base/scene.h"
 
 
+#include "audio_engine/audio_engine.h"
+#include "scripts_engine/script_updates.h"
+#include "physics_engine/physics.h"
+#include "graphic_engine/render_fonctions.h"
+#include "input_engine/input_engine.h"
+
+
+int xfml_game_loop(game_data_t * data);
+void start_game(game_data_t *data);
+
 #endif //LIBCSFML_MY_CSFML_H

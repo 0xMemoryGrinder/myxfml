@@ -10,7 +10,8 @@
 
 #include "../my_csfml.h"
 
-void check_inputs(game_data_t *data, entity_list_t *interacts);
+void check_inputs(game_data_t *data, entity_list_t *interacts,
+sfVector2i right, sfVector2i left);
 void get_clicks_info(sfVector2i *right, sfVector2i *left, game_data_t *data);
 
 #endif //LIBCSFML_INPUT_ENGINE_H

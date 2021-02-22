@@ -103,7 +103,6 @@ typedef struct dependencies_s dependent_t;
 //  MAIN GAME TYPES
 //
 typedef struct game_data_s game_data_t;
-typedef struct global_stats_s global_stats_t;
 typedef struct settings_s settings_t;
 typedef struct game_stats_s game_stats_t;
 typedef struct time_stats_s time_stats_t;

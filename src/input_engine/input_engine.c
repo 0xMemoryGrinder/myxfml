@@ -41,13 +41,11 @@ void get_clicks_info(sfVector2i *right, sfVector2i *left, game_data_t *data)
     }
 }
 
-void check_inputs(game_data_t *data, entity_list_t *interacts)
+void check_inputs(game_data_t *data, entity_list_t *interacts,
+sfVector2i right, sfVector2i left)
 {
-    sfVector2i right = (sfVector2i){0, 0};
-    sfVector2i left = (sfVector2i){0, 0};
     entity_list_t *list = interacts;
 
-    get_clicks_info(&right, &left, data);
     for (; list && (data->stats->is_rclick || data->stats->is_lclick);
     list = list->next) {
         if (list->E_INTERACT == OFF || (list->E_INTERACT->click_right == OFF

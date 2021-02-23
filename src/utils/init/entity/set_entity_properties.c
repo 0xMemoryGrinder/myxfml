@@ -36,7 +36,7 @@ static void load_entity_child(char *content, int *i, entity_t *entity)
 {
     char *path = extract_value(content, i);
 
-    add_entity(load_entity(path, entity), &(entity->children));
+    add_entity_children(load_entity(path, entity), &(entity->children));
 }
 
 void load_entity_children(char *content, int *i, entity_t *entity)

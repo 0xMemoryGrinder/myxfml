@@ -79,6 +79,7 @@ entity_list_t *mergeSort(entity_list_t *head);
 //  Utils Entity
 //
 void add_entity(entity_t *entity, entity_t **list);
+void add_entity_children(entity_t *entity, entity_t **list);
 void add_entity_to_list(entity_t *entity, entity_list_t **list);
 void remove_entity(entity_t *entity);
 entity_t *pop_actual_fromlist(entity_list_t **entity);

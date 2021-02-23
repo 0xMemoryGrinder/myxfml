@@ -30,6 +30,19 @@ void add_entity(entity_t *entity, entity_t **list)
 
 }
 
+void add_entity_children(entity_t *entity, entity_t **list)
+{
+    entity_t *current = *list;
+
+    if (!(*list)) {
+        *list = entity;
+        return;
+    }
+    for (; current->next; current = current->next);
+    current->next = entity;
+    entity->back = current;
+}
+
 
 void init_list(entity_t *entity, entity_list_t **list)
 {

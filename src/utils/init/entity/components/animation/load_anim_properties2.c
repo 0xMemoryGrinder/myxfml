@@ -57,5 +57,6 @@ void load_anim_frames(char *content, int *i, anim_t *anim)
         *i += 7;
         anim->frame[n] = load_anim_frame(content, i);
     }
-    return;
+    *i += 1;
+    skip_to_next_tag(content, i, CLOSE);
 }

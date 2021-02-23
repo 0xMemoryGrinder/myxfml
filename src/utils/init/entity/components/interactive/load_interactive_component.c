@@ -43,7 +43,7 @@ void load_interactive_component(char *content, int *i, components_t *components)
             my_puterr("Unrecognized interactive tag", __FILE__, __LINE__);
         *i += interact_conf_tag_action[k].tag_len;
         interact_conf_tag_action[k].action(content, i, components->interact);
-        *i += interact_conf_tag_action[k].tag_len + 1;
+        *i += 1;
         skip_to_next_tag(content, i, NEXT);
     }
 }

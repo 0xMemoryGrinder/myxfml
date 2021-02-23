@@ -28,7 +28,7 @@ anim_t *load_anim(char *content, int *i)
             my_puterr("Unrecognized anim tag", __FILE__, __LINE__);
         *i += anim_conf_tag_action[k].tag_len;
         anim_conf_tag_action[k].action(content, i, anim);
-        *i += anim_conf_tag_action[k].tag_len + 1;
+        *i += 1;
         skip_to_next_tag(content, i, NEXT);
     }
     return anim;
@@ -73,7 +73,7 @@ void load_animation_component(char *content, int *i, components_t *components)
             my_puterr("Unrecognized animation tag", __FILE__, __LINE__);
         *i += animation_conf_tag_action[k].tag_len;
         animation_conf_tag_action[k].action(content, i, components->animation);
-        *i += animation_conf_tag_action[k].tag_len + 1;
+        *i += 1;
         skip_to_next_tag(content, i, NEXT);
     }
 }

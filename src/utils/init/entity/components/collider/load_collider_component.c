@@ -79,7 +79,7 @@ void load_collider_component(char *content, int *i, components_t *components)
             my_puterr("Unrecognized collider tag", __FILE__, __LINE__);
         *i += collider_conf_tag_action[k].tag_len;
         collider_conf_tag_action[k].action(content, i, components->collider);
-        *i += collider_conf_tag_action[k].tag_len + 1;
+        *i += 1;
         skip_to_next_tag(content, i, NEXT);
     }
 }

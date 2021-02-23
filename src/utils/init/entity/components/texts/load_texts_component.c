@@ -37,7 +37,7 @@ text_t load_text(char *content, int *i)
             my_puterr("Unrecognized text tag", __FILE__, __LINE__);
         *i += text_conf_tag_action[k].tag_len;
         text_conf_tag_action[k].action(content, i, &text);
-        *i += text_conf_tag_action[k].tag_len + 1;
+        *i += 1;
         skip_to_next_tag(content, i, NEXT);
     }
     text.text = sfText_create();
@@ -77,7 +77,7 @@ void load_texts_component(char *content, int *i, components_t *components)
             my_puterr("Unrecognized texts tag", __FILE__, __LINE__);
         *i += texts_conf_tag_action[k].tag_len;
         texts_conf_tag_action[k].action(content, i, components->texts);
-        *i += texts_conf_tag_action[k].tag_len + 1;
+        *i += 1;
         skip_to_next_tag(content, i, NEXT);
     }
 }

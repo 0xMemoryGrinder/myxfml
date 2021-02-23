@@ -33,7 +33,7 @@ sound_t load_sound(char *content, int *i)
             my_puterr("Unrecognized sound tag", __FILE__, __LINE__);
         *i += sound_conf_tag_action[k].tag_len;
         sound_conf_tag_action[k].action(content, i, &sound);
-        *i += sound_conf_tag_action[k].tag_len + 1;
+        *i += 1;
         skip_to_next_tag(content, i, NEXT);
     }
     sound.buff = NULL;
@@ -74,7 +74,7 @@ void load_sounds_component(char *content, int *i, components_t *components)
             my_puterr("Unrecognized sounds tag", __FILE__, __LINE__);
         *i += sounds_conf_tag_action[k].tag_len;
         sounds_conf_tag_action[k].action(content, i, components->sounds);
-        *i += sounds_conf_tag_action[k].tag_len + 1;
+        *i += 1;
         skip_to_next_tag(content, i, NEXT);
     }
 }

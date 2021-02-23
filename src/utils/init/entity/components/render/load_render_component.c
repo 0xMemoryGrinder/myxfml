@@ -40,7 +40,7 @@ void load_render_component(char *content, int *i, components_t *components)
             my_puterr("Unrecognized render tag", __FILE__, __LINE__);
         *i += render_conf_tag_action[k].tag_len;
         render_conf_tag_action[k].action(content, i, components->render);
-        *i += render_conf_tag_action[k].tag_len + 1;
+        *i += 1;
         skip_to_next_tag(content, i, NEXT);
     }
     if (components->render->sprite == NULL)

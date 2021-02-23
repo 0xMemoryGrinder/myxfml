@@ -27,7 +27,7 @@ void iterate_entity_file(char *content, int *i, entity_t *entity)
             my_puterr("Unrecognized entity tag", __FILE__, __LINE__);
         *i += entity_conf_tag_action[k].tag_len;
         entity_conf_tag_action[k].action(content, i, entity);
-        *i += entity_conf_tag_action[k].tag_len + 1;
+        *i += 1;
         skip_to_next_tag(content, i, NEXT);
     }
 }

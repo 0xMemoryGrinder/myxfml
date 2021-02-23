@@ -57,4 +57,5 @@ void load_anim_frames(char *content, int *i, anim_t *anim)
         *i += 7;
         anim->frame[n] = load_anim_frame(content, i);
     }
+    return;
 }

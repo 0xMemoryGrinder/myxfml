@@ -29,7 +29,7 @@ void load_components(char *content, int *i, entity_t *entity)
             my_puterr("Unrecognized component tag", __FILE__, __LINE__);
         *i += components_conf_tag_action[k].tag_len;
         components_conf_tag_action[k].action(content, i, entity->components);
-        *i += components_conf_tag_action[k].tag_len + 1;
+        *i += 1;
         skip_to_next_tag(content, i, NEXT);
     }
 }

@@ -93,6 +93,7 @@ static const global_enum_tab_t anim_enum_tab[] = {
 
 static const struct global_func_ptr_tab_s scripts_func_ptr_tab[] = {
         {"my_putchar", 10, (void *(*)()) &my_putchar},
+        {"my_test_function", 16, (void *(*)()) &my_putchar},
         {NULL, 0, NULL}
 };
 

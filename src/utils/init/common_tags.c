@@ -48,14 +48,7 @@ func_ptr_t fill_function(char *content, int *i,
 const global_func_ptr_tab_t *tab)
 {
     int k = 0;
-    int func_len;
-    char *func_val = NULL;
-    //*i += 8; TODO verify necessity
-    func_len = length_of_tag_value(content, *i);
-    func_val = my_strndup(content + *i, func_len);
-
-    if (func_val == NULL)
-        my_puterr("My_strndup malloc error", __FILE__, __LINE__);
+    char *func_val = extract_value(content, i);
     while (tab[k].str && my_strncmp(func_val,
     tab[k].str, tab[k].len))
         k++;

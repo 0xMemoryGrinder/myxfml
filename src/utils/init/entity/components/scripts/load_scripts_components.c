@@ -33,7 +33,7 @@ script_t *load_script(char *content, int *i)
             my_puterr("Unrecognized script tag", __FILE__, __LINE__);
         *i += script_conf_tag_action[k].tag_len;
         script_conf_tag_action[k].action(content, i, script);
-        *i += script_conf_tag_action[k].tag_len + 1;
+        *i += 1;
         skip_to_next_tag(content, i, NEXT);
     }
     return script;
@@ -78,7 +78,7 @@ void load_scripts_component(char *content, int *i, components_t *components)
             my_puterr("Unrecognized scripts tag", __FILE__, __LINE__);
         *i += scripts_conf_tag_action[k].tag_len;
         scripts_conf_tag_action[k].action(content, i, components->scripts);
-        *i += scripts_conf_tag_action[k].tag_len + 1;
+        *i += 1;
         skip_to_next_tag(content, i, NEXT);
     }
 }

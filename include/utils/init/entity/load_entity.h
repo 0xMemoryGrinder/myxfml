@@ -17,6 +17,7 @@ static struct conf_tag_action_s entity_conf_tag_action[] = {
         {"<type>", 6, (void *(*)()) &set_entity_type},
         {"<toggle>", 8, (void *(*)()) &set_entity_toggle},
         {"<components>", 12, (void *(*)()) &load_components},
+        {"<children>", 10, (void *(*)()) &load_entity_children},
         {NULL, 0, NULL}
 };
 

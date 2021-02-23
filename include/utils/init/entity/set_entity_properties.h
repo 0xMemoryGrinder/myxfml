@@ -13,5 +13,6 @@
 void set_entity_name(char *content, int *i, entity_t *entity);
 void set_entity_type(char *content, int *i, entity_t *entity);
 void set_entity_toggle(char *content, int *i, entity_t *entity);
+void load_entity_children(char *content, int *i, entity_t *entity);
 
 #endif //LIB_MYCSFML_SET_ENTITY_PROPERTIES_H

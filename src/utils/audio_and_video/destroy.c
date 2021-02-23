@@ -13,7 +13,7 @@
 #include "../../../include/types_and_base/video.h"
 #include "../../../include/types_and_base/music.h"
 #include "../../../include/types.h"
-#include "my_puterr.h"
+#include "../../../include/my_puterr.h"
 
 void free_video_data(video_data_t *video_data)
 {

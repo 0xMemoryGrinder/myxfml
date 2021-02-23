@@ -40,7 +40,6 @@ void get_global_entities(char *content, int *i, game_data_t *data)
         add_entity(recept, &data->global_entity);
         skip_to_next_tag(content, i, NEXT);
     }
-    //*i += 10; TODO : CHECK IT
 }
 
 void get_player_entities(char *content, int *i, game_data_t *data)
@@ -66,7 +65,6 @@ void get_player_entities(char *content, int *i, game_data_t *data)
         add_entity(recept, &data->player);
         skip_to_next_tag(content, i, NEXT);
     }
-    //*i += 9; TODO CHECK NESCECITY
 }
 
 void get_gui_entities(char *content, int *i, game_data_t *data)
@@ -92,5 +90,4 @@ void get_gui_entities(char *content, int *i, game_data_t *data)
         add_entity(recept, &data->gui);
         skip_to_next_tag(content, i, NEXT);
     }
-    //*i += 6; TODO : CHECK NESCECITY
 }

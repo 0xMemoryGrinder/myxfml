@@ -6,25 +6,11 @@
 */
 
 #include "utils/init_xfml.h"
+#include "utils/init/entity/components/scripts/load_scripts_components.h"
+#include "utils/init/entity/components/scripts/load_scripts_components_tabs.h"
 #include "my.h"
 #include "my_csfml.h"
 #include "my_puterr.h"
-
-
-void set_script_toggle(char *content, int *i, script_t *script);
-void set_script_time_dep(char *content, int *i, script_t *script);
-void set_script_trigger(char *content, int *i, script_t *script);
-void set_script_name(char *content, int *i, script_t *script);
-void set_script_action(char *content, int *i, script_t *script);
-
-static struct conf_tag_action_s scene_script_tags[] = {
-        {"<toggle>", 8, (void *(*)()) &set_script_toggle},
-        {"<name>", 6, (void *(*)()) &set_script_name},
-        {"<time_dependent>", 16, (void *(*)()) &set_script_time_dep},
-        {"<action>", 8, (void *(*)()) &set_script_action},
-        {"<trigger>", 9, (void *(*)()) &set_script_trigger},
-        {NULL, 0, NULL}
-};
 
 script_t *load_scene_script(char *content, int *i)
 {
@@ -35,14 +21,14 @@ script_t *load_scene_script(char *content, int *i)
     while (my_strncmp(content + *i, "</script>", 9)) {
         k = 0;
         skip_to_next_tag(content, i, OPEN);
-        while (scene_script_tags[k].tag && my_strncmp(content + *i,
-        scene_script_tags[k].tag, scene_script_tags[k].tag_len))
+        while (script_conf_tag_action[k].tag && my_strncmp(content + *i,
+        script_conf_tag_action[k].tag, script_conf_tag_action[k].tag_len))
             k++;
-        if (!scene_script_tags[k].tag)
+        if (!script_conf_tag_action[k].tag)
             my_puterr("Unrecognized script tag", __FILE__, __LINE__);
-        *i += scene_script_tags[k].tag_len;
-        scene_script_tags[k].action(content, i, script);
-        *i += scene_script_tags[k].tag_len + 1;
+        *i += script_conf_tag_action[k].tag_len;
+        script_conf_tag_action[k].action(content, i, script);
+        *i += script_conf_tag_action[k].tag_len + 1;
         skip_to_next_tag(content, i, NEXT);
     }
     return script;
@@ -72,7 +58,7 @@ void load_scene_scripts_list(char *content, int *i, script_list_t *scripts)
 }
 
 static struct conf_tag_action_s scene_scripts_tags[] = {
-        {"<toggle>", 8, (void *(*)()) &set_script_toggle},
+        {"<toggle>", 8, (void *(*)()) &load_script_toggle},
         {"<list count=\"", 13, (void *(*)()) &load_scene_scripts_list},
         {NULL, 0, NULL}
 };
@@ -98,7 +84,7 @@ scene_id id, game_data_t *data)
         if (k == 1)
             *i += 7;
         else
-            *i += scene_script_tags[k].tag_len + 1;
+            *i += scene_scripts_tags[k].tag_len + 1;
         skip_to_next_tag(content, i, NEXT);
     }
 }

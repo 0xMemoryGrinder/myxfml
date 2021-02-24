@@ -148,6 +148,7 @@ struct script_s {
     char *name;
     void *data;
     void *(*update)(void **d, game_data_t *g, entity_list_t *e);
+    void *(*destroy)(void **d);
     script_t *next;
 };
 

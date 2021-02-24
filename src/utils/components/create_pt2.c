@@ -61,6 +61,8 @@ script_t *malloc_script_node(void)
     script->data = NULL;
     script->name = NULL;
     script->next = NULL;
+    script->update = NULL;
+    script->destroy = NULL;
     script->actual = 0;
     script->trigger = 0;
     return script;

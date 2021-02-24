@@ -17,5 +17,6 @@ void load_script_time_dep(char *content, int *i, script_t *script);
 void load_script_trigger(char *content, int *i, script_t *script);
 void load_script_name(char *content, int *i, script_t *script);
 void load_script_action(char *content, int *i, script_t *script);
+void load_script_destroy(char *content, int *i, script_t *script);
 
 #endif //LIB_MYCSFML_LOAD_SCRIPTS_COMPONENTS_H

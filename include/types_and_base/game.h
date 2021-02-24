@@ -33,8 +33,8 @@ struct game_stats_s{
     sfEvent *event;
     toggle_t is_rclick;
     toggle_t is_lclick;
-    sfVector2i rclick;
-    sfVector2i lclick;
+    sfVector2f rclick;
+    sfVector2f lclick;
     camera_t *camera;
 };
 

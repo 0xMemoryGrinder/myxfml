@@ -32,8 +32,8 @@ void start_game(game_data_t *data)
 
 void input_engine(game_data_t *data)
 {
-    sfVector2i right;
-    sfVector2i left;
+    sfVector2f right;
+    sfVector2f left;
 
     while (sfRenderWindow_pollEvent(G_WINDOW, data->stats->event)) {
         if (data->stats->event->type == sfEvtClosed)
@@ -56,28 +56,17 @@ void graphic_engine(game_data_t *data)
     G_ACTUAL_SCENEOBJS->render = mergeSort(G_ACTUAL_SCENEOBJS->render);
     get_render_updates(data, G_ACTUAL_SCENEOBJS->render);
     get_texts_updates(data, G_ACTUAL_SCENEOBJS->text);
-
-    sfRenderWindow_setView(G_WINDOW, G_VIEW);
-    sfRenderWindow_setVerticalSyncEnabled(G_WINDOW, sfTrue);
 }
 
 int xfml_game_loop(game_data_t * data)
 {
     while (sfRenderWindow_isOpen(G_WINDOW)) {
-
-        //  INPUT ENGINE
-        input_engine(data);
-
+            input_engine(data);
         sfRenderWindow_clear(G_WINDOW, sfBlack);
-        //  AUDIO ENGINE
         audio_engine(data);
-
-        //  PHYSICS ENGINE
         physics_update(G_ACTUAL_SCENEOBJS->colliders, data);
         get_scripts_updates(data, G_ACTUAL_SCENEOBJS->scripts);
         transform_updates(data, G_ACTUAL_SCENEOBJS->transforms);
-
-        //  GRAPHIC ENGINE
         graphic_engine(data);
         sfRenderWindow_display(G_WINDOW);
     }

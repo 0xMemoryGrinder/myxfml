@@ -9,6 +9,7 @@
 #define LIBCSFML_BASE_COMPONENTS_H
 
 #include "../types.h"
+#include "../custom.h"
 
         ////////////////////////////////
         //      BASE COMPONENTS       //
@@ -148,7 +149,6 @@ struct script_s {
     char *name;
     void *data;
     void *(*update)(void **d, game_data_t *g, entity_list_t *e);
-    void *(*destroy)(void **d);
     script_t *next;
 };
 

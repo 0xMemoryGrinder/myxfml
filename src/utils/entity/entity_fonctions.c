@@ -25,9 +25,15 @@ entity_t *get_entity_name(entity_t *entity, const char *name)
 
 void add_entity(entity_t *entity, entity_t **list)
 {
-    (*list)->back = entity;
-    (*list) = (*list)->back;
+    entity_t *current = *list;
 
+    if (!(*list)) {
+        *list = entity;
+        return;
+    }
+    for (; current->next; current = current->next);
+    current->next = entity;
+    entity->back = current;
 }
 
 void add_entity_children(entity_t *entity, entity_t **list)
@@ -62,8 +68,6 @@ void init_list(entity_t *entity, entity_list_t **list)
 
 void add_entity_to_list(entity_t *entity, entity_list_t **list)
 {
-    entity_list_t *new;
-
     if (!(*list)->entity) {
         (*list)->entity = entity;
         return;

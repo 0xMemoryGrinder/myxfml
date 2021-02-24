@@ -9,6 +9,7 @@
 #define LIBCSFML_SCENE_H
 
 #include "../types.h"
+#include "custom.h"
 
 struct scene_objects_s {
     entity_t *list;

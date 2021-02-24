@@ -14,11 +14,11 @@ void get_canvas_size(char *content, int *i, game_data_t *data)
 {
     int j = 0;
     char *scale = extract_value(content, i);
-    float x = my_getnbr_f(scale);
+    float x = (float)my_getnbr(scale);
     float y;
     for (;scale[j] != ' '; j++);
     j++;
-    y = my_getnbr_f(scale + j);
+    y = (float)my_getnbr(scale + j);
     free(scale);
     data->stats->camera->transform->scale.x = x;
     data->stats->camera->transform->scale.y = y;

@@ -51,7 +51,6 @@ void init_entities_list(char *content, int *i, scene_id id, game_data_t *data)
     char *path3 = NULL;
     char *path4 = NULL;
 
-    data->scenes->list[id].objects->list = malloc_entity_node();
     skip_to_next_tag(content, i, NEXT);
     while (my_strncmp(content + *i, "</entities>", 11)) {
         skip_to_next_tag(content, i, OPEN);

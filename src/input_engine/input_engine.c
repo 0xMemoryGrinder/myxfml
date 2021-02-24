@@ -7,7 +7,22 @@
 
 #include "../../include/my_csfml.h"
 
-sfBool store_rclick(sfVector2i click, entity_t *entity)
+sfVector2f get_cursor_pos(game_data_t *data)
+{
+    sfVector2f rcursor = {0, 0};
+    sfVector2i cursor = sfMouse_getPositionRenderWindow(G_WINDOW);
+    sfVector2u wsize = sfRenderWindow_getSize(G_WINDOW);
+    sfVector2f view_size = sfView_getSize(G_VIEW);
+    float xscale = (float)wsize.x / view_size.x;
+    float yscale = (float)wsize.y / view_size.y;
+
+    rcursor.x = (float)cursor.x / xscale;
+    rcursor.y = (float)cursor.y / yscale;
+    return rcursor;
+}
+
+
+sfBool store_rclick(sfVector2f click, entity_t *entity)
 {
     if (E_INTERACT->click_right == ON &&
     sfIntRect_contains(&ACTUAL_CROP.crop, click.x, click.y)) {
@@ -17,7 +32,7 @@ sfBool store_rclick(sfVector2i click, entity_t *entity)
     return sfFalse;
 }
 
-sfBool store_lclick(sfVector2i click, entity_t *entity)
+sfBool store_lclick(sfVector2f click, entity_t *entity)
 {
     if (E_INTERACT->click_left == ON &&
     sfIntRect_contains(&ACTUAL_CROP.crop, click.x, click.y)) {
@@ -27,22 +42,22 @@ sfBool store_lclick(sfVector2i click, entity_t *entity)
     return sfFalse;
 }
 
-void get_clicks_info(sfVector2i *right, sfVector2i *left, game_data_t *data)
+void get_clicks_info(sfVector2f *right, sfVector2f *left, game_data_t *data)
 {
     data->stats->is_rclick = OFF;
     data->stats->is_lclick = OFF;
     if (sfMouse_isButtonPressed(sfMouseLeft)) {
-        *left = sfMouse_getPositionRenderWindow(G_WINDOW);
+        *left = get_cursor_pos(data);
         data->stats->is_lclick = ON;
     }
     if (sfMouse_isButtonPressed(sfMouseRight)) {
-        *right = sfMouse_getPositionRenderWindow(G_WINDOW);
+        *right = get_cursor_pos(data);
         data->stats->is_rclick = ON;
     }
 }
 
 void check_inputs(game_data_t *data, entity_list_t *interacts,
-sfVector2i right, sfVector2i left)
+sfVector2f right, sfVector2f left)
 {
     entity_list_t *list = interacts;
 
@@ -53,10 +68,10 @@ sfVector2i right, sfVector2i left)
             continue;
         if (data->stats->is_rclick && store_rclick(right, list->entity)) {
             data->stats->is_rclick = OFF;
-            right = (sfVector2i){0, 0};
+            right = (sfVector2f){0, 0};
         } if (data->stats->is_lclick && store_lclick(left, list->entity)) {
             data->stats->is_lclick = OFF;
-            left = (sfVector2i){0, 0};
+            left = (sfVector2f){0, 0};
         }
     }
     data->stats->lclick = left;

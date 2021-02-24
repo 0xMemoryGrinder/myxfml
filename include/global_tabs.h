@@ -97,6 +97,12 @@ static const struct global_func_ptr_tab_s scripts_func_ptr_tab[] = {
         {NULL, 0, NULL}
 };
 
+static const struct global_func_ptr_tab_s destroy_sdata_func_ptr_tab[] = {
+        {"my_putchar", 10, (void *(*)()) &my_putchar},
+        {"my_test_function", 16, (void *(*)()) &my_putchar},
+        {NULL, 0, NULL}
+};
+
 static const struct global_func_ptr_tab_s collider_func_ptr_tab[] = {
         {"my_putchar", 10, (void *(*)()) &my_putchar},
         {NULL, 0, NULL}

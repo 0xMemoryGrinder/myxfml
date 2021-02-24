@@ -23,6 +23,7 @@ static struct conf_tag_action_s script_conf_tag_action[] = {
         {"<name>", 6, (void *(*)()) &load_script_name},
         {"<time_dependent>", 16, (void *(*)()) &load_script_time_dep},
         {"<action>", 8, (void *(*)()) &load_script_action},
+        {"<destroy>", 9, (void *(*)()) &load_script_destroy},
         {"<trigger>", 9, (void *(*)()) &load_script_trigger},
         {NULL, 0, NULL}
 };

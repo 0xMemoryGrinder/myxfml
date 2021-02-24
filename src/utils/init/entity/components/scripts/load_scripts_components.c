@@ -17,6 +17,11 @@ void load_scripts_toggle(char *content, int *i, script_list_t *scripts)
     scripts->toggle = fill_toogle(content, i);
 }
 
+void load_script_destroy(char *content, int *i, script_t *script)
+{
+    script->destroy = fill_function(content, i, destroy_sdata_func_ptr_tab);
+}
+
 script_t *load_script(char *content, int *i)
 {
     script_t *script = malloc_script_node();

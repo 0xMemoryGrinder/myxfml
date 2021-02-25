@@ -39,13 +39,22 @@ scene_id id, game_data_t *data)
     free(path4);
 }
 
+void load_multiple_entities(char *path, int count, entity_t **list)
+{
+    entity_t *entity;
+    int j = 0;
+
+    for (j = 0; j < count; j++) {
+        entity = load_entity(path, NULL);
+        add_entity(entity, list);
+    }
+    free(path);
+}
 
 void init_entities_list(char *content, int *i, scene_id id, game_data_t *data)
 {
     int count = 0;
     char *name = NULL;
-    int j = 0;
-    entity_t *entity = NULL;
     char *path = my_strcat("conf/scenes/", data->scenes->list[id].name);
     char *path2 = my_strcat(path, "/");
     char *path3 = NULL;
@@ -62,14 +71,13 @@ void init_entities_list(char *content, int *i, scene_id id, game_data_t *data)
         name = extract_value(content, i);
         path3 = my_strcat(path2, name);
         path4 = my_strcat(path3, ".xml");
-        for (j = 0; j < count; j++) {
-            entity = load_entity(path4, NULL);
-            add_entity(entity, &data->scenes->list[id].objects->list);
-        }
+        load_multiple_entities(path4, count,
+        &data->scenes->list[id].objects->list);
         free(name);
         free(path3);
-        free(path4);
         *i += 9;
         skip_to_next_tag(content, i, NEXT);
     }
+    free(path);
+    free(path2);
 }

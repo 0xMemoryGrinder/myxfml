@@ -18,7 +18,6 @@
 #include "types_and_base/struct_shortcuts.h"
 #include "types_and_base/scene.h"
 
-
 #include "audio_engine/audio_engine.h"
 #include "scripts_engine/script_updates.h"
 #include "physics_engine/physics.h"
@@ -28,5 +27,8 @@
 
 int xfml_game_loop(game_data_t * data);
 void start_game(game_data_t *data);
+
+#include "utils/components_utils.h"
+#include "utils/converter.h"
 
 #endif //LIBCSFML_MY_CSFML_H

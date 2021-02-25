@@ -22,7 +22,7 @@
 void start_game(game_data_t *data)
 {
     if (data->game_settings->video->is_fullscreen)
-        G_WINDOW = sfRenderWindow_create(data->game_settings->video->mode,
+        G_WINDOW = sfRenderWindow_create(sfVideoMode_getDesktopMode(),
         data->game_settings->video->game_title, sfFullscreen, NULL);
     else
         G_WINDOW = sfRenderWindow_create(data->game_settings->video->mode,
@@ -55,13 +55,14 @@ void graphic_engine(game_data_t *data)
     get_animations_update(data, G_ACTUAL_SCENEOBJS->render);
     G_ACTUAL_SCENEOBJS->render = mergeSort(G_ACTUAL_SCENEOBJS->render);
     get_render_updates(data, G_ACTUAL_SCENEOBJS->render);
+    get_render_updates(data, G_ACTUAL_SCENEOBJS->gui);
     get_texts_updates(data, G_ACTUAL_SCENEOBJS->text);
 }
 
 int xfml_game_loop(game_data_t * data)
 {
     while (sfRenderWindow_isOpen(G_WINDOW)) {
-            input_engine(data);
+        input_engine(data);
         sfRenderWindow_clear(G_WINDOW, sfBlack);
         audio_engine(data);
         physics_update(G_ACTUAL_SCENEOBJS->colliders, data);

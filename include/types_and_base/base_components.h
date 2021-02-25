@@ -9,7 +9,7 @@
 #define LIBCSFML_BASE_COMPONENTS_H
 
 #include "../types.h"
-#include "../custom.h"
+#include "../custom_structs.h"
 
         ////////////////////////////////
         //      BASE COMPONENTS       //
@@ -149,6 +149,7 @@ struct script_s {
     char *name;
     void *data;
     void *(*update)(void **d, game_data_t *g, entity_list_t *e);
+    void *(*destroy)(void **d);
     script_t *next;
 };
 
@@ -197,22 +198,6 @@ frame_t *malloc_frames_array(int count);
 anim_t *malloc_anim_frame(void);
 
 text_t *malloc_text_array(int size);
-
-//
-//  SCRIPT UTILS
-//
-// Get Script by Name From Actual entity
-script_t *get_script_from_actual(entity_t *entity, char *name);
-//  Get Script by Name From Entity list By Entity Name
-script_t *get_script_from_elist(entity_t *list, char *ename, char *sname);
-// Toggle Script by Name From Entity list By Entity Name
-void toggle_entity_script(entity_t *list, char *ename,
-char *sname ,toggle_t toggle);
-//  Get Script DATA By Name From Actual Entity
-void *get_script_data_fromactual(entity_t *entity, char *sname);
-//  Get Script DATA by Name From Entity List by Entity Name
-void *get_entity_script_data_fromlist(entity_t *entity,
-char *ename, char *sname);
 
 
 #endif //LIBCSFML_BASE_COMPONENTS_H

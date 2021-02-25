@@ -10,6 +10,7 @@
 #include "utils/init/common_tags.h"
 #include "utils/init/load_file.h"
 #include "my.h"
+#include "global_tabs.h"
 
 void load_animation_toggle(char *content, int *i, animation_t *animation)
 {

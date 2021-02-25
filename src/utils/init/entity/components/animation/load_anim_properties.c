@@ -8,6 +8,7 @@
 #include "my_csfml.h"
 #include "utils/init/common_tags.h"
 #include "my.h"
+#include "global_tabs.h"
 
 void load_anim_toggle(char *content, int *i, anim_t *anim)
 {

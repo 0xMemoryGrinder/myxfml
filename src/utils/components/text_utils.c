@@ -6,6 +6,7 @@
 */
 
 #include "my_csfml.h"
+#include "my.h"
 
 // TEXT TOGGLE
 // TODO : TOGGLE FOR SPECIFIC TEXT
@@ -39,7 +40,7 @@ void toggle_text_fromactual(entity_t *entity, char *id, toggle_t toggle)
 }
 
 void toggle_text_fromlist(entity_t *list, char *ename,
-                          char *id, toggle_t toggle)
+char *id, toggle_t toggle)
 {
     entity_t *entity = get_entity_name(list, ename);
 

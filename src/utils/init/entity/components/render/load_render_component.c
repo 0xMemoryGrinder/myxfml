@@ -21,7 +21,10 @@ void load_render_sprite(char *content, int *i, render_sprite_t *render)
 {
     char *path = extract_value(content, i);
     render->texture = sfTexture_createFromFile(path, NULL);
+    if (render->texture == NULL)
+        my_puterr("Error creating texture", __FILE__, __LINE__);
     free(path);
+    sfSprite_setTexture(render->sprite, render->texture, sfFalse);
 }
 
 void load_render_component(char *content, int *i, components_t *components)

@@ -6,6 +6,7 @@
 */
 
 #include "my_csfml.h"
+#include "my.h"
 
 void toggle_sfxlist_fromlist(entity_t *list, char *name, toggle_t toggle)
 {

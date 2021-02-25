@@ -9,7 +9,7 @@
 #define LIBCSFML_ENTITY_H
 
 #include "../types.h"
-#include "../custom.h"
+#include "../custom_structs.h"
 
 //
 // entity test

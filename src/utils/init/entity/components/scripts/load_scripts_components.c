@@ -11,6 +11,7 @@
 #include "my.h"
 #include "utils/init/common_tags.h"
 #include "my_puterr.h"
+#include "global_tabs.h"
 
 void load_scripts_toggle(char *content, int *i, script_list_t *scripts)
 {

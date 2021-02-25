@@ -9,11 +9,9 @@
 #define LIB_MYCSFML_GLOBAL_TABS_H
 
 #include "types.h"
+#include "custom_structs.h"
 #include "custom.h"
 #include "my.h"
-
-void *tower_attack_script(void **none, game_data_t *data, entity_list_t *);
-void *hoover_rs_script(void **none, game_data_t *data, entity_t *entity);
 
 typedef struct global_enum_tab_s {
     char *str;
@@ -31,12 +29,13 @@ static const global_enum_tab_t entity_type_enum_tab[] = {
         //
         //  entity_type
         //
-        {"MOB",    3, MOB},
-        {"PNJ",    3, PNJ},
+        {"MOB", 3, MOB},
+        {"PNJ", 3, PNJ},
         {"PLAYER", 6, PLAYER},
-        {"WALL",   4, WALL},
-        {"TOWER",   5, TOWER},
-        {"MAP",   3, MAP}
+        {"WALL", 4, WALL},
+        {"TOWER", 5, TOWER},
+        {"MAP", 3, MAP},
+        {"ROUTE",5, ROUTE},
 };
 
 static const global_enum_tab_t anim_type_enum_tab[] = {
@@ -106,23 +105,23 @@ static const global_enum_tab_t anim_enum_tab[] = {
 static const struct global_func_ptr_tab_s scripts_func_ptr_tab[] = {
         {"tower_attack_script", 19, (void *(*)()) &tower_attack_script},
         {"hoover_rs_script", 16, (void *(*)()) &hoover_rs_script},
-        {"my_test_function", 10, (void *(*)()) &my_putchar},
-        {NULL, 0, NULL}
-};
-
-static const struct global_func_ptr_tab_s destroy_sdata_func_tab[] = {
+        {"mob_route_script", 16, (void *(*)()) &mob_route_script},
+        {"next_route", 10, (void *(*)()) &next_route},
+        {"walking_direction_script",
+     24, (void *(*)()) &walking_direction_script},
         {"my_test_function", 10, (void *(*)()) &my_putchar},
         {NULL, 0, NULL}
 };
 
 static const struct global_func_ptr_tab_s destroy_sdata_func_ptr_tab[] = {
-        {"my_putchar", 10, (void *(*)()) &my_putchar},
+        {"destroy_script_data", 19, (void *(*)()) &destroy_script_data},
         {"my_test_function", 16, (void *(*)()) &my_putchar},
         {NULL, 0, NULL}
 };
 
 static const struct global_func_ptr_tab_s collider_func_ptr_tab[] = {
         {"my_putchar", 10, (void *(*)()) &my_putchar},
+        {"inject_next_route", 17, (void *(*)()) &inject_next_route},
         {NULL, 0, NULL}
 };
 

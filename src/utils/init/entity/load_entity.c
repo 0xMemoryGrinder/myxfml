@@ -42,13 +42,9 @@ entity_t *load_entity(char *filepath, entity_t *parent)
         entity->parent = parent;
     iterate_entity_file(content, &i, entity);
     free(content);
-    update_anim_state(entity);
+    if (E_ANIMATION)
+        update_anim_state(entity);
+    if (E_RSPRITE && E_TRANSFORM)
+        sfSprite_setPosition(E_RSPRITE->sprite, E_TRANSFORM->position);
     return entity;
-}
-
-
-int main(int ac, char **av)
-{
-    entity_t *test = load_entity("../lib_myCSFML/config/main_menu/test1.xml", NULL);
-    return 0;
 }

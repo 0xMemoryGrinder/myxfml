@@ -14,7 +14,7 @@
 #include "../../include/types_and_base/struct_shortcuts.h"
 #include "../../include/types_and_base/game.h"
 #include "../../include/my.h"
-#include "../../include/converter.h"
+#include "utils/converter.h"
 
 void check_collision(entity_list_t *entity, entity_list_t *collider,
 game_data_t *data)

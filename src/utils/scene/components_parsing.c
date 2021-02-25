@@ -40,6 +40,8 @@ sfBool is_gui)
         insert_entity_inlists(entity, objects, is_gui);
         if (E_TRANSFORM)
             add_entity_to_list(entity, &objects->transforms);
+        if (E_RSPRITE && is_gui)
+            add_entity_to_list(entity, &objects->gui);
     }
 }
 

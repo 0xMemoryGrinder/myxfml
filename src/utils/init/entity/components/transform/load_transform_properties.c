@@ -13,3 +13,11 @@ void load_transform_toggle(char *content, int *i, transform_t *transform)
 {
     transform->toggle = fill_toogle(content, i);
 }
+
+void load_transform_rotation(char *content, int *i, transform_t *transform)
+{
+    char *value = extract_value(content, i);
+    transform->rotation = my_getnbr_f(value);
+
+    free(value);
+}

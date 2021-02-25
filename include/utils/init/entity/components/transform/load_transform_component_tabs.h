@@ -18,6 +18,7 @@ static struct conf_tag_action_s transform_conf_tag_action[] = {
         {"<scale>", 7, (void *(*)()) &load_transform_scale},
         {"<velocity>", 10, (void *(*)()) &load_transform_velocity},
         {"<speed>", 7, (void *(*)()) &load_transform_speed},
+        {"<rotation>", 10, (void *(*)()) &load_transform_rotation},
         {NULL, 0, NULL}
 };
 

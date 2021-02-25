@@ -19,7 +19,7 @@ typedef enum {
 } scene_id;
 
 
-enum entity_id_e{MOB, PNJ, PLAYER, WALL};
+enum entity_id_e{MOB, PNJ, PLAYER, WALL, TOWER, MAP, ROUTE};
 
 typedef enum anim_type_e{
     IDLE, ATTACK, DEFENSE, MOVING, HURT,
@@ -32,7 +32,7 @@ typedef enum anim_e{
 
     //  ATTACKS
     ATTACK_SWORD, ATTACK_HAMMER ,ATTACK_BOW, ATTACK_MAGIC, ATTACK_MELEE,
-    ATTACK_DASH, ATTACK_CIRCLE, ATTACK_BACKSTAB,
+    ATTACK_DASH, ATTACK_CIRCLE, ATTACK_BACKSTAB, ATTACK_RIGHT, ATTACK_LEFT,
 
     //  DEFENSE
     DEFENSE_SHIELD, DEFENSE_BODY, DEFENSE_AVOID_LEFT, DEFENSE_AVOID_RIGHT,
@@ -61,6 +61,24 @@ typedef enum anim_e{
 } anim;
 
 
+
+// TD Routes
+typedef enum td_poin{START, END}td_point;
+
+typedef struct td_route_s {
+    sfVector2f* route;
+}td_route_t;
+
+static const sfVector2f routelvl_1[] = {
+            {72, 0},
+            {72, 435},
+            {423,420},
+            {423, 221},
+            {647, 221},
+            {647, 471},
+            {919, 471},
+            {920, 0}
+};
 
 // side enum
 enum {

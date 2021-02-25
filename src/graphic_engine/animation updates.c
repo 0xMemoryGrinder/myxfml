@@ -16,18 +16,16 @@
 
 void update_anim_state(entity_t * entity)
 {
-    anim_t * list = E_ANIMATION->list;
+    anim_t *list = E_ANIMATION->list;
 
     for (; list; list = list->next) {
         if (list->name == E_ANIMATION->actual_anim) {
             E_ANIMATION->actual = list;
             E_ANIMATION->actual_frame = 0;
-            break;
+            return;
         }
     }
-    if (list == NULL) {
-        E_ANIMATION->actual_anim = E_ANIMATION->actual->name;
-    }
+    E_ANIMATION->actual_anim = E_ANIMATION->actual->name;
 }
 
 void update_anim_frame(game_data_t *data, entity_t *entity)

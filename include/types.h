@@ -12,53 +12,9 @@
 #include <SFML/Graphics.h>
 #include <SFML/Window.h>
 #include <SFML/Audio.h>
-
-typedef enum {
-    SCENE_1, SCENE_2, SCENE_3, SCENE_4
-} scene_id;
-
 typedef enum toggle_e{OFF, ON}toggle_t;
 
-typedef enum {MOB, PNJ, PLAYER, WALL} entity_id;
-
-typedef enum anim_type_e{
-    IDLE, ATTACK, DEFENSE, MOVING, HURT,
-    DEAD, DYING, HOVER, CLICK, CUT_SCENE
-} anim_type;
-
-typedef enum anim_e{
-    //DEFAULT
-    DEFAULT,
-
-    //  ATTACKS
-    ATTACK_SWORD, ATTACK_HAMMER ,ATTACK_BOW, ATTACK_MAGIC, ATTACK_MELEE,
-    ATTACK_DASH, ATTACK_CIRCLE, ATTACK_BACKSTAB,
-
-    //  DEFENSE
-    DEFENSE_SHIELD, DEFENSE_BODY, DEFENSE_AVOID_LEFT, DEFENSE_AVOID_RIGHT,
-    DEFENSE_AVOID_TOP, DEFENSE_AVOID_BOTTOM,
-
-    //  HURT
-    HURT_PHYSIC, HURT_KNOCKBACK,
-
-    //  IDLE
-    IDLE_STATIC, IDLE_TALK, IDLE_BORED,
-
-    //  MOVING
-    MOVING_WALK, MOVING_RUN, MOVING_DASH, MOVING_CLIMB,
-
-    //  HOOVER
-    HOVER_ON, HOVER_OFF,
-
-    //  CLICK
-    CLICK_ON, CLICK_OFF,
-
-    //  DYING
-    DYING_BURNED, DYING_FREEZED, DYING_EXPLODING, DYING_SLICED, DYING_MELTED,
-
-    // CUT_SCENE
-    SPAWNING, TALKING,
-} anim;
+typedef enum entity_id_e entity_id;
 
 //"ATTACK_SWORD", ATTACK_SWORD
 

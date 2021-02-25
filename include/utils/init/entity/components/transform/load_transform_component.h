@@ -15,5 +15,6 @@ void load_transform_position(char *content, int *i, transform_t *transform);
 void load_transform_scale(char *content, int *i, transform_t *transform);
 void load_transform_velocity(char *content, int *i, transform_t *transform);
 void load_transform_speed(char *content, int *i, transform_t *transform);
+void load_transform_rotation(char *content, int *i, transform_t *transform);
 
 #endif //LIB_MYCSFML_LOAD_TRANSFORM_COMPONENT_H

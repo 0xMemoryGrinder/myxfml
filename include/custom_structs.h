@@ -125,4 +125,10 @@ typedef struct next_route_sdata_s {
     int route_nb;
 } next_route_sdata_t;
 
+
+typedef struct mob_health_s {
+    int health;
+    int max_health;
+} mob_health_t;
+
 #endif //MY_DEFENDER_CUSTOM_STRUCTS_H

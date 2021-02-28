@@ -9,39 +9,71 @@
 #include "../../../include/utils/init_xfml.h"
 #include "../../../include/my.h"
 #include "my_puterr.h"
+#include "my_xml.h"
 
 #define GAME_CONF "conf/game_cfg.xml"
 
 game_data_t *malloc_game(void);
 
-void iterate_game_cfg_file(char *content, int *i, game_data_t *data)
+int load_camera(xmlnode_t *node, game_data_t *data)
 {
-    int k;
-
-    skip_to_next_tag(content, i, NEXT);
-    while (my_strncmp(content + *i, "</game_config>", 14)) {
-        skip_to_next_tag(content, i, OPEN);
-        k = 0;
-        while (game_conf_tags[k].tag && my_strncmp(content + *i,
-        game_conf_tags[k].tag, game_conf_tags[k].tag_len))
-            k++;
-        if (!game_conf_tags[k].tag)
-            my_puterr("Unrecognized entity tag", __FILE__, __LINE__);
-        *i += game_conf_tags[k].tag_len;
-        game_conf_tags[k].action(content, i, data);
-        *i += game_conf_tags[k].tag_len + 1;
-        skip_to_next_tag(content, i, NEXT);
-    }
+    if (!node)
+        return 0;
+    G_CAMERA->transform->scale.x = xml_value_float("x", node);
+    G_CAMERA->transform->scale.y = xml_value_float("y", node);
+    sfView_setSize(G_VIEW ,G_CAMERA->transform->scale);
+    return 1;
 }
 
-void load_game_conf(char *path, game_data_t *data)
+int load_game_scenes(xmlnode_t *node, game_data_t *data)
 {
-    char *content = load_file(path);
-    int i = 1;
+    if (!node)
+        return 0;
+    data->scenes->count = xml_value_int("count", node);
+    data->scenes->actual = xml_value_int("actual", node);
+    data->scenes->list = malloc_scene_array(data->scenes->count);
+    if (data->scenes->list)
+        return 0;
+    for (int i = 0; i < data->scenes->count; i++) {
+        if (!load_scene(node->children.data[i]->data, i, data))
+            return 0;
+    }
+    return 1;
+}
 
-    skip_to_next_tag(content, &i, false);
-    iterate_game_cfg_file(content, &i, data);
-    free(content);
+int load_video(xmlnode_t *node, game_data_t *data)
+{
+    if (!node)
+        return 0;
+    data->game_settings->video->width = xml_value_int("x", node);
+    data->game_settings->video->height = xml_value_int("y", node);
+    data->game_settings->video->game_title = xml_value_str("fullscreen", node);
+    data->game_settings->video->fps = xml_value_int("fps", node);
+    data->game_settings->video->is_fullscreen = xml_toggle("fullscreen", node);
+    return 1;
+}
+
+
+
+static const tag_ftc_t game_cfg_tags[] = {
+        {"scenes", ftc&load_game_scenes},
+        {"camera", ftc&load_camera},
+        {"video", ftc&load_video},
+        {NULL}
+};
+
+int load_game_conf(char *path, game_data_t *data)
+{
+    xmldoc_t *doc = load_xmldoc(path);
+    xmlnode_t *node;
+
+    if (doc == NULL)
+        return 0;
+    node = doc->root;
+    load_camera(extract_xml_child("camera", node, false), data);
+    load_game_scenes(extract_xml_child("scenes", node, false), data);
+    load_video(extract_xml_child("video", node, false), data);
+    return 1;
 }
 
 game_data_t *create_game(void)
@@ -55,6 +87,6 @@ game_data_t *create_game(void)
     data->game_settings->video->mode.bitsPerPixel = 32;
     data->stats->event = malloc(sizeof(sfEvent));
     if (data->stats->event == NULL)
-        my_puterr("Error mallocing event struct", __FILE__, __LINE__);
+        return NULL;
     return data;
 }

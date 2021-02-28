@@ -34,7 +34,6 @@ struct scene_array_s{
 
 struct scenes_s{
     scene_id actual;
-
     int count;
     scene_array_t *list;
 };

@@ -10,11 +10,9 @@
 
 #include "types.h"
 
-void load_transform_toggle(char *content, int *i, transform_t *transform);
-void load_transform_position(char *content, int *i, transform_t *transform);
-void load_transform_scale(char *content, int *i, transform_t *transform);
-void load_transform_velocity(char *content, int *i, transform_t *transform);
-void load_transform_speed(char *content, int *i, transform_t *transform);
-void load_transform_rotation(char *content, int *i, transform_t *transform);
+int load_transform_toggle(xmlnode_t *node, transform_t *transform);
+int load_transform_position(xmlnode_t *node, transform_t *transform);
+int load_transform_scale(xmlnode_t *node, transform_t *transform);
+int load_transform_speed(xmlnode_t *node, transform_t *transform);
 
 #endif //LIB_MYCSFML_LOAD_TRANSFORM_COMPONENT_H

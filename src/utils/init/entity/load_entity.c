@@ -6,45 +6,58 @@
 */
 
 #include <stdlib.h>
+#include "utils/init/entity/components/load_components.h"
 #include "graphic_engine/render_fonctions.h"
-#include "../../../../include/utils/init/entity/load_entity.h"
-#include "../../../../include/utils/init/load_file.h"
+#include "utils/init/entity/load_entity_properties.h"
 #include "my_puterr.h"
-#include "../../../../include/my.h"
+#include "my_xml.h"
+#include "my.h"
 
-void iterate_entity_file(char *content, int *i, entity_t *entity)
+int iterate_entity_file(xmlnode_t *node, entity_t *entity)
 {
-    int k;
+    int good;
 
-    skip_to_next_tag(content, i, NEXT);
-    while (my_strncmp(content + *i, "</entity>", 9)) {
-        k = 0;
-        skip_to_next_tag(content, i, OPEN);
-        while (entity_conf_tag_action[k].tag && my_strncmp(content + *i,
-        entity_conf_tag_action[k].tag, entity_conf_tag_action[k].tag_len))
-            k++;
-        if (!entity_conf_tag_action[k].tag)
-            my_puterr("Unrecognized entity tag", __FILE__, __LINE__);
-        *i += entity_conf_tag_action[k].tag_len;
-        entity_conf_tag_action[k].action(content, i, entity);
-        *i += 1;
-        skip_to_next_tag(content, i, NEXT);
+    if (!load_entity_name(node, entity) || !load_entity_type(node, entity) ||
+    !load_entity_toggle(node, entity))
+        return 0;
+    for (int i = 0; i < node->children.size; i++) {
+        if (!my_strcmp(node->children.data[i]->tag, "components"))
+            good = load_components(node->children.data[i], entity);
+        else if (!my_strcmp(node->children.data[i]->tag, "children"))
+            good = load_entity_children(node->children.data[i], entity);
+        else
+            return *my_puterr("Unknown entity tag", __FILE__, __LINE__);
+        if (!good)
+            return 0;
     }
+    return 1;
 }
 
 entity_t *load_entity(char *filepath, entity_t *parent)
 {
-    char *content = load_file(filepath);
+    xmldoc_t *doc = load_xmldoc(filepath);
     entity_t *entity = malloc_entity_node();
-    int i = 2;
+    xmlnode_t *node;
+    int good;
 
+    if (doc == NULL || entity == NULL)
+        return NULL;
+    node = doc->root;
     if (parent != NULL)
         entity->parent = parent;
-    iterate_entity_file(content, &i, entity);
-    free(content);
+    good = iterate_entity_file(node, entity);
+    if (!good)
+        return NULL;
     if (E_ANIMATION)
         update_anim_state(entity);
     if (E_RSPRITE && E_TRANSFORM)
         sfSprite_setPosition(E_RSPRITE->sprite, E_TRANSFORM->position);
     return entity;
 }
+
+/*
+int main()
+{
+    entity_t *test = load_entity("conf/entity_templates/template_with_child.xml", NULL);
+    return 0;
+} */

@@ -7,73 +7,53 @@
 
 #include "utils/init/entity/components/animation/load_animation_component.h"
 #include "my_csfml.h"
-#include "utils/init/load_file.h"
 #include "my.h"
 #include "my_puterr.h"
 #include "utils/init/entity/components/animation/load_animation_component_tabs.h"
 
-anim_t *load_anim(char *content, int *i)
+anim_t *load_anim(xmlnode_t *node)
 {
     anim_t *anim = malloc_anim_frame();
-    int k;
 
-    skip_to_next_tag(content, i, NEXT);
-    while (my_strncmp(content + *i, "</anim>", 7)) {
-        k = 0;
-        skip_to_next_tag(content, i, OPEN);
-        while (anim_conf_tag_action[k].tag && my_strncmp(content + *i,
-        anim_conf_tag_action[k].tag, anim_conf_tag_action[k].tag_len))
-            k++;
-        if (!anim_conf_tag_action[k].tag)
-            my_puterr("Unrecognized anim tag", __FILE__, __LINE__);
-        *i += anim_conf_tag_action[k].tag_len;
-        anim_conf_tag_action[k].action(content, i, anim);
-        *i += 1;
-        skip_to_next_tag(content, i, NEXT);
-    }
+    if (anim == NULL || !load_anim_toggle(node, anim) ||
+    !load_anim_name(node, anim) || !load_anim_frames(node, anim) ||
+    !load_anim_frame_action(node, anim))
+        return NULL;
     return anim;
 }
 
-void load_anim_list(char *content, int *i, animation_t *animation)
+int load_anim_list(xmlnode_t *node, animation_t *animation)
 {
-    int count = my_getnbr(content + *i);
     anim_t *current = NULL;
+    anim_t *to_check = NULL;
 
-    for (int n = 0; n < count; n++) {
-        *i += 1;
-        skip_to_next_tag(content, i, NEXT);
-        *i += 1;
-        skip_to_next_tag(content, i, OPEN);
+    for (int n = 0; n < node->children.size; n++) {
+        if (my_strcmp(node->children.data[n]->tag, "anim"))
+            return *my_puterr("Unknown anim tag", __FILE__, __LINE__);
+        to_check = load_anim(node->children.data[n]);
+        if (!to_check)
+            return 0;
         if (n == 0) {
-            animation->list = load_anim(content, i);
+            animation->list = to_check;
             current = animation->list;
         } else {
-            current->next = load_anim(content, i);
+            current->next = to_check;
             current = current->next;
         }
-        skip_to_next_tag(content, i, CLOSE);
     }
-    *i += 1;
-    skip_to_next_tag(content, i, CLOSE);
+    return 1;
 }
 
-void load_animation_component(char *content, int *i, components_t *components)
+int load_animation_component(xmlnode_t *node, components_t *components)
 {
     components->animation = malloc_animations();
-    int k;
 
-    skip_to_next_tag(content, i, NEXT);
-    while (my_strncmp(content + *i, "</animation>", 12)) {
-        k = 0;
-        skip_to_next_tag(content, i, OPEN);
-        while (animation_conf_tag_action[k].tag && my_strncmp(content + *i,
-        animation_conf_tag_action[k].tag, animation_conf_tag_action[k].tag_len))
-            k++;
-        if (!animation_conf_tag_action[k].tag)
-            my_puterr("Unrecognized animation tag", __FILE__, __LINE__);
-        *i += animation_conf_tag_action[k].tag_len;
-        animation_conf_tag_action[k].action(content, i, components->animation);
-        *i += 1;
-        skip_to_next_tag(content, i, NEXT);
-    }
+    if (components->animation == NULL ||
+    !load_animation_toggle(node, components->animation) ||
+    !load_animation_anim_type(node, components->animation) ||
+    !load_animation_actual_anim(node, components->animation) ||
+    !load_animation_actual_frame(node, components->animation) ||
+    !load_anim_list(node, components->animation))
+        return 0;
+    return 1;
 }

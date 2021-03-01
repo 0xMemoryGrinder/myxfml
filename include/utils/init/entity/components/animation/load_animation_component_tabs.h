@@ -12,11 +12,10 @@
 #include "utils/init/conf_tag_action_struct.h"
 
 static struct conf_tag_action_s animation_conf_tag_action[] = {
-        {"<toggle>", 8, (void *(*)()) &load_animation_toggle},
-        {"<actual_frame>", 14, (void *(*)()) &load_animation_actual_frame},
-        {"<anim_type>", 11, (void *(*)()) &load_animation_anim_type},
-        {"<actual_anim>", 13, (void *(*)()) &load_animation_actual_anim},
-        {"<list count=\"", 13, (void *(*)()) &load_anim_list},
+        {"toggle", 8, (void *(*)()) &load_animation_toggle},
+        {"actual_frame", 14, (void *(*)()) &load_animation_actual_frame},
+        {"anim_type>", 11, (void *(*)()) &load_animation_anim_type},
+        {"actual_anim>", 13, (void *(*)()) &load_animation_actual_anim},
         {NULL, 0, NULL}
 };
 

@@ -5,31 +5,30 @@
 ** load_components.c
 */
 
-#include "../../../../../include/utils/init/entity/components/load_components.h"
-#include "../../../../../include/my_csfml.h"
-#include "../../../../../include/types_and_base/entity.h"
-#include "../../../../../include/types_and_base/base_components.h"
-#include "../../../../../include/utils/init/load_file.h"
-#include "../../../../../include/my.h"
+#include "my_xml.h"
+#include "utils/init/entity/components/load_components.h"
+#include "my_csfml.h"
 #include "../../../../../include/my_puterr.h"
 
-void load_components(char *content, int *i, entity_t *entity)
+int load_components(xmlnode_t *node, entity_t *entity)
 {
-    int k;
     entity->components = malloc_components();
+    int k;
+    int good = 1;
 
-    skip_to_next_tag(content, i, NEXT);
-    while (my_strncmp(content + *i, "</components>", 13)) {
+    if (entity->components == NULL)
+        return 0;
+    for (int i = 0; i < node->children.size; i++) {
         k = 0;
-        skip_to_next_tag(content, i, OPEN);
-        while (components_conf_tag_action[k].tag && my_strncmp(content + *i,
-        components_conf_tag_action[k].tag, components_conf_tag_action[k].tag_len))
+        while (components_conf_tag_action[k].tag && my_strcmp(
+        node->children.data[i]->tag, components_conf_tag_action[k].tag))
             k++;
         if (!components_conf_tag_action[k].tag)
-            my_puterr("Unrecognized component tag", __FILE__, __LINE__);
-        *i += components_conf_tag_action[k].tag_len;
-        components_conf_tag_action[k].action(content, i, entity->components);
-        *i += 1;
-        skip_to_next_tag(content, i, NEXT);
+            return *my_puterr("Unknown component tag", __FILE__, __LINE__);
+        good = components_conf_tag_action[k].action(node->children.data[i],
+        entity->components);
+        if (!good)
+            return 0;
     }
+    return 1;
 }

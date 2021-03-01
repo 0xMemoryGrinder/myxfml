@@ -10,8 +10,7 @@
 
 struct conf_tag_action_s {
     char *tag;
-    int tag_len;
-    void *(*action)();
+    int (*action)();
 };
 
 #endif //LIB_MYCSFML_CONF_TAG_ACTION_STRUCT_H

@@ -6,63 +6,60 @@
 */
 
 #include <stdlib.h>
+#include "my_xml.h"
 #include "my_csfml.h"
-#include "utils/init/load_file.h"
 #include "my.h"
-#include "my_puterr.h"
-#include "utils/init/common_tags.h"
 
-void load_text_toggle(char *content, int *i, text_t *text)
+int load_text_toggle(xmlnode_t *node, text_t *text)
 {
-    text->toggle = fill_toogle(content, i);
+    int status = 1;
+    text->toggle = xml_toggle("toggle", node, &status);
+
+    if (!status)
+        return 0;
+    return 1;
 }
 
-void load_text_font(char *content, int *i, text_t *text)
+int load_text_font(xmlnode_t *node, text_t *text)
 {
-    char *path = extract_value(content, i);
+    int status = 1;
+    char *path = xml_value_str("path", node, &status);
+
+    if (!status)
+        return 0;
     text->font = sfFont_createFromFile(path);
-
     free(path);
+    return 1;
 }
 
-void load_text_position(char *content, int *i, text_t *text)
+int load_text_position(xmlnode_t *node, text_t *text)
 {
-    char *path = extract_value(content, i);
-    char **pos = my_str_to_tab(path, ' ');
-    int j = 0;
+    int status1 = 1;
+    int status2 = 1;
+    text->pos.x = (float)xml_value_int("xpos", node, &status1);
+    text->pos.y = (float)xml_value_int("ypos", node, &status2);
 
-    if (pos == NULL)
-        my_puterr("Malloc error in my_str_to_tab", __FILE__, __LINE__);
-    for (; pos[j]; j++);
-    if (j != 2)
-        my_puterr("Incorrect position coords", __FILE__, __LINE__);
-    text->pos.x = (float)my_getnbr(pos[0]);
-    text->pos.y = (float)my_getnbr(pos[1]);
-    free(path);
-    free(pos[0]);
-    free(pos[1]);
-    free(pos);
+    if (!status1 || !status2)
+        return 0;
+    return 1;
 }
 
-void load_text_font_size(char *content, int *i, text_t *text)
+int load_text_font_size(xmlnode_t *node, text_t *text)
 {
-    int path_len = length_of_tag_value(content, *i);
-    char *path = my_strndup(content + *i, path_len);
-    *i += path_len;
+    int status = 1;
+    text->size = xml_value_int("font-size", node, &status);
 
-    if (path == NULL)
-        my_puterr("Malloc error in strndup", __FILE__, __LINE__);
-    text->size = my_getnbr(path);
-    free(path);
+    if (!status)
+        return 0;
+    return 1;
 }
 
-void load_text_string(char *content, int *i, text_t *text)
+int load_text_string(xmlnode_t *node, text_t *text)
 {
-    int path_len = length_of_tag_value(content, *i);
-    char *path = my_strndup(content + *i, path_len);
-    *i += path_len;
+    int status =1;
+    text->string = xml_value_str("string", node, &status);
 
-    if (path == NULL)
-        my_puterr("Malloc error in strndup", __FILE__, __LINE__);
-    text->string = path;
+    if (!status)
+        return 0;
+    return 1;
 }

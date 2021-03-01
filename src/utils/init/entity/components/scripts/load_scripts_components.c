@@ -5,86 +5,80 @@
 ** load_scripts_components.c
 */
 
-#include "utils/init/entity/components/scripts/load_scripts_components_tabs.h"
+#include "utils/init/entity/components/scripts/load_scripts_components.h"
+#include "my_xml.h"
 #include "my_csfml.h"
-#include "utils/init/load_file.h"
 #include "my.h"
 #include "utils/init/common_tags.h"
 #include "my_puterr.h"
 #include "global_tabs.h"
 
-void load_scripts_toggle(char *content, int *i, script_list_t *scripts)
+int load_scripts_toggle(xmlnode_t *node, script_list_t *scripts)
 {
-    scripts->toggle = fill_toogle(content, i);
+    int status = 1;
+    scripts->toggle = xml_toggle("toggle", node, &status);
+
+    if (!status)
+        return 0;
+    return 1;
 }
 
-void load_script_destroy(char *content, int *i, script_t *script)
+int load_script_destroy(xmlnode_t *node, script_t *script)
 {
-    script->destroy = fill_function(content, i, destroy_sdata_func_ptr_tab);
+    int status = 1;
+    char *content = xml_value_str("destroy", node, &status);
+
+    if (!status)
+        return 0;
+    script->destroy = fill_function(content, destroy_sdata_func_ptr_tab,
+    &status);
+    free(content);
+    if (!status)
+        return 0;
+    return 1;
 }
 
-script_t *load_script(char *content, int *i)
+script_t *load_script(xmlnode_t *node)
 {
     script_t *script = malloc_script_node();
-    int k;
 
-    skip_to_next_tag(content, i, NEXT);
-    while (my_strncmp(content + *i, "</script>", 9)) {
-        k = 0;
-        skip_to_next_tag(content, i, OPEN);
-        while (script_conf_tag_action[k].tag && my_strncmp(content + *i,
-        script_conf_tag_action[k].tag, script_conf_tag_action[k].tag_len))
-            k++;
-        if (!script_conf_tag_action[k].tag)
-            my_puterr("Unrecognized script tag", __FILE__, __LINE__);
-        *i += script_conf_tag_action[k].tag_len;
-        script_conf_tag_action[k].action(content, i, script);
-        *i += 1;
-        skip_to_next_tag(content, i, NEXT);
-    }
+    if (script == NULL || !load_script_name(node, script) ||
+    !load_script_action(node, script) || !load_script_destroy(node, script) ||
+    !load_script_trigger(node, script))
+        return NULL;
     return script;
 }
 
-void load_scripts_list(char *content, int *i, script_list_t *scripts)
+int load_scripts_list(xmlnode_t *node, script_list_t *scripts)
 {
-    scripts->count = my_getnbr(content + *i);
-    script_t *current = scripts->list;
+    scripts->count = node->children.size;
+    script_t *current = NULL;
+    script_t *to_check = NULL;
 
-    for (int n = 0; n < scripts->count; n++) {
-        *i += 1;
-        skip_to_next_tag(content, i, NEXT);
-        *i += 1;
-        skip_to_next_tag(content, i, OPEN);
+    for (int n = 0; n < node->children.size; n++) {
+        if (my_strcmp(node->children.data[n]->tag, "script"))
+            return *my_puterr("Unknown script tag", __FILE__, __LINE__);
+        to_check = load_script(node->children.data[n]);
+        if (!to_check)
+            return 0;
         if (n == 0) {
-            scripts->list = load_script(content, i);
+            scripts->list = to_check;
             current = scripts->list;
         } else {
-            current->next = load_script(content, i);
+            current->next = to_check;
             current = current->next;
         }
-        skip_to_next_tag(content, i, CLOSE);
     }
-    *i += 1;
-    skip_to_next_tag(content, i, CLOSE);
+    return 1;
 }
 
-void load_scripts_component(char *content, int *i, components_t *components)
+int load_scripts_component(xmlnode_t *node, components_t *components)
 {
     components->scripts = malloc_script_list();
-    int k;
 
-    skip_to_next_tag(content, i, NEXT);
-    while (my_strncmp(content + *i, "</scripts>", 8)) {
-        k = 0;
-        skip_to_next_tag(content, i, OPEN);
-        while (scripts_conf_tag_action[k].tag && my_strncmp(content + *i,
-        scripts_conf_tag_action[k].tag, scripts_conf_tag_action[k].tag_len))
-            k++;
-        if (!scripts_conf_tag_action[k].tag)
-            my_puterr("Unrecognized scripts tag", __FILE__, __LINE__);
-        *i += scripts_conf_tag_action[k].tag_len;
-        scripts_conf_tag_action[k].action(content, i, components->scripts);
-        *i += 1;
-        skip_to_next_tag(content, i, NEXT);
-    }
+    if (components->scripts == NULL ||
+    !load_scripts_toggle(node, components->scripts) ||
+    !load_scripts_list(node, components->scripts))
+        return 0;
+    return 1;
 }

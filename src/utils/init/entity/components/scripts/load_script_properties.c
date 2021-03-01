@@ -6,41 +6,61 @@
 */
 
 #include <stdlib.h>
-#include "my_csfml.h"
+#include "my_xml.h"
 #include "my.h"
-#include "my_puterr.h"
-#include "utils/init/load_file.h"
 #include "utils/init/common_tags.h"
 #include "global_tabs.h"
 
-void load_script_toggle(char *content, int *i, script_t *script)
+int load_script_toggle(xmlnode_t *node, script_t *script)
 {
-    script->toggle = fill_toogle(content, i);
+    int status = 1;
+    script->toggle = xml_toggle("toggle", node, &status);
+
+    if (!status)
+        return 0;
+    return 1;
 }
 
-void load_script_time_dep(char *content, int *i, script_t *script)
+int load_script_time_dep(xmlnode_t *node, script_t *script)
 {
-    script->time_dependent = fill_toogle(content, i);
+    int status = 1;
+    script->time_dependent = xml_toggle("time_dependent", node, &status);
+
+    if (!status)
+        return 0;
+    return 1;
 }
 
-void load_script_trigger(char *content, int *i, script_t *script)
+int load_script_trigger(xmlnode_t *node, script_t *script)
 {
-    int path_len = length_of_tag_value(content, *i);
-    char *path = my_strndup(content + *i, path_len);
-    *i += path_len;
+    int status = 1;
+    script->trigger = xml_value_int("trigger", node, &status);
 
-    if (path == NULL)
-        my_puterr("Malloc error in strndup", __FILE__, __LINE__);
-    script->trigger = my_getnbr(path);
-    free(path);
+    if (!status)
+        return 0;
+    return 1;
 }
 
-void load_script_name(char *content, int *i, script_t *script)
+int load_script_name(xmlnode_t *node, script_t *script)
 {
-    script->name = extract_value(content, i);
+    int status = 1;
+    script->name = xml_value_str("name", node, &status);
+
+    if (!status)
+        return 0;
+    return 1;
 }
 
-void load_script_action(char *content, int *i, script_t *script)
+int load_script_action(xmlnode_t *node, script_t *script)
 {
-    script->update = fill_function(content, i, scripts_func_ptr_tab);
+    int status = 1;
+    char *content = xml_value_str("action", node, &status);
+
+    if (!status)
+        return 0;
+    script->update = fill_function(content, scripts_func_ptr_tab, &status);
+    free(content);
+    if (!status)
+        return 0;
+    return 1;
 }

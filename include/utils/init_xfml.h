@@ -15,7 +15,7 @@
 #include "init/common_tags.h"
 
 #include "init/entity/load_entity.h"
-#include "init/entity/set_entity_properties.h"
+#include "init/entity/load_entity_properties.h"
 
 
 #include "init/entity/components/load_components.h"

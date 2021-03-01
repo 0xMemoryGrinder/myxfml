@@ -5,76 +5,59 @@
 ** load_sounds_component.c
 */
 
-#include "utils/init/entity/components/sounds/load_sounds_component_tabs.h"
+#include "utils/init/entity/components/sounds/load_sounds_component.h"
+#include "my_xml.h"
 #include "my_csfml.h"
-#include "utils/init/common_tags.h"
-#include "utils/init/load_file.h"
 #include "my.h"
 #include "my_puterr.h"
 
-void load_sounds_toggle(char *content, int *i, sfx_list_t *sounds)
+int load_sounds_toggle(xmlnode_t *node, sfx_list_t *sounds)
 {
-    sounds->toggle = fill_toogle(content, i);
+    int status = 1;
+    sounds->toggle = xml_toggle("toggle", node, &status);
+
+    if (!status)
+        return 0;
+    return 1;
 }
 
-sound_t load_sound(char *content, int *i)
+sound_t load_sound(xmlnode_t *node, int *status)
 {
     sound_t sound;
-    int k;
 
-    skip_to_next_tag(content, i, NEXT);
-    while (my_strncmp(content + *i, "</sound>", 8)) {
-        k = 0;
-        skip_to_next_tag(content, i, OPEN);
-        while (sound_conf_tag_action[k].tag && my_strncmp(content + *i,
-        sound_conf_tag_action[k].tag, sound_conf_tag_action[k].tag_len))
-            k++;
-        if (!sound_conf_tag_action[k].tag)
-            my_puterr("Unrecognized sound tag", __FILE__, __LINE__);
-        *i += sound_conf_tag_action[k].tag_len;
-        sound_conf_tag_action[k].action(content, i, &sound);
-        *i += 1;
-        skip_to_next_tag(content, i, NEXT);
+    if (!load_sound_toggle(node, &sound) || !load_sound_anim(node, &sound) ||
+    !load_sound_name(node, &sound) || !load_sound_music(node, &sound)) {
+        *status = 0;
+        return sound;
     }
     sound.buff = NULL;
     sound.sfx = sfSound_create();
     return sound;
 }
 
-void load_sounds_list(char *content, int *i, sfx_list_t *sounds)
+int load_sounds_list(xmlnode_t *node, sfx_list_t *sounds)
 {
-    sounds->sfx_count = my_getnbr(content + *i);
+    sounds->sfx_count = node->children.size;
     sounds->sfx = malloc_sfx_array(sounds->sfx_count);
+    int good = 1;
 
-    for (int n = 0; n < sounds->sfx_count; n++) {
-        *i += 1;
-        skip_to_next_tag(content, i, NEXT);
-        *i += 1;
-        skip_to_next_tag(content, i, OPEN);
-        sounds->sfx[n] = load_sound(content, i);
-        skip_to_next_tag(content, i, CLOSE);
+    for (int n = 0; n < node->children.size; n++) {
+        if (my_strcmp(node->children.data[n]->tag, "sound"))
+            return *my_puterr("Unknown sound tag", __FILE__, __LINE__);
+        sounds->sfx[n] = load_sound(node->children.data[n], &good);
+        if (!good)
+            return 0;
     }
-    *i += 1;
-    skip_to_next_tag(content, i, CLOSE);
+    return 1;
 }
 
-void load_sounds_component(char *content, int *i, components_t *components)
+int load_sounds_component(xmlnode_t *node, components_t *components)
 {
     components->sounds = malloc_sfx_list();
-    int k;
 
-    skip_to_next_tag(content, i, NEXT);
-    while (my_strncmp(content + *i, "</sounds>", 9)) {
-        k = 0;
-        skip_to_next_tag(content, i, OPEN);
-        while (sounds_conf_tag_action[k].tag && my_strncmp(content + *i,
-        sounds_conf_tag_action[k].tag, sounds_conf_tag_action[k].tag_len))
-            k++;
-        if (!sounds_conf_tag_action[k].tag)
-            my_puterr("Unrecognized sounds tag", __FILE__, __LINE__);
-        *i += sounds_conf_tag_action[k].tag_len;
-        sounds_conf_tag_action[k].action(content, i, components->sounds);
-        *i += 1;
-        skip_to_next_tag(content, i, NEXT);
-    }
+    if (components->sounds == NULL ||
+        !load_sounds_toggle(node, components->sounds) ||
+        !load_sounds_list(node, components->sounds))
+        return 0;
+    return 1;
 }

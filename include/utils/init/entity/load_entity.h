@@ -9,16 +9,7 @@
 #define LIB_MYCSFML_LOAD_ENTITY_H
 
 #include "../conf_tag_action_struct.h"
-#include "set_entity_properties.h"
+#include "load_entity_properties.h"
 #include "components/load_components.h"
-
-static struct conf_tag_action_s entity_conf_tag_action[] = {
-        {"<name>", 6, (void *(*)()) &set_entity_name},
-        {"<type>", 6, (void *(*)()) &set_entity_type},
-        {"<toggle>", 8, (void *(*)()) &set_entity_toggle},
-        {"<components>", 12, (void *(*)()) &load_components},
-        {"<children>", 10, (void *(*)()) &load_entity_children},
-        {NULL, 0, NULL}
-};
 
 #endif //LIB_MYCSFML_LOAD_ENTITY_H

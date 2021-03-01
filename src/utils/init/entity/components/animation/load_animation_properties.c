@@ -6,31 +6,55 @@
 */
 
 #include <stdlib.h>
-#include "my_csfml.h"
+#include "my_xml.h"
 #include "utils/init/common_tags.h"
-#include "utils/init/load_file.h"
 #include "my.h"
 #include "global_tabs.h"
 
-void load_animation_toggle(char *content, int *i, animation_t *animation)
+int load_animation_toggle(xmlnode_t *node, animation_t *animation)
 {
-    animation->toggle = fill_toogle(content, i);
+    int status = 1;
+    animation->toggle = xml_toggle("toggle", node, &status);
+
+    if (!status)
+        return 0;
+    return 1;
 }
 
-void load_animation_actual_anim(char *content, int *i, animation_t *animation)
+int load_animation_actual_anim(xmlnode_t *node, animation_t *animation)
 {
-    animation->actual_anim = fill_enum(content, i, anim_enum_tab);
+    int status = 1;
+    char *content = xml_value_str("actual_anim", node, &status);
+
+    if (!status)
+        return 0;
+    animation->actual_anim = fill_enum(content, anim_enum_tab, &status);
+    free(content);
+    if (!status)
+        return 0;
+    return 1;
 }
 
-void load_animation_anim_type(char *content, int *i, animation_t *anim)
+int load_animation_anim_type(xmlnode_t *node, animation_t *animation)
 {
-    anim->type = fill_enum(content, i, anim_type_enum_tab);
+    int status = 1;
+    char *content = xml_value_str("anim_type", node, &status);
+
+    if (!status)
+        return 0;
+    animation->type = fill_enum(content, anim_type_enum_tab, &status);
+    free(content);
+    if (!status)
+        return 0;
+    return 1;
 }
 
-void load_animation_actual_frame(char *content, int *i, animation_t *animation)
+int load_animation_actual_frame(xmlnode_t *node, animation_t *animation)
 {
-    char *value = extract_value(content, i);
-    animation->actual_frame = my_getnbr(value);
+    int status = 1;
 
-    free(value);
+    animation->actual_frame = xml_value_int("actual_frame", node, &status);
+    if (!status)
+        return 0;
+    return 1;
 }

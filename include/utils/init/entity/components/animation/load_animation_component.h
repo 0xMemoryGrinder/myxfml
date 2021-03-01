@@ -9,15 +9,16 @@
 #define LIB_MYCSFML_LOAD_ANIMATION_COMPONENT_H
 
 #include "types.h"
+#include "my_xml.h"
 
-void load_animation_toggle(char *content, int *i, animation_t *animation);
-void load_animation_actual_frame(char *content, int *i, animation_t *animation);
-void load_animation_anim_type(char *content, int *i, animation_t *animation);
-void load_animation_actual_anim(char *content, int *i, animation_t *animation);
-void load_anim_list(char *content, int *i, animation_t *animation);
-void load_anim_toggle(char *content, int *i, anim_t *anim);
-void load_anim_name(char *content, int *i, anim_t *anim);
-void load_anim_frame_action(char *content, int *i, anim_t *anim);
-void load_anim_frames(char *content, int *i, anim_t *anim);
+int load_animation_toggle(xmlnode_t *node, animation_t *animation);
+int load_animation_actual_frame(xmlnode_t *node, animation_t *animation);
+int load_animation_anim_type(xmlnode_t *node, animation_t *animation);
+int load_animation_actual_anim(xmlnode_t *node, animation_t *animation);
+int load_anim_list(xmlnode_t *node, animation_t *animation);
+int load_anim_toggle(xmlnode_t *node, anim_t *anim);
+int load_anim_name(xmlnode_t *node, anim_t *anim);
+int load_anim_frame_action(xmlnode_t *node, anim_t *anim);
+int load_anim_frames(xmlnode_t *node, anim_t *anim);
 
 #endif //LIB_MYCSFML_LOAD_ANIMATION_COMPONENT_H

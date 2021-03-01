@@ -5,23 +5,46 @@
 ** set_anim_properties.c
 */
 
-#include "my_csfml.h"
+#include "my_xml.h"
 #include "utils/init/common_tags.h"
 #include "my.h"
 #include "global_tabs.h"
 
-void load_anim_toggle(char *content, int *i, anim_t *anim)
+int load_anim_toggle(xmlnode_t *node, anim_t *anim)
 {
-    anim->toggle = fill_toogle(content, i);
+    int status = 1;
+
+    anim->toggle = xml_toggle("toggle", node, &status);
+    if (!status)
+        return 0;
+    return 1;
 }
 
-void load_anim_name(char *content, int *i, anim_t *anim)
+int load_anim_name(xmlnode_t *node, anim_t *anim)
 {
-    anim->name = fill_enum(content, i, anim_enum_tab);
+    int status = 1;
+    char *content = xml_value_str("name", node, &status);
+
+    if (!status)
+        return 0;
+    anim->name = fill_enum(content, anim_enum_tab, &status);
+    free(content);
+    if (!status)
+        return 0;
+    return 1;
 }
 
-void load_anim_frame_action(char *content, int *i, anim_t *anim)
+int load_anim_frame_action(xmlnode_t *node, anim_t *anim)
 {
+    int status = 1;
+    char *content = xml_value_str("action", node, &status);
+
+    if (!status)
+        return 0;
     anim->frame_action = (void (*)(game_data_t *, entity_list_t *,
-    animation_t *)) fill_function(content, i, anim_func_ptr_tab);
+    animation_t *)) fill_function(content, anim_func_ptr_tab, &status);
+    free(content);
+    if (!status)
+        return 0;
+    return 1;
 }

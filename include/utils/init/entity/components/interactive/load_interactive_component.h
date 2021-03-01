@@ -10,8 +10,8 @@
 
 #include "types.h"
 
-void load_interact_toggle(char *content, int *i, interact_t *interact);
-void load_interact_left_click(char *content, int *i, interact_t *interact);
-void load_interact_right_click(char *content, int *i, interact_t *interact);
+int load_interact_toggle(xmlnode_t *node, interact_t *interact);
+int load_interact_left_click(xmlnode_t *node, interact_t *interact);
+int load_interact_right_click(xmlnode_t *node, interact_t *interact);
 
 #endif //LIB_MYCSFML_LOAD_INTERACTIVE_COMPONENT_H

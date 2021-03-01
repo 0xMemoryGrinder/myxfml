@@ -10,15 +10,15 @@
 
 #include "my_csfml.h"
 
-void load_texts_toggle(char *content, int *i, texts_t *texts);
-void load_texts_list(char *content, int *i, texts_t *texts);
-void load_text_id(char *content, int *i, text_t *text);
-void load_text_toggle(char *content, int *i, text_t *text);
-void load_text_font(char *content, int *i, text_t *text);
-void load_text_position(char *content, int *i, text_t *text);
-void load_text_offset(char *content, int *i, text_t *text);
-void load_text_font_size(char *content, int *i, text_t *text);
-void load_text_string(char *content, int *i, text_t *text);
-void load_text_rs_linked(char *content, int *i, text_t *text);
+int load_texts_toggle(xmlnode_t *node, texts_t *texts);
+int load_texts_list(xmlnode_t *node, texts_t *texts);
+int load_text_id(xmlnode_t *node, text_t *text);
+int load_text_toggle(xmlnode_t *node, text_t *text);
+int load_text_font(xmlnode_t *node, text_t *text);
+int load_text_position(xmlnode_t *node, text_t *text);
+int load_text_offset(xmlnode_t *node, text_t *text);
+int load_text_font_size(xmlnode_t *node, text_t *text);
+int load_text_string(xmlnode_t *node, text_t *text);
+int load_text_rs_linked(xmlnode_t *node, text_t *text);
 
 #endif //LIB_MYCSFML_LOAD_TEXTS_COMPONENT_H

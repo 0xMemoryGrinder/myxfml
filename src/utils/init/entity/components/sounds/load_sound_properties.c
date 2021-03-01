@@ -5,26 +5,51 @@
 ** load_sound_properties.c
 */
 
+#include "my_xml.h"
 #include "utils/init/common_tags.h"
 #include "my.h"
-#include "utils/init/load_file.h"
 
-void load_sound_toggle(char *content, int *i, sound_t *sound)
+int load_sound_toggle(xmlnode_t *node, sound_t *sound)
 {
-    sound->toggle = fill_toogle(content, i);
+    int status = 1;
+    sound->toggle = xml_toggle("toggle", node, &status);
+
+    if (!status)
+        return 0;
+    return 1;
 }
 
-void load_sound_anim(char *content, int *i, sound_t *sound)
+int load_sound_anim(xmlnode_t *node, sound_t *sound)
 {
-    sound->type = fill_enum(content, i, anim_enum_tab);
+    int status = 1;
+    char *content = xml_value_str("anim", node, &status);
+
+    if (!status)
+        return 0;
+    if (content)
+        sound->type = fill_enum(content, anim_enum_tab, &status);
+    free(content);
+    if (!status)
+        return 0;
+    return 1;
 }
 
-void load_sound_name(char *content, int *i, sound_t *sound)
+int load_sound_name(xmlnode_t *node, sound_t *sound)
 {
-    sound->name = extract_value(content, i);
+    int status = 1;
+    sound->name = xml_value_str("name", node, &status);
+
+    if (!status || !sound->name)
+        return 0;
+    return 1;
 }
 
-void load_sound_music(char *content, int *i, sound_t *sound)
+int load_sound_music(xmlnode_t *node, sound_t *sound)
 {
-    sound->path = extract_value(content, i);
+    int status = 1;
+    sound->path = xml_value_str("path", node, &status);
+
+    if (!status || !sound->path)
+        return 0;
+    return 1;
 }

@@ -9,31 +9,31 @@
 #define LIB_MYCSFML_LOAD_COMPONENTS_H
 
 #include "../../conf_tag_action_struct.h"
-#include "../set_entity_properties.h"
+#include "../load_entity_properties.h"
 #include <stdlib.h>
 
-void load_texts_component(char *content, int *i, components_t *components);
-void load_sounds_component(char *content, int *i, components_t *components);
-void load_render_component(char *content, int *i, components_t *components);
-void load_transform_component(char *content, int *i, components_t *components);
-void load_scripts_component(char *content, int *i, components_t *components);
-void load_collider_component(char *content, int *i, components_t *components);
-void load_interactive_component(char *content, int *i, components_t *components);
-void load_animation_component(char *content, int *i, components_t *components);
+int load_texts_component(xmlnode_t *node, components_t *components);
+int load_sounds_component(xmlnode_t *node, components_t *components);
+int load_render_component(xmlnode_t *node, components_t *components);
+int load_transform_component(xmlnode_t *node, components_t *components);
+int load_scripts_component(xmlnode_t *node, components_t *components);
+int load_collider_component(xmlnode_t *node, components_t *components);
+int load_interactive_component(xmlnode_t *node, components_t *components);
+int load_animation_component(xmlnode_t *node, components_t *components);
 
 static const struct conf_tag_action_s components_conf_tag_action[] = {
-        {"<texts>", 7, (void *(*)()) &load_texts_component},
-        {"<sounds>", 8, (void *(*)()) &load_sounds_component},
-        {"<render>", 8, (void *(*)()) &load_render_component},
-        {"<transform>", 11, (void *(*)()) &load_transform_component},
-        {"<scripts>", 9, (void *(*)()) &load_scripts_component},
-        {"<collider>", 10, (void *(*)()) &load_collider_component},
-        {"<interactive>", 13, (void *(*)()) &load_interactive_component},
-        {"<animation>", 11, (void *(*)()) &load_animation_component},
-        {NULL, 0, NULL}
+        {"texts", &load_texts_component},
+        {"sounds", &load_sounds_component},
+        {"render", &load_render_component},
+        {"transform", &load_transform_component},
+        {"scripts", &load_scripts_component},
+        {"collider", &load_collider_component},
+        {"interactive", &load_interactive_component},
+        {"animation", &load_animation_component},
+        {NULL, NULL}
 
 };
 
-void load_components(char *content, int *i, entity_t *entity);
+int load_components(xmlnode_t *node, entity_t *entity);
 
 #endif //LIB_MYCSFML_LOAD_COMPONENTS_H

@@ -8,13 +8,14 @@
 #ifndef LIB_MYCSFML_LOAD_SOUNDS_COMPONENT_H
 #define LIB_MYCSFML_LOAD_SOUNDS_COMPONENT_H
 
+#include "my_xml.h"
 #include "types.h"
 
-void load_sounds_list(char *content, int *i, sfx_list_t *sounds);
-void load_sounds_toggle(char *content, int *i, sfx_list_t *sounds);
-void load_sound_toggle(char *content, int *i, sound_t *sound);
-void load_sound_anim(char *content, int *i, sound_t *sound);
-void load_sound_name(char *content, int *i, sound_t *sound);
-void load_sound_music(char *content, int *i, sound_t *sound);
+int load_sounds_list(xmlnode_t *node, sfx_list_t *sounds);
+int load_sounds_toggle(xmlnode_t *node, sfx_list_t *sounds);
+int load_sound_toggle(xmlnode_t *node, sound_t *sound);
+int load_sound_anim(xmlnode_t *node, sound_t *sound);
+int load_sound_name(xmlnode_t *node, sound_t *sound);
+int load_sound_music(xmlnode_t *node, sound_t *sound);
 
 #endif //LIB_MYCSFML_LOAD_SOUNDS_COMPONENT_H

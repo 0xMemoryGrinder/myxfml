@@ -5,94 +5,65 @@
 ** load_transform_component.c
 */
 
-#include "utils/init/entity/components/transform/load_transform_component_tabs.h"
-#include "../../../../../../include/my_csfml.h"
-#include "../../../../../../include/utils/init/load_file.h"
-#include "../../../../../../include/my.h"
+#include "my_xml.h"
+#include "my_csfml.h"
+#include "utils/init/load_file.h"
+#include "my.h"
 #include "my_puterr.h"
 
-void load_transform_position(char *content, int *i, transform_t *transform)
+int load_transform_position(xmlnode_t *node, transform_t *transform)
 {
-    char *path = extract_value(content, i);
-    char **pos = my_str_to_tab(path, ' ');;
-    int j = 0;
+    int status1 = 1;
+    int status2 = 1;
+    transform->position.x = (float)xml_value_int("xpos", node, &status1);
+    transform->position.y = (float)xml_value_int("ypos", node, &status2);
 
-    if (pos == NULL)
-        my_puterr("Malloc error in my_str_to_tab", __FILE__, __LINE__);
-    for (; pos[j]; j++);
-    if (j != 2)
-        my_puterr("Incorrect position coords", __FILE__, __LINE__);
-    transform->position.x = (float)my_getnbr(pos[0]);
-    transform->position.y = (float)my_getnbr(pos[1]);
-    free(path);
-    free(pos[0]);
-    free(pos[1]);
-    free(pos);
+    if (!status1 || !status2)
+        return 0;
+    return 1;
 }
 
-void load_transform_scale(char *content, int *i, transform_t *transform)
+int load_transform_scale(xmlnode_t *node, transform_t *transform)
 {
-    char *path = extract_value(content, i);
-    char **pos = my_str_to_tab(path, ' ');;
-    int j = 0;
+    int status1 = 1;
+    int status2 = 1;
+    transform->scale.x = xml_value_float("xscale", node, &status1);
+    transform->scale.y = xml_value_float("yscale", node, &status2);
 
-    if (pos == NULL)
-        my_puterr("Malloc error in my_str_to_tab", __FILE__, __LINE__);
-    for (; pos[j]; j++);
-    if (j != 2)
-        my_puterr("Incorrect scale values", __FILE__, __LINE__);
-    transform->scale.x = (float)my_getnbr_f(pos[0]);
-    transform->scale.y = (float)my_getnbr_f(pos[1]);
-    free(path);
-    free(pos[0]);
-    free(pos[1]);
-    free(pos);
+    if (!status1 || !status2)
+        return 0;
+    return 1;
 }
 
-void load_transform_velocity(char *content, int *i, transform_t *transform)
+int load_transform_speed(xmlnode_t *node, transform_t *transform)
 {
-    char *path = extract_value(content, i);
-    char **pos = my_str_to_tab(path, ' ');;
-    int j = 0;
+    int status = 1;
+    transform->speed = xml_value_float("speed", node, &status);
 
-    if (pos == NULL)
-        my_puterr("Malloc error in my_str_to_tab", __FILE__, __LINE__);
-    for (; pos[j]; j++);
-    if (j != 2)
-        my_puterr("Incorrect velocity values", __FILE__, __LINE__);
-    transform->velocity.x = (float)my_getnbr(pos[0]);
-    transform->velocity.y = (float)my_getnbr(pos[1]);
-    free(path);
-    free(pos[0]);
-    free(pos[1]);
-    free(pos);
+    if (!status)
+        return 0;
+    return 1;
 }
 
-void load_transform_speed(char *content, int *i, transform_t *transform)
+int load_transform_toggle(xmlnode_t *node, transform_t *transform)
 {
-    char *path = extract_value(content, i);
+    int status = 1;
+    transform->toggle = xml_toggle("toggle", node, &status);
 
-    transform->speed = my_getnbr_f(path);
-    free(path);
+    if (!status)
+        return 0;
+    return 1;
 }
 
-void load_transform_component(char *content, int *i, components_t *components)
+int load_transform_component(xmlnode_t *node, components_t *components)
 {
     components->transform = malloc_transform();
-    int k;
 
-    skip_to_next_tag(content, i, NEXT);
-    while (my_strncmp(content + *i, "</transform>", 12)) {
-        k = 0;
-        skip_to_next_tag(content, i, OPEN);
-        while (transform_conf_tag_action[k].tag && my_strncmp(content + *i,
-        transform_conf_tag_action[k].tag, transform_conf_tag_action[k].tag_len))
-            k++;
-        if (!transform_conf_tag_action[k].tag)
-            my_puterr("Unrecognized transform tag", __FILE__, __LINE__);
-        *i += transform_conf_tag_action[k].tag_len;
-        transform_conf_tag_action[k].action(content, i, components->transform);
-        *i += transform_conf_tag_action[k].tag_len + 1;
-        skip_to_next_tag(content, i, NEXT);
-    }
+    if (components->transform == NULL ||
+    !load_transform_toggle(node, components->transform) ||
+    !load_transform_position(node, components->transform) ||
+    !load_transform_scale(node, components->transform) ||
+    !load_transform_speed(node, components->transform))
+        return 0;
+    return 1;
 }

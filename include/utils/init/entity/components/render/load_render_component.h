@@ -10,7 +10,7 @@
 
 #include "types.h"
 
-void load_render_toggle(char *content, int *i, render_sprite_t *render);
-void load_render_sprite(char *content, int *i, render_sprite_t *render);
+int load_render_toggle(xmlnode_t *node, render_sprite_t *render);
+int load_render_sprite(xmlnode_t *node, render_sprite_t *render);
 
 #endif //LIB_MYCSFML_LOAD_RENDER_COMPONENT_H

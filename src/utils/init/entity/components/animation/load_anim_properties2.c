@@ -6,57 +6,46 @@
 */
 
 #include <stdlib.h>
+#include "my_xml.h"
 #include "my_csfml.h"
 #include "my.h"
-#include "utils/init/load_file.h"
 #include "my_puterr.h"
 
-char **load_tab(char *str, char sep, int nb)
-{
-    char **frame_trigger = my_str_to_tab(str, sep);
-    int i = 0;
-
-    for (i = 0; frame_trigger[i]; i++);
-    if (i != nb)
-        my_puterr("Error in frame config", __FILE__, __LINE__);
-    return frame_trigger;
-}
-
-frame_t load_anim_frame(char *content, int *i)
+frame_t load_anim_frame(xmlnode_t *node, int *status)
 {
     frame_t frame;
-    char *value = extract_value(content, i);
-    char **frame_trigger = load_tab(value, ':', 2);
-    char **crop = load_tab(frame_trigger[0], ' ', 4);
-
-    frame.trigger = my_getnbr(frame_trigger[1]);
+    int status1 = 1;
+    int status2 = 1;
+    int status3 = 1;
+    int status4 = 1;
+    int status5 = 1;
+    frame.trigger = xml_value_int("duration", node, &status5);
     frame.crop = (sfIntRect){
-        my_getnbr(crop[0]), my_getnbr(crop[1]),
-        my_getnbr(crop[2]), my_getnbr(crop[3])
+        xml_value_int("left", node, &status1),
+        xml_value_int("top", node, &status2),
+        xml_value_int("width", node, &status3),
+        xml_value_int("height", node, &status4)
     };
-    free(frame_trigger[0]);
-    free(frame_trigger[1]);
-    free(frame_trigger);
-    free(crop[0]);
-    free(crop[1]);
-    free(crop[2]);
-    free(crop[3]);
-    free(crop);
+
+    if (!status1 || !status2 || !status3 || !status4 || !status5)
+        *status = 0;
     return frame;
 }
 
-void load_anim_frames(char *content, int *i, anim_t *anim)
+int load_anim_frames(xmlnode_t *node, anim_t *anim)
 {
-    anim->frames_count = my_getnbr(content + *i);
+    int good = 1;
+    anim->frames_count = node->children.size;
     anim->frame = malloc_frames_array(anim->frames_count);
 
+    if (anim->frame == NULL)
+        return 0;
     for (int n = 0; n < anim->frames_count; n++) {
-        skip_to_next_tag(content, i, OPEN);
-        if (my_strncmp(content + *i, "<frame>", 7))
-            my_puterr("Error in anim frame config", __FILE__, __LINE__);
-        *i += 7;
-        anim->frame[n] = load_anim_frame(content, i);
+        if (my_strcmp(node->children.data[n]->tag, "frame"))
+            return (int)my_puterr("Invalid tag name", __FILE__, __LINE__);
+        anim->frame[n] = load_anim_frame(node->children.data[n], &good);
+        if (!good)
+            return 0;
     }
-    *i += 1;
-    skip_to_next_tag(content, i, CLOSE);
+    return 1;
 }

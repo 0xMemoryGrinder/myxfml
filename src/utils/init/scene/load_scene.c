@@ -45,7 +45,7 @@ int load_scene_entities(xmlnode_t *node, scene_array_t *scene)
     if (!node)
         return -1;
     for (int i = 0; i < node->children.size; i ++) {
-        count = xml_value_int("count", node->children.data[i]);
+        count = xml_value_int("count", node->children.data[i], NULL);
         if (!count)
             count++;
         for (int j = 0; j < count; j++) {

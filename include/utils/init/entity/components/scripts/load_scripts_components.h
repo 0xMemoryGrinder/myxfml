@@ -8,15 +8,16 @@
 #ifndef LIB_MYCSFML_LOAD_SCRIPTS_COMPONENTS_H
 #define LIB_MYCSFML_LOAD_SCRIPTS_COMPONENTS_H
 
+#include "my_xml.h"
 #include "types.h"
 
-void load_scripts_list(char *content, int *i, script_list_t *scripts);
-void load_scripts_toggle(char *content, int *i, script_list_t *scripts);
-void load_script_toggle(char *content, int *i, script_t *script);
-void load_script_time_dep(char *content, int *i, script_t *script);
-void load_script_trigger(char *content, int *i, script_t *script);
-void load_script_name(char *content, int *i, script_t *script);
-void load_script_action(char *content, int *i, script_t *script);
-void load_script_destroy(char *content, int *i, script_t *script);
+int load_scripts_list(xmlnode_t *node, script_list_t *scripts);
+int load_scripts_toggle(xmlnode_t *node, script_list_t *scripts);
+int load_script_toggle(xmlnode_t *node, script_t *script);
+int load_script_time_dep(xmlnode_t *node, script_t *script);
+int load_script_trigger(xmlnode_t *node, script_t *script);
+int load_script_name(xmlnode_t *node, script_t *script);
+int load_script_action(xmlnode_t *node, script_t *script);
+int load_script_destroy(xmlnode_t *node, script_t *script);
 
 #endif //LIB_MYCSFML_LOAD_SCRIPTS_COMPONENTS_H

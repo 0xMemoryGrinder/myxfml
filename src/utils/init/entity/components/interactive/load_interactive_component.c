@@ -10,40 +10,45 @@
 #include "my.h"
 #include "my_puterr.h"
 #include "utils/init/common_tags.h"
-#include "utils/init/entity/components/interactive/load_interactive_component_tabs.h"
 
-void load_interact_toggle(char *content, int *i, interact_t *interact)
+int load_interact_toggle(xmlnode_t *node, interact_t *interact)
 {
-    interact->toggle = fill_toogle(content, i);
+    int status = 1;
+    interact->toggle = xml_toggle("toggle", node, &status);
+
+    if (!status)
+        return 0;
+    return 1;
 }
 
-void load_interact_left_click(char *content, int *i, interact_t *interact)
+int load_interact_left_click(xmlnode_t *node, interact_t *interact)
 {
-    interact->click_left = fill_toogle(content, i);
+    int status = 1;
+    interact->click_left = xml_toggle("left_click", node, &status);
+
+    if (!status)
+        return 0;
+    return 1;
 }
 
-void load_interact_right_click(char *content, int *i, interact_t *interact)
+int load_interact_right_click(xmlnode_t *node, interact_t *interact)
 {
-    interact->click_right = fill_toogle(content, i);
+    int status = 1;
+    interact->click_right = xml_toggle("right_click", node, &status);
+
+    if (!status)
+        return 0;
+    return 1;
 }
 
-void load_interactive_component(char *content, int *i, components_t *components)
+int load_interactive_component(xmlnode_t *node, components_t *components)
 {
     components->interact = malloc_interact();
-    int k;
 
-    skip_to_next_tag(content, i, NEXT);
-    while (my_strncmp(content + *i, "</interactive>", 14)) {
-        k = 0;
-        skip_to_next_tag(content, i, OPEN);
-        while (interact_conf_tag_action[k].tag && my_strncmp(content + *i,
-        interact_conf_tag_action[k].tag, interact_conf_tag_action[k].tag_len))
-            k++;
-        if (!interact_conf_tag_action[k].tag)
-            my_puterr("Unrecognized interactive tag", __FILE__, __LINE__);
-        *i += interact_conf_tag_action[k].tag_len;
-        interact_conf_tag_action[k].action(content, i, components->interact);
-        *i += 1;
-        skip_to_next_tag(content, i, NEXT);
-    }
+    if (components->interact == NULL ||
+    !load_interact_toggle(node, components->interact) ||
+    !load_interact_left_click(node, components->interact) ||
+    !load_interact_right_click(node, components->interact))
+        return 0;
+    return 1;
 }

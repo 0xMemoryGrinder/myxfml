@@ -11,11 +11,10 @@
 #include "global_tabs.h"
 #include "my_csfml.h"
 
-toggle_t fill_toogle(char *content, int *i);
-int fill_enum(char *content, int *i, const global_enum_tab_t *tab);
+int fill_enum(char *value, const global_enum_tab_t *tab, int *status);
 
 typedef void *(*func_ptr_t)();
-func_ptr_t fill_function(char *content, int *i,
-const global_func_ptr_tab_t *tab);
+func_ptr_t fill_function(char *value, const global_func_ptr_tab_t *tab,
+int *status);
 
 #endif //LIB_MYCSFML_COMMON_TAGS_H

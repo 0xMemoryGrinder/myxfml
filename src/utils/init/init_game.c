@@ -19,8 +19,8 @@ int load_camera(xmlnode_t *node, game_data_t *data)
 {
     if (!node)
         return -1;
-    G_CAMERA->transform->scale.x = xml_value_float("x", node);
-    G_CAMERA->transform->scale.y = xml_value_float("y", node);
+    G_CAMERA->transform->scale.x = xml_value_float("x", node, NULL);
+    G_CAMERA->transform->scale.y = xml_value_float("y", node, NULL);
     if (G_CAMERA->transform->scale.y && G_CAMERA->transform->scale.x)
         sfView_setSize(G_VIEW ,G_CAMERA->transform->scale);
     return 1;

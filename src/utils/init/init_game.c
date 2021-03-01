@@ -18,17 +18,18 @@ game_data_t *malloc_game(void);
 int load_camera(xmlnode_t *node, game_data_t *data)
 {
     if (!node)
-        return 0;
+        return -1;
     G_CAMERA->transform->scale.x = xml_value_float("x", node);
     G_CAMERA->transform->scale.y = xml_value_float("y", node);
-    sfView_setSize(G_VIEW ,G_CAMERA->transform->scale);
+    if (G_CAMERA->transform->scale.y && G_CAMERA->transform->scale.x)
+        sfView_setSize(G_VIEW ,G_CAMERA->transform->scale);
     return 1;
 }
 
 int load_game_scenes(xmlnode_t *node, game_data_t *data)
 {
     if (!node)
-        return 0;
+        return -1;
     data->scenes->count = xml_value_int("count", node);
     data->scenes->actual = xml_value_int("actual", node);
     data->scenes->list = malloc_scene_array(data->scenes->count);
@@ -44,7 +45,7 @@ int load_game_scenes(xmlnode_t *node, game_data_t *data)
 int load_video(xmlnode_t *node, game_data_t *data)
 {
     if (!node)
-        return 0;
+        return -1;
     data->game_settings->video->width = xml_value_int("x", node);
     data->game_settings->video->height = xml_value_int("y", node);
     data->game_settings->video->game_title = xml_value_str("fullscreen", node);
@@ -53,25 +54,18 @@ int load_video(xmlnode_t *node, game_data_t *data)
     return 1;
 }
 
-
-
-static const tag_ftc_t game_cfg_tags[] = {
-        {"scenes", ftc&load_game_scenes},
-        {"camera", ftc&load_camera},
-        {"video", ftc&load_video},
-        {NULL}
-};
-
 int load_game_conf(char *path, game_data_t *data)
 {
     xmldoc_t *doc = load_xmldoc(path);
     xmlnode_t *node;
+    int status = 1;
 
     if (doc == NULL)
         return 0;
     node = doc->root;
     load_camera(extract_xml_child("camera", node, false), data);
-    load_game_scenes(extract_xml_child("scenes", node, false), data);
+    if (!load_game_scenes(extract_xml_child("scenes", node, false), data))
+        return 0;
     load_video(extract_xml_child("video", node, false), data);
     return 1;
 }
@@ -80,7 +74,8 @@ game_data_t *create_game(void)
 {
     game_data_t *data = malloc_game();
 
-    load_game_conf(GAME_CONF, data);
+    if (!load_game_conf(GAME_CONF, data))
+        return NULL;
     data->game_settings->video->mode.width = data->game_settings->video->width;
     data->game_settings->video->mode.height =
     data->game_settings->video->height;

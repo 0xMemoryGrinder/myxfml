@@ -9,96 +9,81 @@
 #include "my.h"
 #include "utils/init_xfml.h"
 #include "my_puterr.h"
+#include "my_xml.h"
 
-void insert_global_entity(char *content, int *i,
-scene_id id, game_data_t *data)
+int insert_gui(xmlnode_t *node, game_data_t *data ,scene_array_t *scene)
 {
-    char *name = NULL;
-    entity_t *entity = NULL;
+    entity_t *entity;
+    xmlnode_list_t list;
 
-    if (content[*i] != '\n' && ! my_strncmp(content + *i, "all", 3)) {
-        insert_entities_inlists(data->global_entity,
-                                data->scenes->list[id].objects, sfFalse);
-        return;
+    if (!node)
+        return -1;
+    list = node->children;
+    if (xml_toggle("all", node)) {
+        for (entity = data->gui; entity ; entity = entity->next) {
+            add_entity(entity, &scene->objects->list);
+        }
+        return 1;
     }
-    skip_to_next_tag(content, i, NEXT);
-    while(my_strncmp(content + *i, "</globals>", 10)) {
-        skip_to_next_tag(content, i, OPEN);
-        *i += 8;
-        name = extract_value(content, i);
-        *i += 9;
-        entity = get_entity_name(data->global_entity, name);
-        insert_entity_inlists(entity, data->scenes->list[id].objects, sfFalse);
-        free(name);
-        skip_to_next_tag(content, i, NEXT);
+    for (int i = 0; i < list.size; i++) {
+        entity = get_entity_name(data->gui, list.data[i]->data);
+        if (!entity)
+        add_entity(entity, &scene->objects->list);
     }
+    return 1;
 }
 
-void insert_player_entity(char *content, int *i,
-scene_id id, game_data_t *data)
+int insert_player(xmlnode_t *node, game_data_t *data ,scene_array_t *scene)
 {
-    char *name = NULL;
-    entity_t *entity = NULL;
+    entity_t *entity;
+    xmlnode_list_t list;
 
-    if (content[*i] != '\n' && ! my_strncmp(content + *i, "all", 3)) {
-        insert_entities_inlists(data->player,
-        data->scenes->list[id].objects, sfFalse);
-        return;
+    if (!node)
+        return -1;
+    list = node->children;
+    if (xml_toggle("all", node)) {
+        for (entity = data->player; entity ; entity = entity->next) {
+            add_entity(entity, &scene->objects->list);
+        }
+        return 1;
     }
-    skip_to_next_tag(content, i, NEXT);
-    while(my_strncmp(content + *i, "</player>", 9)) {
-        skip_to_next_tag(content, i, OPEN);
-        *i += 8;
-        name = extract_value(content, i);
-        *i += 9;
-        entity = get_entity_name(data->player, name);
-        insert_entity_inlists(entity, data->scenes->list[id].objects, sfFalse);
-        free(name);
-        skip_to_next_tag(content, i, NEXT);
+    for (int i = 0; i < list.size; i++) {
+        entity = get_entity_name(data->player, list.data[i]->data);
+        if (!entity)
+            add_entity(entity, &scene->objects->list);
     }
+    return 1;
 }
 
-void insert_gui_entity(char *content, int *i,
-scene_id id, game_data_t *data)
+int insert_global(xmlnode_t *node, game_data_t *data ,scene_array_t *scene)
 {
-    char *name = NULL;
-    entity_t *entity = NULL;
+    entity_t *entity;
+    xmlnode_list_t list;
 
-    if (content[*i] != '\n' && ! my_strncmp(content + *i, "all", 3)) {
-        insert_entities_inlists(data->global_entity,
-        data->scenes->list[id].objects, sfTrue);
-        return;
+    if (!node)
+        return -1;
+    list = node->children;
+    if (xml_toggle("all", node)) {
+        for (entity = data->global_entity; entity ; entity = entity->next) {
+            add_entity(entity, &scene->objects->list);
+        }
+        return 1;
     }
-    skip_to_next_tag(content, i, NEXT);
-    while(my_strncmp(content + *i, "</gui>", 6)) {
-        skip_to_next_tag(content, i, OPEN);
-        *i += 8;
-        name = extract_value(content, i);
-        *i += 9;
-        entity = get_entity_name(data->global_entity, name);
-        insert_entity_inlists(entity, data->scenes->list[id].objects, sfTrue);
-        free(name);
-        skip_to_next_tag(content, i, NEXT);
+    for (int i = 0; i < list.size; i++) {
+        entity = get_entity_name(data->global_entity, list.data[i]->data);
+        if (!entity)
+            add_entity(entity, &scene->objects->list);
     }
+    return 1;
 }
 
-void insert_globals_in_scene(char *content, int *i,
-scene_id id ,game_data_t *data)
-{
-    int k;
 
-    skip_to_next_tag(content, i, NEXT);
-    while (my_strncmp(content + *i, "</insert>", 9)) {
-        k = 0;
-        skip_to_next_tag(content, i, OPEN);
-        while (insert_conf_tags[k].tag && my_strncmp(content + *i,
-        insert_conf_tags[k].tag, insert_conf_tags[k].tag_len))
-            k++;
-        if (!insert_conf_tags[k].tag)
-            my_puterr("Unrecognized insert tag", __FILE__, __LINE__);
-        *i += insert_conf_tags[k].tag_len;
-        insert_conf_tags[k].action(content, i, id, data);
-        *i += insert_conf_tags[k].tag_len + 1;
-        skip_to_next_tag(content, i, NEXT);
-    }
+int insert_globals(xmlnode_t *node, game_data_t *data, scene_array_t *scene)
+{
+    if (!node)
+        return -1;
+    insert_gui(extract_xml_child("gui", node, false), data, scene);
+    insert_player(extract_xml_child("player", node, false), data, scene);
+    insert_global(extract_xml_child("globals", node, false), data, scene);
+    return 1;
 }

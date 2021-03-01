@@ -68,13 +68,17 @@ int load_scene(char *path, scene_id id, game_data_t *data)
     char *path2 = my_strcat(path1, ".xml");
     xmldoc_t *doc = load_xmldoc(path2);
     xmlnode_t *node;
+    int status = 1;
 
     if (!path1 || !path2 || !doc)
         return 0;
     node = doc->root;
     data->scenes->list[id].id = id;
-    data->scenes->list[id].name = xml_value_str("name", node);
-    data->scenes->list[id].toggle = xml_toggle("toggle", node);
+    data->scenes->list[id].name = xml_value_str("name", node, &status);
+    data->scenes->list[id].toggle = xml_toggle("toggle", node, &status);
+    insert_globals(extract_xml_child("insert", node, false),
+    data, &data->scenes->list[id]);
+    data->scenes->list[id].objects->background =
     load_scene_entities(extract_xml_child("entities", node, false),
     &data->scenes->list[id]);
     free_xmlnode(doc->root);

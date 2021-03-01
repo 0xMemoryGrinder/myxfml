@@ -10,18 +10,6 @@
 #include "my.h"
 #include "my_csfml.h"
 
-
-void get_scene_name(char *content, int *i, scene_id id, game_data_t *data)
-{
-    data->scenes->list[id].name = extract_value(content, i);
-}
-
-void get_scene_toggle(char *content, int *i, scene_id id, game_data_t *data)
-{
-    toggle_t t = fill_toogle(content, i);
-    data->scenes->list[id].toggle = t;
-}
-
 void get_scene_background(char *content, int *i,
 scene_id id, game_data_t *data)
 {

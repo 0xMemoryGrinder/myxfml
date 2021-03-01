@@ -80,7 +80,7 @@ static const struct conf_tag_action_s scene_tags[]= {
 
 // Load Scene
 void get_scene(char *content, int *i, game_data_t *data, scene_id id);
-void load_scene(char *path, scene_id id, game_data_t *data);
+int load_scene(char *path, scene_id id, game_data_t *data);
 
 void get_scenes_list(char *content, int *i, game_data_t *data);
 void get_actual_scene_id(char *content, int *i, game_data_t *data);
@@ -155,6 +155,12 @@ static const struct conf_tag_action_s game_conf_tags[]= {
         {NULL}
 };
 
+typedef struct tag_ftc_s {
+    char *tag;
+    void *(*func)();
+} tag_ftc_t;
+
+#define ftc (void *(*)())
 
 game_data_t *create_game(void);
 

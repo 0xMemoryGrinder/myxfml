@@ -31,7 +31,7 @@ int my_put_nbr_err(int nb)
     return (0);
 }
 
-void my_puterr(char *str, char *filename, int line)
+int *my_puterr(char *str, char *filename, int line)
 {
     my_putstr_err(str);
     my_putstr_err(" in ");
@@ -39,5 +39,5 @@ void my_puterr(char *str, char *filename, int line)
     my_putstr_err(" at line ");
     my_put_nbr_err(line);
     write(2, "\n", 1);
-    exit(84);
+    return NULL;
 }

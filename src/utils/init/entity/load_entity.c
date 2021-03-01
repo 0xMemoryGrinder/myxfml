@@ -26,7 +26,7 @@ int iterate_entity_file(xmlnode_t *node, entity_t *entity)
         else if (!my_strcmp(node->children.data[i]->tag, "children"))
             good = load_entity_children(node->children.data[i], entity);
         else
-            return *my_puterr("Unknown entity tag", __FILE__, __LINE__);
+            return my_puterr("Unknown entity tag", __FILE__, __LINE__).nb;
         if (!good)
             return 0;
     }

@@ -19,7 +19,7 @@ entity_t *malloc_entity_node(void)
     entity_t *entity = malloc(sizeof(entity_t));
 
     if (entity == NULL)
-        my_puterr("Error allocating entity", __FILE__, __LINE__);
+        return my_puterr("Error allocating entity", __FILE__, __LINE__).ptr;
     entity->name = NULL;
     entity->path = NULL;
     entity->parent = NULL;
@@ -40,7 +40,8 @@ entity_list_t *malloc_list_node(void)
     entity_list_t *new = malloc(sizeof(entity_list_t));
 
     if (!new)
-        my_puterr("Error allocating entity list node", __FILE__, __LINE__);
+        return my_puterr("Error allocating entity list node",
+        __FILE__, __LINE__).ptr;
     new->next = NULL;
     new->back = NULL;
     new->entity = NULL;

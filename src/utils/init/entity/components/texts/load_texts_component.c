@@ -45,8 +45,7 @@ text_t load_text(xmlnode_t *node, int *status)
     }
     if (text.is_rslinked)
         if (!load_text_offset(node, &text)) {
-            *status = (int)*my_puterr("Missing text offset",
-            __FILE__, __LINE__);
+            *status = my_puterr("Missing text offset", __FILE__, __LINE__).nb;
             return text;
         }
     sfText_setCharacterSize(text.text, text.size);
@@ -65,7 +64,7 @@ int load_texts_list(xmlnode_t *node, texts_t *texts)
         return 0;
     for (int n = 0; n < node->children.size; n++) {
         if (my_strcmp(node->children.data[n]->tag, "text"))
-            return (int)my_puterr("Unknown sound tag", __FILE__, __LINE__);
+            return my_puterr("Unknown sound tag", __FILE__, __LINE__).nb;
         texts->text[n] = load_text(node->children.data[n], &good);
         if (!good)
             return 0;

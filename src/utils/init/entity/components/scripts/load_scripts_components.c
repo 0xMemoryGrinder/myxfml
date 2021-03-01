@@ -57,7 +57,7 @@ int load_scripts_list(xmlnode_t *node, script_list_t *scripts)
 
     for (int n = 0; n < node->children.size; n++) {
         if (my_strcmp(node->children.data[n]->tag, "script"))
-            return *my_puterr("Unknown script tag", __FILE__, __LINE__);
+            return my_puterr("Unknown script tag", __FILE__, __LINE__).nb;
         to_check = load_script(node->children.data[n]);
         if (!to_check)
             return 0;

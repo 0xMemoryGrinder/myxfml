@@ -8,7 +8,7 @@
 #include "my_xml.h"
 #include "utils/init/entity/components/load_components.h"
 #include "my_csfml.h"
-#include "../../../../../include/my_puterr.h"
+#include "my_puterr.h"
 
 int load_components(xmlnode_t *node, entity_t *entity)
 {
@@ -24,7 +24,7 @@ int load_components(xmlnode_t *node, entity_t *entity)
         node->children.data[i]->tag, components_conf_tag_action[k].tag))
             k++;
         if (!components_conf_tag_action[k].tag)
-            return *my_puterr("Unknown component tag", __FILE__, __LINE__);
+            return my_puterr("Unknown component tag", __FILE__, __LINE__).nb;
         good = components_conf_tag_action[k].action(node->children.data[i],
         entity->components);
         if (!good)

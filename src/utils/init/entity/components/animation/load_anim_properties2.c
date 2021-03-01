@@ -42,7 +42,7 @@ int load_anim_frames(xmlnode_t *node, anim_t *anim)
         return 0;
     for (int n = 0; n < anim->frames_count; n++) {
         if (my_strcmp(node->children.data[n]->tag, "frame"))
-            return (int)my_puterr("Invalid tag name", __FILE__, __LINE__);
+            return my_puterr("Invalid tag name", __FILE__, __LINE__).nb;
         anim->frame[n] = load_anim_frame(node->children.data[n], &good);
         if (!good)
             return 0;

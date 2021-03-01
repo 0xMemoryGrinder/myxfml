@@ -7,7 +7,8 @@
 
 #include <unistd.h>
 #include <stdlib.h>
-#include "../../include/my.h"
+#include "my_puterr.h"
+#include "my.h"
 
 void my_putstr_err(char *str);
 
@@ -31,7 +32,7 @@ int my_put_nbr_err(int nb)
     return (0);
 }
 
-int *my_puterr(char *str, char *filename, int line)
+error_code_t my_puterr(char *str, char *filename, int line)
 {
     my_putstr_err(str);
     my_putstr_err(" in ");
@@ -39,5 +40,5 @@ int *my_puterr(char *str, char *filename, int line)
     my_putstr_err(" at line ");
     my_put_nbr_err(line);
     write(2, "\n", 1);
-    return NULL;
+    return error_code;
 }

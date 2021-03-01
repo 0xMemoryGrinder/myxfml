@@ -15,7 +15,7 @@ int load_entity_name(xmlnode_t *node, entity_t *entity)
     entity->name = xml_value_str("name", node, &status);
 
     if (!status || !entity->name)
-        return *my_puterr("Error with entity name", __FILE__, __LINE__);
+        return my_puterr("Error with entity name", __FILE__, __LINE__).nb;
     return 1;
 }
 
@@ -25,7 +25,7 @@ int load_entity_type(xmlnode_t *node, entity_t *entity)
     char *content = xml_value_str("type", node, &status);
 
     if (!status || !content)
-        return *my_puterr("Error with entity type", __FILE__, __LINE__);
+        return my_puterr("Error with entity type", __FILE__, __LINE__).nb;
     entity->type = fill_enum(content, entity_type_enum_tab, &status);
     free(content);
     if (!status)

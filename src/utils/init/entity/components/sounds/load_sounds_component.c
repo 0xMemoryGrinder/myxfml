@@ -43,7 +43,7 @@ int load_sounds_list(xmlnode_t *node, sfx_list_t *sounds)
 
     for (int n = 0; n < node->children.size; n++) {
         if (my_strcmp(node->children.data[n]->tag, "sound"))
-            return *my_puterr("Unknown sound tag", __FILE__, __LINE__);
+            return my_puterr("Unknown sound tag", __FILE__, __LINE__).nb;
         sounds->sfx[n] = load_sound(node->children.data[n], &good);
         if (!good)
             return 0;

@@ -18,7 +18,8 @@ components_t *malloc_components(void)
     components_t *cmp = malloc(sizeof(components_t));
 
     if (cmp == NULL)
-        my_puterr("Error : malloc component structure", __FILE__, __LINE__);
+        return my_puterr("Error : malloc component structure",
+        __FILE__, __LINE__).ptr;
     cmp->render = NULL;
     cmp->transform = NULL;
     cmp->texts = NULL;
@@ -35,7 +36,8 @@ collider_t *malloc_collider(void)
     collider_t *new = malloc(sizeof(collider_t));
 
     if (new == NULL)
-        my_puterr("Error : malloc collider structure", __FILE__, __LINE__);
+        return my_puterr("Error : malloc collider structure",
+        __FILE__, __LINE__).ptr;
     new->position = (sfVector2f){0, 0};
     new->dimensions = (sfVector2f){0, 0};
     new->on_collison = NULL;
@@ -47,7 +49,8 @@ animation_t *malloc_animations(void)
     animation_t *anim = malloc(sizeof(animation_t));
 
     if (anim == NULL)
-        my_puterr("Error : malloc animations structure", __FILE__, __LINE__);
+        return my_puterr("Error : malloc animations structure",
+        __FILE__, __LINE__).ptr;
     anim->toggle = OFF;
     anim->actual = NULL;
     anim->actual_frame = 0;
@@ -62,7 +65,8 @@ anim_t *malloc_anim_frame(void)
     anim_t *anim = malloc(sizeof(anim_t));
 
     if (anim == NULL)
-        my_puterr("Error : malloc anim frame node", __FILE__, __LINE__);
+        return my_puterr("Error : malloc anim frame node",
+        __FILE__, __LINE__).ptr;
     anim->toggle = OFF;
     anim->frames_count = 0;
     anim->frame = NULL;
@@ -78,7 +82,8 @@ frame_t *malloc_frames_array(int count)
     frame_t *frames = malloc(sizeof(frame_t) * (count + 1));
 
     if (frames == NULL )
-        my_puterr("Error : malloc frames array", __FILE__, __LINE__);
+        return my_puterr("Error : malloc frames array",
+        __FILE__, __LINE__).ptr;
     for (int i = 0; i < count; i++) {
         frames[i].trigger = 0;
         frames[i].crop = (sfIntRect){0, 0, 0, 0};

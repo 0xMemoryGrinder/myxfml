@@ -29,7 +29,7 @@ int load_anim_list(xmlnode_t *node, animation_t *animation)
 
     for (int n = 0; n < node->children.size; n++) {
         if (my_strcmp(node->children.data[n]->tag, "anim"))
-            return *my_puterr("Unknown anim tag", __FILE__, __LINE__);
+            return my_puterr("Unknown anim tag", __FILE__, __LINE__).nb;
         to_check = load_anim(node->children.data[n]);
         if (!to_check)
             return 0;

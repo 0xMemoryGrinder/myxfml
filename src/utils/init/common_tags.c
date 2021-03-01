@@ -20,7 +20,7 @@ int fill_enum(char *value, const global_enum_tab_t *tab, int *status)
     while (tab[k].str && my_strcmp(value, tab[k].str))
         k++;
     if (!tab[k].str) {
-        *status = (int)my_puterr("Unknown enum", __FILE__, __LINE__);
+        *status = my_puterr("Unknown enum", __FILE__, __LINE__).nb;
         return 0;
     }
     return tab[k].enum_nb;
@@ -34,7 +34,7 @@ int *status)
     while (tab[k].str && my_strcmp(value, tab[k].str))
         k++;
     if (!tab[k].str) {
-        *status = (int)my_puterr("Unknown function", __FILE__, __LINE__);
+        *status = my_puterr("Unknown function", __FILE__, __LINE__).nb;
         return NULL;
     }
     return tab[k].func_ptr;

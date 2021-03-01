@@ -29,7 +29,7 @@ int load_render_sprite(xmlnode_t *node, render_sprite_t *render)
         return 0;
     render->texture = sfTexture_createFromFile(path, NULL);
     if (render->texture == NULL)
-        return *my_puterr("Error creating texture", __FILE__, __LINE__);
+        return my_puterr("Error creating texture", __FILE__, __LINE__).nb;
     free(path);
     sfSprite_setTexture(render->sprite, render->texture, sfFalse);
     return 1;

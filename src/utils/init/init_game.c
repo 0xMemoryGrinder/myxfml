@@ -30,8 +30,8 @@ int load_game_scenes(xmlnode_t *node, game_data_t *data)
 {
     if (!node)
         return -1;
-    data->scenes->count = xml_value_int("count", node);
-    data->scenes->actual = xml_value_int("actual", node);
+    data->scenes->count = xml_value_int("count", node , NULL);
+    data->scenes->actual = xml_value_int("actual", node, NULL);
     data->scenes->list = malloc_scene_array(data->scenes->count);
     if (data->scenes->list)
         return 0;
@@ -42,16 +42,18 @@ int load_game_scenes(xmlnode_t *node, game_data_t *data)
     return 1;
 }
 
-int load_video(xmlnode_t *node, game_data_t *data)
+int load_video(xmlnode_t *node, game_data_t *data, int *status)
 {
     if (!node)
         return -1;
-    data->game_settings->video->width = xml_value_int("x", node);
-    data->game_settings->video->height = xml_value_int("y", node);
-    data->game_settings->video->game_title = xml_value_str("fullscreen", node);
-    data->game_settings->video->fps = xml_value_int("fps", node);
-    data->game_settings->video->is_fullscreen = xml_toggle("fullscreen", node);
-    return 1;
+    data->game_settings->video->width = xml_value_int("x", node, NULL);
+    data->game_settings->video->height = xml_value_int("y", node, NULL);
+    data->game_settings->video->game_title = xml_value_str("title",
+    node, status);
+    data->game_settings->video->fps = xml_value_int("fps", node, NULL);
+    data->game_settings->video->is_fullscreen = xml_toggle("fullscreen",
+    node, status);
+    return *status;
 }
 
 int load_game_conf(char *path, game_data_t *data)
@@ -66,8 +68,8 @@ int load_game_conf(char *path, game_data_t *data)
     load_camera(extract_xml_child("camera", node, false), data);
     if (!load_game_scenes(extract_xml_child("scenes", node, false), data))
         return 0;
-    load_video(extract_xml_child("video", node, false), data);
-    return 1;
+    load_video(extract_xml_child("video", node, false), data, &status);
+    return status;
 }
 
 game_data_t *create_game(void)

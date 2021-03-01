@@ -24,7 +24,7 @@ void update_text(game_data_t *data, texts_t *texts, entity_t *entity)
             continue;
         if (texts->text[i].is_rslinked)
             texts->text[i].pos = add_vectors(E_TRANSFORM->position,
-                                             texts->text[i].offset);
+            texts->text[i].offset);
         sfText_setPosition(texts->text[i].text, texts->text[i].pos);
         sfRenderWindow_drawText(G_WINDOW, texts->text[i].text, NULL);
     }

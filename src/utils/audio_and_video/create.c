@@ -14,7 +14,8 @@ audio_data_t *malloc_audio_data(void)
     audio_data_t *new = malloc(sizeof(audio_data_t));
 
     if (new == NULL)
-        my_puterr("Error malloc audio data", __FILE__, __LINE__);
+        return (audio_data_t *)my_puterr("Error malloc audio data",
+        __FILE__, __LINE__);
     new->sounds = NULL;
     new->sfx_volume = 0;
     new->music_volume = 0;
@@ -29,13 +30,13 @@ camera_t *malloc_game_camera(void)
     camera_t *new = malloc(sizeof(camera_t));
 
     if (new == NULL)
-        my_puterr("Error malloc game camera", __FILE__ ,__LINE__);
+        return (camera_t *)my_puterr("Error malloc game camera",
+        __FILE__ ,__LINE__);
     new->transform = malloc(sizeof(transform_t));
-    if (new->transform == NULL)
-        my_puterr("Error malloc camera tranform", __FILE__, __LINE__);
     new->camera = sfView_create();
-    if (new->camera == NULL)
-        my_puterr("Error creating camera view", __FILE__, __LINE__);
+    if (new->transform == NULL || !new->camera)
+        return (camera_t *)my_puterr("Error malloc camera / tranform",
+        __FILE__, __LINE__);
     return new;
 }
 
@@ -44,7 +45,8 @@ video_data_t *malloc_video_data(void)
     video_data_t *new = malloc (sizeof(video_data_t));
 
     if (new == NULL)
-        my_puterr("Error malloc video data", __FILE__, __LINE__);
+        return (video_data_t *)my_puterr("Error malloc video data",
+        __FILE__, __LINE__);
     new->width = 0;
     new->height = 0;
     new->window = NULL;
@@ -60,10 +62,9 @@ music_t *malloc_music_array(int size)
     music_t *new = malloc(sizeof(music_t) * (size));
 
     if (new == NULL)
-        my_puterr("Error malloc music array", __FILE__, __LINE__);
-    for (int i = 0; i < size; i++) {
-        new[i].name = NULL;
-        new[i].music = NULL;
-    }
+        return (music_t *)my_puterr("Error malloc music array",
+        __FILE__, __LINE__);
+    for (int i = 0; i < size; i++)
+        new[i] = (music_t){.name = NULL, .path = NULL, .music = NULL};
     return new;
 }

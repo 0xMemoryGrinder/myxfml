@@ -17,77 +17,84 @@
 //
 //  Game Globals
 //
-void get_global_entities(char *content, int *i, game_data_t *data)
-{
-    char *name = NULL;
-    char *path;
-    char *paht2;
-    data->global_entity = malloc_entity_node();
-    entity_t *recept = NULL;
 
-    skip_to_next_tag(content, i, NEXT);
-    while (my_strncmp(content + *i, "</globals>", 10)) {
-        skip_to_next_tag(content, i, OPEN);
-        *i += entity_tag.tag_len;
-        name = extract_value(content , i);
-        *i += entity_tag.tag_len + 1;
-        path = my_strcat(GLOBAL_PATH, name);
-        paht2  =my_strcat(path, XML);
-        recept = load_entity(paht2, NULL);
-        free(name);
-        free(path);
-        free(paht2);
-        add_entity(recept, &data->global_entity);
-        skip_to_next_tag(content, i, NEXT);
-    }
-}
 
-void get_player_entities(char *content, int *i, game_data_t *data)
+int load_player(xmlnode_t *node, game_data_t *data)
 {
-    char *name = NULL;
     char *path;
-    char *path2;
+    xmlnode_list_t list;
+    entity_t *entity = NULL;
+
+    if (!node)
+        return -1;
+    list = node->children;
     data->player = malloc_entity_node();
-    entity_t *recept = NULL;
-
-    skip_to_next_tag(content, i, NEXT);
-    while (my_strncmp(content + *i, "</player>", 9)) {
-        skip_to_next_tag(content, i, OPEN);
-        *i += entity_tag.tag_len;
-        name = extract_value(content , i);
-        *i += entity_tag.tag_len + 1;
-        path = my_strcat(PLAYER_PATH, name);
-        path2 = my_strcat(path, XML);
-        recept = load_entity(path2, NULL);
-        free(name);
-        free(path);
-        free(path2);
-        add_entity(recept, &data->player);
-        skip_to_next_tag(content, i, NEXT);
+    if (!data->player)
+        return 0;
+    for (int i = 0; i < node->children.size; i++) {
+        path = get_entity_path(list.data[i], NULL);
+        if (!path)
+            return 0;
+        entity = load_entity(path, NULL);
+        if (entity)
+            add_entity(entity, &data->player);
     }
+    return 1;
 }
 
-void get_gui_entities(char *content, int *i, game_data_t *data)
+int load_gui(xmlnode_t *node, game_data_t *data)
 {
-    char *name = NULL;
     char *path;
-    char *path2;
-    data->gui = malloc_entity_node();
-    entity_t *recept = NULL;
+    xmlnode_list_t list;
+    entity_t *entity = NULL;
 
-    skip_to_next_tag(content, i, NEXT);
-    while (my_strncmp(content + *i, "</gui>", 6)) {
-        skip_to_next_tag(content, i, OPEN);
-        *i += entity_tag.tag_len;
-        name = extract_value(content , i);
-        *i += entity_tag.tag_len + 1;
-        path = my_strcat(GUI_PATH, name);
-        path2 = my_strcat(path, XML);
-        recept = load_entity(path2, NULL);
-        free(name);
-        free(path);
-        free(path2);
-        add_entity(recept, &data->gui);
-        skip_to_next_tag(content, i, NEXT);
+    if (!node)
+        return -1;
+    list = node->children;
+    data->gui = malloc_entity_node();
+    if (!data->gui)
+        return 0;
+    for (int i = 0; i < node->children.size; i++) {
+        path = get_entity_path(list.data[i], NULL);
+        if (!path)
+            return 0;
+        entity = load_entity(path, NULL);
+        if (entity)
+            add_entity(entity, &data->gui);
     }
+    return 1;
+}
+
+int load_globals(xmlnode_t *node, game_data_t *data)
+{
+    char *path;
+    xmlnode_list_t list;
+    entity_t *entity = NULL;
+
+    if (!node)
+        return -1;
+    list = node->children;
+    data->global_entity = malloc_entity_node();
+    if (!data->global_entity)
+        return 0;
+    for (int i = 0; i < node->children.size; i++) {
+        path = get_entity_path(list.data[i], NULL);
+        if (!path)
+            return 0;
+        entity = load_entity(path, NULL);
+        if (entity)
+            add_entity(entity, &data->global_entity);
+    }
+    return 1;
+}
+
+int load_global_entities(xmlnode_t *node, game_data_t *data)
+{
+    if (!node)
+        return -1;
+    if (!load_player(extract_xml_child("player", node, false), data) ||
+    !load_globals(extract_xml_child("globals", node, false), data) ||
+    !load_gui(extract_xml_child("gui", node, false), data))
+        return 0;
+    return 1;
 }

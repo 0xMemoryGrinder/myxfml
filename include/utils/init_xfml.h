@@ -33,6 +33,8 @@ typedef struct tag_ftc_s {
 
 #define ftc (void *(*)())
 
+char *get_entity_path(xmlnode_t *node, char *scene_name);
+int load_global_entities(xmlnode_t *node, game_data_t *data);
 int load_scene(char *path, scene_id id, game_data_t *data);
 int insert_globals(xmlnode_t *node, game_data_t *data, scene_array_t *scene);
 game_data_t *create_game(void);

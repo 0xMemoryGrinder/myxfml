@@ -126,9 +126,30 @@ typedef struct next_route_sdata_s {
 } next_route_sdata_t;
 
 
-typedef struct mob_health_s {
+typedef struct health_stats_s {
     int health;
     int max_health;
-} mob_health_t;
+} health_stats_t;
+
+typedef struct attack_stats_s {
+    int damage;
+    float attack_speed;
+}attack_stats_t;
+
+typedef struct wave_s {
+    sfInt64 between;
+    sfInt64 actual_time;
+    entity_list_t *to_spawn;
+    entity_list_t *list;
+} wave_t;
+
+typedef struct level_waves_s {
+    int count;
+    int actual;
+    sfInt64 between;
+    sfInt64 actual_time;
+    sfBool wave_done;
+    wave_t *waves;
+} level_waves_t;
 
 #endif //MY_DEFENDER_CUSTOM_STRUCTS_H

@@ -16,6 +16,11 @@ void *hoover_rs_script(void **none, game_data_t *data, entity_list_t *entity);
 void *mob_route_script(void **none, game_data_t *data, entity_list_t *mob);
 void *walking_direction_script(void **, game_data_t *, entity_list_t *);
 void *next_route(void **, game_data_t *, entity_list_t *);
+void *health_stats_script(void **none, game_data_t *data,
+entity_list_t *entity);
+void *attack_stats_script(void **none, game_data_t *data,
+entity_list_t *entity);
+
 
 // DESTROY DATA FUNCTIONS
 void destroy_script_data(void **data);

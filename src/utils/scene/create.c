@@ -20,13 +20,14 @@ scene_objects_t *malloc_scene_objects(void)
         return my_puterr("Error : malloc scene entity_templates",
         __FILE__, __LINE__).ptr;
     new->list = NULL;
-    new->interact = malloc_list_node();
-    new->render = malloc_list_node();
-    new->text = malloc_list_node();
-    new->sfx = malloc_list_node();
-    new->scripts = malloc_list_node();
-    new->colliders = malloc_list_node();
-    new->transforms = malloc_list_node();
+    new->interact = NULL;
+    new->render = NULL;
+    new->text = NULL;
+    new->sfx = NULL;
+    new->scripts = NULL;
+    new->colliders = NULL;
+    new->transforms = NULL;
+    new->gui = NULL;
     return new;
 }
 

@@ -23,7 +23,7 @@ entity_t *get_entity_name(entity_t *entity, const char *name)
     return to_return;
 }
 
-void add_entity(entity_t *entity, entity_t **list)
+void  add_entity(entity_t *entity, entity_t **list)
 {
     entity_t *current = *list;
 
@@ -49,26 +49,11 @@ void add_entity_children(entity_t *entity, entity_t **list)
     entity->back = current;
 }
 
-
-void init_list(entity_t *entity, entity_list_t **list)
-{
-    if (!(*list)) {
-        (*list) = malloc_list_node();
-        (*list)->entity = entity;
-    } else {
-        if (!(*list)->entity)
-            (*list)->entity = entity;
-        else {
-            (*list)->next = malloc_list_node();
-            (*list)->next->entity = entity;
-            (*list)->next->back = (*list);
-        }
-    }
-}
-
 void add_entity_to_list(entity_t *entity, entity_list_t **list)
 {
-    if (!(*list)->entity) {
+    if (!(*list) || !(*list)->entity) {
+        if (!(*list))
+            (*list) = malloc_list_node();
         (*list)->entity = entity;
         return;
     }

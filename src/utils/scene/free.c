@@ -26,7 +26,10 @@ void destroy_scene_array(scene_array_t *list, int size)
         free_entites_list(list[i].objects->sfx);
         free_entites_list(list[i].objects->colliders);
         free_entites_list(list[i].objects->scripts);
+        free_entites_list(list[i].objects->gui);
+        free_entites_list(list[i].objects->transforms);
         free_entity_list(list[i].objects->list);
+        free_entity_list(list[i].objects->background);
         free(list[i].objects);
     }
     free(list);

@@ -37,7 +37,7 @@ char *my_multiple_strcat(int n, ...)
             return NULL;
         str_size = my_strlen(actual);
         new = mem_expand(new, sizeof(char) * actual_size,
-       sizeof(char) * (actual_size + str_size));
+       sizeof(char) * (actual_size + str_size + 1));
         actual_size += str_size;
         if (new == NULL)
             return NULL;

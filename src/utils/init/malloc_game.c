@@ -20,7 +20,7 @@ game_data_t *malloc_game(void)
     data->stats = malloc_game_stats();
     data->game_settings = malloc_settings();
     data->scenes = malloc_scene_struct();
-    if (!data->stats || !data->game_settings || data->scenes)
+    if (!data->stats || !data->game_settings || !data->scenes)
         return NULL;
     data->stats->time = malloc_time_stats();
     data->stats->camera = malloc_game_camera();

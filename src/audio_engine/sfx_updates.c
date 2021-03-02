@@ -40,7 +40,7 @@ void sfx_engine(game_data_t *data, entity_list_t *list)
 {
     entity_list_t *sfx_list = list;
 
-    if (list->entity == NULL)
+    if (!list || list->entity == NULL)
         return;
     for (; sfx_list; sfx_list = sfx_list->next) {
         if (sfx_list->entity->toggle == OFF ||

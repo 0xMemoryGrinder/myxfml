@@ -24,7 +24,11 @@
 
 
 entity_t *load_entity(char *filepath, entity_t *parent);
-
+int mod_toggle(xmlnode_t *node, toggle_t *toggle, char *key);
+int mod_int_value(xmlnode_t *node, int *data, char *key);
+int mod_float_value(xmlnode_t *node, float *data, char *key);
+int mod_str(xmlnode_t *node, char **str, char *key);
+int moddify_entity(xmlnode_t *node, entity_t *entity);
 
 typedef struct tag_ftc_s {
     char *tag;

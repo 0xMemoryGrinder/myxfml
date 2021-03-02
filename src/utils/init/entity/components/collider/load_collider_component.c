@@ -54,6 +54,8 @@ int load_collider_action(xmlnode_t *node, collider_t *collider)
 
     if (!status)
         return 0;
+    if (!content)
+        return 1;
     collider->on_collison = (void (*)(entity_list_t *, entity_list_t *,
     game_data_t *, sfIntRect)) fill_function(content, collider_func_ptr_tab,
     &status);

@@ -30,10 +30,10 @@ int load_game_scenes(xmlnode_t *node, game_data_t *data)
 {
     if (!node)
         return -1;
-    data->scenes->count = xml_value_int("count", node , NULL);
+    data->scenes->count = node->children.size;
     data->scenes->actual = xml_value_int("actual", node, NULL);
     data->scenes->list = malloc_scene_array(data->scenes->count);
-    if (data->scenes->list)
+    if (!data->scenes->list)
         return 0;
     for (int i = 0; i < data->scenes->count; i++) {
         if (!load_scene(node->children.data[i]->data, i, data))
@@ -69,6 +69,8 @@ int load_game_conf(char *path, game_data_t *data)
     if (!load_game_scenes(extract_xml_child("scenes", node, false), data))
         return 0;
     load_video(extract_xml_child("video", node, false), data, &status);
+    free_xmlnode(doc->root);
+    free(doc);
     return status;
 }
 

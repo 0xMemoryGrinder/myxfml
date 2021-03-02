@@ -14,6 +14,7 @@ void destroy_game_stats(game_stats_t *stats)
     sfClock_destroy(stats->time->game_clock);
     free(stats->time);
     sfView_destroy(stats->camera->camera);
+    free(stats->camera->transform);
     free(stats->camera);
     free(stats->event);
     free(stats);

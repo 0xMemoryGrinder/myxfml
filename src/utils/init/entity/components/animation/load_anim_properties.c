@@ -41,6 +41,8 @@ int load_anim_frame_action(xmlnode_t *node, anim_t *anim)
 
     if (!status)
         return 0;
+    if (!content)
+        return 1;
     anim->frame_action = (void (*)(game_data_t *, entity_list_t *,
     animation_t *)) fill_function(content, anim_func_ptr_tab, &status);
     free(content);

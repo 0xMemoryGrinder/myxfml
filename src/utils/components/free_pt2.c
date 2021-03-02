@@ -19,6 +19,8 @@ void free_scripts(script_t *scripts)
         free_scripts(scripts->next);
     if (scripts->destroy)
         scripts->destroy(scripts->data);
+    if (scripts->name)
+        free(scripts->name);
     if (scripts != NULL)
         free(scripts);
     scripts = NULL;

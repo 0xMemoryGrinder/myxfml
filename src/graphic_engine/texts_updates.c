@@ -34,7 +34,7 @@ void get_texts_updates(game_data_t *data, entity_list_t *texts)
 {
     entity_list_t *list = texts;
 
-    if (list->entity == NULL)
+    if (!list || list->entity == NULL)
         return;
     for (; list; list = list->next) {
         if (list->entity->toggle == OFF || list->E_TEXT->toggle == OFF)

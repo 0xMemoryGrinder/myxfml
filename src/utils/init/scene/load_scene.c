@@ -17,7 +17,7 @@ char *get_entity_path(xmlnode_t *node, char *scene_name)
 {
     int status = 1;
     char *from = xml_value_str("from", node, &status);
-    char *scene = my_multiple_strcat(4,"conf/scenes/", scene_name, "/", node->data, ".xml");
+    char *scene = my_multiple_strcat(5,"conf/scenes/", scene_name, "/", node->data, ".xml");
     char *template = my_multiple_strcat(3, "conf/entity_templates/", node->data, ".xml");
 
     if (!from) {
@@ -29,49 +29,52 @@ char *get_entity_path(xmlnode_t *node, char *scene_name)
     if (!my_strcmp(from, "scene") && scene) {
         free_multiple_ptr(2, from, template);
         return scene;
-    }
-    if (!my_strcmp(from, "template") && template) {
+    } if (!my_strcmp(from, "template") && template) {
         free_multiple_ptr(2, from, scene);
         return template;
-    }
+    } my_puterr("Error with \"from\" attribute in scene conf",
+    __FILE__, __LINE__);
     return node->data;
 }
 
 int load_scene_entities(xmlnode_t *node, scene_array_t *scene)
 {
-    int count;
     entity_t *entity;
+    int status = 1;
+    int status2 = 1;
+    char *path;
 
     if (!node)
         return -1;
     for (int i = 0; i < node->children.size; i ++) {
-        count = xml_value_int("count", node->children.data[i], NULL);
-        if (!count)
-            count++;
-        for (int j = 0; j < count; j++) {
-            entity = load_entity(
-            get_entity_path(node->children.data[i], scene->name), NULL);
-            add_entity(entity, &scene->objects->list);
-            if (!entity)
-                return 0;
-        }
-    }
-    return 1;
+        path = get_entity_path(node->children.data[i], scene->name);
+        entity = load_entity(path, NULL);
+        free(path);
+        if (! entity)
+            return 0;
+        if (xml_toggle("modify", node->children.data[i], &status) == 1
+        && status)
+            status2 = moddify_entity(node->children.data[i], entity);
+        if (! status || ! status2)
+            return 0;
+        add_entity(entity, &scene->objects->list);
+    } return 1;
 }
 
 int scene_properties(xmlnode_t *node, scene_id id,
 game_data_t *data, int *status)
 {
+    char *path = NULL;
+
     data->scenes->list[id].id = id;
     data->scenes->list[id].name = xml_value_str("name", node, status);
+    path =  get_entity_path(
+    extract_xml_child("background", node, false), data->scenes->list[id].name);
     data->scenes->list[id].toggle = xml_toggle("toggle", node, status);
-    data->scenes->list[id].objects->background = load_entity( get_entity_path(
-    extract_xml_child("background", node, false),
-    data->scenes->list[id].name), NULL);
-    if (!data->scenes->list[id].objects->background) {
+    data->scenes->list[id].objects->background = load_entity(path, NULL);
+    free(path);
+    if (!data->scenes->list[id].objects->background)
         *status = 0;
-        return 0;
-    }
     return 1;
 }
 
@@ -95,3 +98,12 @@ int load_scene(char *path, scene_id id, game_data_t *data)
     free_multiple_ptr(2, doc, path1);
     return status;
 }
+
+/*
+ * <entity count="1" from="scene">routes/route_1</entity>
+<entity count="1" from="scene">routes/route_2</entity>
+<entity count="1" from="scene">routes/route_3</entity>
+<entity count="1" from="scene">routes/route_4</entity>
+<entity count="1" from="scene">routes/route_5</entity>
+<entity count="1" from="scene">routes/route_6</entity>
+ */

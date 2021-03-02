@@ -18,7 +18,7 @@ static int get_first_digit_idx(const char *str)
 
 static int check_neg(const char *str, int first_digit)
 {
-    if (str[first_digit - 1] == '-')
+    if (first_digit > 0 && str[first_digit - 1] == '-')
         return 1;
     else
         return 0;

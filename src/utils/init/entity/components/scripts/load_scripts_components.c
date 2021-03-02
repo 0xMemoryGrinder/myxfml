@@ -44,9 +44,9 @@ script_t *load_script(xmlnode_t *node)
 {
     script_t *script = malloc_script_node();
 
-    if (script == NULL || !load_script_name(node, script) ||
-    !load_script_action(node, script) || !load_script_destroy(node, script) ||
-    !load_script_trigger(node, script))
+    if (script == NULL || !load_scripts_toggle(node, script) ||
+    !load_script_name(node, script) || !load_script_action(node, script) ||
+    !load_script_destroy(node, script) || !load_script_trigger(node, script))
         return NULL;
     return script;
 }

@@ -9,7 +9,7 @@ int check_int(char const *str, int nSize, int nb)
 {
     int bo = 0;
     int reNb = 0;
-    if (str[nb - 1] == '-')
+    if (nb > 0 && str[nb - 1] == '-')
         bo = 1;
 
     for (int i = 1; i <= nSize; i++) {
@@ -33,10 +33,10 @@ int my_getnbr(char const *str)
     int size = 0;
     int rNb;
 
-    while ( str[i] < '0' || '9' < str[i] )
+    while (str[i] && str[i] < '0' || '9' < str[i] )
         i++;
     n = i;
-    while ( str[i] >= '0' && '9' >= str[i] ) {
+    while (str[i] && str[i] >= '0' && '9' >= str[i]) {
         size++;
         i++;
     }

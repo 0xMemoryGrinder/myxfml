@@ -52,6 +52,8 @@ entity_t *load_entity(char *filepath, entity_t *parent)
         update_anim_state(entity);
     if (E_RSPRITE && E_TRANSFORM)
         sfSprite_setPosition(E_RSPRITE->sprite, E_TRANSFORM->position);
+    free_xmlnode(doc->root);
+    free(doc);
     return entity;
 }
 

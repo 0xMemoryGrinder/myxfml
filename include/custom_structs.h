@@ -122,12 +122,28 @@ struct projectile_s {
 typedef struct health_stats_s {
     int health;
     int max_health;
+    sfRectangleShape *life;
+    sfRectangleShape *total_life;
 } health_stats_t;
 
 typedef struct attack_stats_s {
     int damage;
     float attack_speed;
-}attack_stats_t;
+    float range;
+    toggle_t is_attacking;
+} attack_stats_t;
+
+typedef struct aggro_data_s{
+    entity_list_t *aggro_list;
+    entity_t *aggro_entity;
+    toggle_t is_aggro;
+} aggro_data_t;
+
+
+//*********************** END RP Component's **********************//
+/////////////////////////////////////////////////////////////////////
+/////////////////////////////////////////////////////////////////////
+//*********************** TD Component's **************************//
 
 typedef struct wave_s {
     sfInt64 between;

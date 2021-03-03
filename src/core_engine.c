@@ -85,6 +85,7 @@ int xfml_game_loop(game_data_t * data)
         if (!graphic_engine(data))
             return 0;
         sfRenderWindow_display(G_WINDOW);
+        kill_entities(data, G_ACTUAL_SCENE.to_free);
     }
     return 1;
 }

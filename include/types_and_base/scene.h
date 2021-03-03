@@ -30,6 +30,7 @@ struct scene_array_s{
     toggle_t toggle;
     scene_objects_t *objects;
     script_list_t *scene_scripts;
+    entity_list_t *to_free;
 };
 
 struct scenes_s{
@@ -60,5 +61,5 @@ void insert_entities_inlists(entity_t *list, scene_objects_t *objects
 , sfBool is_gui);
 void insert_entity_inlists(entity_t *entity, scene_objects_t *objects
 , sfBool is_gui);
-
+void kill_entities(game_data_t *data, entity_list_t *to_free);
 #endif //LIBCSFML_SCENE_H

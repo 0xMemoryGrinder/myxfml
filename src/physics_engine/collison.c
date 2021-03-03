@@ -46,10 +46,12 @@ game_data_t *data, sfBool is_collide)
     int status = 1;
 
     if (is_collide) {
-        if (entity->E_COLLIDER->on_collison && collider && collider->entity)
+        if (entity->E_COLLIDER->on_collison && entity->entity->toggle &&
+        collider && collider->entity && collider->entity->toggle)
             status = entity->E_COLLIDER->on_collison(entity->entity,
             collider->entity, data);
-        if (status && entity->entity && collider && collider->entity
+        if (status && entity->entity && entity->entity->toggle &&
+            collider && collider->entity && collider->entity->toggle
             && collider->E_COLLIDER->on_collison)
             status = collider->E_COLLIDER->on_collison(collider->entity,
             entity->entity, data);
@@ -63,7 +65,7 @@ game_data_t *data)
     sfBool is_collide = sfFalse;
     int status = 1;
 
-    for (; status && collider; collider = collider->next) {
+    for (; status && entity->entity->toggle && collider; collider = collider->next) {
         if (collider->entity->toggle == OFF ||
             collider->E_COLLIDER->toggle == OFF)
             continue;

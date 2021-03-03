@@ -41,6 +41,7 @@ struct game_stats_s{
 struct settings_s{
     video_data_t *video;
     audio_data_t *audio;
+    toggle_t debug;
 };
 
 struct game_data_s {

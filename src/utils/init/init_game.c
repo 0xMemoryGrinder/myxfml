@@ -69,6 +69,8 @@ int load_game_conf(char *path, game_data_t *data)
     if (!load_game_scenes(extract_xml_child("scenes", node, false), data))
         return 0;
     load_video(extract_xml_child("video", node, false), data, &status);
+    if (status != 0)
+        data->game_settings->debug = xml_toggle("debug", node, &status);
     free_xmlnode(doc->root);
     free(doc);
     return status;

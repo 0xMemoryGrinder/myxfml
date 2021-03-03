@@ -11,7 +11,20 @@
 #include "my.h"
 #include "utils/init_xfml.h"
 #include <stdarg.h>
+#include "utils/init/entity/components/scripts/load_scripts_components.h"
 
+int load_scene_scripts(xmlnode_t *node, scene_array_t *scene)
+{
+    if (!node)
+        return -1;
+    scene->scene_scripts = malloc_script_list();
+
+    if (scene->scene_scripts == NULL ||
+        !load_scripts_toggle(node, scene->scene_scripts) ||
+        !load_scripts_list(node, scene->scene_scripts))
+        return 0;
+    return 1;
+}
 
 char *get_entity_path(xmlnode_t *node, char *scene_name)
 {
@@ -89,6 +102,8 @@ int load_scene(char *path, scene_id id, game_data_t *data)
         return 0;
     node = doc->root;
     scene_properties(node, id, data, &status);
+    load_scene_scripts(extract_xml_child("scripts", node, false),
+    &G_ACTUAL_SCENE);
     insert_globals(extract_xml_child("insert", node, false),
     data, &data->scenes->list[id]);
     if (!load_scene_entities(extract_xml_child("entities", node, false),

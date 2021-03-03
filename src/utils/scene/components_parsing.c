@@ -7,6 +7,15 @@
 
 #include "../../../include/my_csfml.h"
 
+static void insert_pt3(entity_t *entity, scene_objects_t *objects,
+sfBool is_gui)
+{
+    if (E_TRANSFORM)
+        add_entity_to_list(entity, &objects->transforms);
+    if (E_RSPRITE && is_gui)
+        add_entity_to_list(entity, &objects->gui);
+}
+
 static void insert_pt2(entity_t *entity, scene_objects_t *objects)
 {
     if (E_TEXT && !E_RSPRITE)
@@ -27,6 +36,7 @@ void insert_entity_inlists(entity_t *entity, scene_objects_t *objects
     if (E_SOUND)
         add_entity_to_list(entity, &objects->sfx);
     insert_pt2(entity, objects);
+    insert_pt3(entity, objects, is_gui);
 }
 
 void insert_entities_inlists(entity_t *list, scene_objects_t *objects,
@@ -38,10 +48,6 @@ sfBool is_gui)
         if (list->children != NULL)
             insert_entities_inlists(entity->children, objects, is_gui);
         insert_entity_inlists(entity, objects, is_gui);
-        if (E_TRANSFORM)
-            add_entity_to_list(entity, &objects->transforms);
-        if (E_RSPRITE && is_gui)
-            add_entity_to_list(entity, &objects->gui);
     }
 }
 

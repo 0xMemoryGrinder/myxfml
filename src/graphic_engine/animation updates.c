@@ -39,13 +39,14 @@ void update_anim_frame(game_data_t *data, entity_t *entity)
         ACTUAL_FRAME = 0;
 }
 
-void get_animations_update(game_data_t *data, entity_list_t *animation)
+int get_animations_update(game_data_t *data, entity_list_t *animation)
 {
     entity_list_t *list = animation;
+    int status = 1;
 
     if (!list || list->entity == NULL)
-        return;
-    for (; list; list = list->next) {
+        return -1;
+    for (; status && list; list = list->next) {
         if (list->entity->toggle == OFF || list->E_ANIMATION->toggle == OFF)
             continue;
         if (list->E_ANIMATION->actual_anim != list->E_ANIMATION->actual->name)
@@ -54,7 +55,8 @@ void get_animations_update(game_data_t *data, entity_list_t *animation)
         sfSprite_setTextureRect(list->E_RSPRITE->sprite,
         list->A_CROP[list->ACTUAL_FRAME].crop);
         if (list->E_ANIMATION->actual->frame_action != NULL)
-            list->E_ANIMATION->actual->frame_action(data,
-            list, list->E_ANIMATION);
+            status = list->E_ANIMATION->actual->frame_action(data,
+            list->entity, list->E_ANIMATION);
     }
+    return status;
 }

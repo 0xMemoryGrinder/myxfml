@@ -31,6 +31,12 @@ void transform_collider(entity_t *entity)
     if (E_TRANSFORM == NULL || E_TRANSFORM->toggle == OFF)
         return;
     if (E_COLLIDER && E_COLLIDER->toggle == ON) {
+        if (E_COLLIDER->is_circle)
+            sfCircleShape_move(E_COLLIDER->circ_collider,
+           E_TRANSFORM->velocity);
+        else
+            sfRectangleShape_move(E_COLLIDER->rect_collider,
+        E_TRANSFORM->velocity);
         E_COLLIDER->position.x += E_TRANSFORM->velocity.x;
         E_COLLIDER->position.y += E_TRANSFORM->velocity.y;
     }

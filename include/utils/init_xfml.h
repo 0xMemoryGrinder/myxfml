@@ -35,7 +35,7 @@ typedef struct tag_ftc_s {
     void *(*func)();
 } tag_ftc_t;
 
-#define ftc (void *(*)())
+#define ftc(function) (void *(*)())function
 
 char *get_entity_path(xmlnode_t *node, char *scene_name);
 int load_global_entities(xmlnode_t *node, game_data_t *data);

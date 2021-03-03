@@ -9,7 +9,6 @@
 #include "my_csfml.h"
 #include "my.h"
 #include "my_puterr.h"
-#include "utils/init/entity/components/animation/load_animation_component_tabs.h"
 
 anim_t *load_anim(xmlnode_t *node)
 {

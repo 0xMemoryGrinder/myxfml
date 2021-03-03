@@ -18,12 +18,17 @@
 //
 //  Collider_Component
 //
+
 struct collider_s {
     toggle_t toggle;
+    toggle_t is_circle;
     sfVector2f position;
     sfVector2f dimensions;
-    void (* on_collison)(entity_list_t *self, entity_list_t *collider,
-    game_data_t *data, sfIntRect intersect);
+    float radius;
+    sfCircleShape *circ_collider;
+    sfRectangleShape *rect_collider;
+    int (* on_collison)(entity_t *self, entity_t *collider,
+    game_data_t *data);
 };
 
 
@@ -127,7 +132,7 @@ struct anim_s {
     anim name;
     sfInt64 actual_time;
     frame_t *frame;
-    void (* frame_action)(game_data_t *d, entity_list_t *e, animation_t *a);
+    int (* frame_action)(game_data_t *d, entity_t *e, animation_t *a);
     anim_t *next;
 };
 
@@ -148,8 +153,8 @@ struct script_s {
     sfInt64 actual;
     char *name;
     void *data;
-    void *(*update)(void **d, game_data_t *g, entity_list_t *e);
-    void *(*destroy)(void **d);
+    int (*update)(void **d, game_data_t *g, entity_t *e);
+    void (*destroy)(void **d);
     script_t *next;
 };
 

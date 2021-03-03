@@ -43,20 +43,30 @@ void input_engine(game_data_t *data)
     check_inputs(data, G_ACTUAL_SCENEOBJS->interact, right, left);
 }
 
-void audio_engine(game_data_t *data)
+int scene_scripts_updates(game_data_t *data)
 {
-    music_engine(data, G_AUDIO);
-    sfx_engine(data, G_ACTUAL_SCENEOBJS->sfx);
+    script_t *scripts = G_ACTUAL_SCENE.scene_scripts->list;
+    int status = 1;
+
+    if (G_ACTUAL_SCENE.scene_scripts->toggle == OFF)
+        return - 1;
+    for (; status && scripts; scripts = scripts->next) {
+        if (scripts->toggle == OFF)
+            continue;
+       status = update_script(data, NULL, scripts);
+    }
+    return status;
 }
 
-void graphic_engine(game_data_t *data)
+int graphic_engine(game_data_t *data)
 {
-    render_background(data, G_ACTUAL_SCENEOBJS->background);
-    get_animations_update(data, G_ACTUAL_SCENEOBJS->render);
+    if (!get_animations_update(data, G_ACTUAL_SCENEOBJS->render))
+        return 0;
     G_ACTUAL_SCENEOBJS->render = mergeSort(G_ACTUAL_SCENEOBJS->render);
     get_render_updates(data, G_ACTUAL_SCENEOBJS->render);
     get_render_updates(data, G_ACTUAL_SCENEOBJS->gui);
     get_texts_updates(data, G_ACTUAL_SCENEOBJS->text);
+    return 1;
 }
 
 int xfml_game_loop(game_data_t * data)
@@ -64,12 +74,17 @@ int xfml_game_loop(game_data_t * data)
     while (sfRenderWindow_isOpen(G_WINDOW)) {
         input_engine(data);
         sfRenderWindow_clear(G_WINDOW, sfBlack);
-        audio_engine(data);
-        physics_update(G_ACTUAL_SCENEOBJS->colliders, data);
-        get_scripts_updates(data, G_ACTUAL_SCENEOBJS->scripts);
+        music_engine(data, G_AUDIO);
+        sfx_engine(data, G_ACTUAL_SCENEOBJS->sfx);
+        render_background(data, G_ACTUAL_SCENEOBJS->background);
+        if (!physics_update(G_ACTUAL_SCENEOBJS->colliders, data)
+        || !scene_scripts_updates(data)
+        || !get_scripts_updates(data, G_ACTUAL_SCENEOBJS->scripts))
+            return 0;
         transform_updates(data, G_ACTUAL_SCENEOBJS->transforms);
-        graphic_engine(data);
+        if (!graphic_engine(data))
+            return 0;
         sfRenderWindow_display(G_WINDOW);
     }
-    return 0;
+    return 1;
 }

@@ -10,7 +10,7 @@
 
 #include "../types.h"
 
-void get_scripts_updates(game_data_t *data, entity_list_t *list);
-void update_script(game_data_t *data, entity_list_t *entity, script_t *script);
+int get_scripts_updates(game_data_t *data, entity_list_t *list);
+int update_script(game_data_t *data, entity_list_t *entity, script_t *script);
 
 #endif //LIBCSFML_SCRIPT_UPDATES_H

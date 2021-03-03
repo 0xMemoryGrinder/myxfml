@@ -127,6 +127,7 @@ static const struct global_func_ptr_tab_s scripts_func_ptr_tab[] = {
         {"next_route", (void *(*)()) &next_route},
         {"health_stats_script", (void *(*)()) &health_stats_script},
         {"attack_stats_script", (void *(*)()) &attack_stats_script},
+        {"wave_control_script", (void *(*)()) &wave_control_script},
         {"walking_direction_script",
         (void *(*)()) &walking_direction_script},
         {NULL, NULL}

@@ -32,8 +32,19 @@ static int modify_collider(xmlnode_t *node, entity_t *entity)
     !mod_float_value(node, &E_COLLIDER->position.x, "coll-x") ||
     !mod_float_value(node, &E_COLLIDER->position.y, "coll-y") ||
     !mod_float_value(node, &E_COLLIDER->dimensions.x, "coll-w") ||
-    !mod_float_value(node, &E_COLLIDER->dimensions.y, "coll-h"))
+    !mod_float_value(node, &E_COLLIDER->dimensions.y, "coll-h") ||
+    !mod_float_value(node, &E_COLLIDER->radius, "coll-r"))
         return 0;
+    if (E_COLLIDER->is_circle) {
+        sfCircleShape_setRadius(E_COLLIDER->circ_collider, E_COLLIDER->radius);
+        sfCircleShape_setPosition(E_COLLIDER->circ_collider,
+        E_COLLIDER->position);
+    } else {
+        sfRectangleShape_setSize(E_COLLIDER->rect_collider,
+        E_COLLIDER->dimensions);
+        sfRectangleShape_setPosition(E_COLLIDER->rect_collider,
+        E_COLLIDER->position);
+    }
     return 1;
 }
 

@@ -10,8 +10,8 @@
 
 #include "../types.h"
 
-void physics_update(entity_list_t *list, game_data_t *data);
-void check_collision(entity_list_t *entity, entity_list_t *collider,
+int physics_update(entity_list_t *list, game_data_t *data);
+int check_collision(entity_list_t *entity, entity_list_t *collider,
                      game_data_t *data);
 
 

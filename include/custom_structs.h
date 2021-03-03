@@ -150,6 +150,7 @@ typedef struct level_waves_s {
     sfInt64 actual_time;
     sfBool wave_done;
     wave_t *waves;
+    sfVector2f start;
 } level_waves_t;
 
 #endif //MY_DEFENDER_CUSTOM_STRUCTS_H

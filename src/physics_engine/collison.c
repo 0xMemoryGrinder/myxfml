@@ -89,10 +89,13 @@ int physics_update(entity_list_t *list, game_data_t *data)
     for (; entity; entity = entity->next) {
         if (entity->entity->toggle == OFF || entity->E_COLLIDER->toggle == OFF)
             continue;
-         colliders = entity->next;
-        for (; colliders; colliders = colliders->next) {
-            check_collision(entity, colliders, data);
-        }
+        if (!entity->E_COLLIDER->is_circle)
+            sfRenderWindow_drawRectangleShape(G_WINDOW, entity->E_COLLIDER->rect_collider, NULL);
+        else
+            sfRenderWindow_drawCircleShape(G_WINDOW, entity->E_COLLIDER->circ_collider, NULL);
+        colliders = entity->next;
+       if (!check_collision(entity, colliders, data))
+           return 0;
     }
     return 1;
 }

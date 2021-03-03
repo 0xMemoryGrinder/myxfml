@@ -46,7 +46,6 @@ int load_entity_toggle(xmlnode_t *node, entity_t *entity)
 static int load_entity_child(xmlnode_t *node, entity_t *entity)
 {
     int status1 = 1;
-    int status2 = 1;
     char *path = xml_value_str("path", node, &status1);
     entity_t *to_add = NULL;
 

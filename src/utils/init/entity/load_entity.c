@@ -6,12 +6,28 @@
 */
 
 #include <stdlib.h>
+#include "utils/init_xfml.h"
 #include "utils/init/entity/components/load_components.h"
 #include "graphic_engine/render_fonctions.h"
 #include "utils/init/entity/load_entity_properties.h"
 #include "my_puterr.h"
 #include "my_xml.h"
 #include "my.h"
+
+int load_entity_on_destroy(xmlnode_t *node, entity_t *entity)
+{
+    int status = 1;
+    char *content = xml_value_str("action", node, &status);
+
+    if (!status)
+        return 0;
+    entity->on_destroy = fill_function(content, destroy_entity_func_ptr_tab,
+    &status);
+    free(content);
+    if (!status)
+        return 0;
+    return 1;
+}
 
 int iterate_entity_file(xmlnode_t *node, entity_t *entity)
 {

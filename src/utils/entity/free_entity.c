@@ -57,6 +57,7 @@ void free_entity_list(entity_t *entity)
     if (entity->next)
         free_entity_list(entity->next);
     free_entity(entity);
+    entity = NULL;
 }
 
 

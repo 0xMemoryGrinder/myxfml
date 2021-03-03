@@ -42,6 +42,7 @@ struct entity_s{
     components_t *components;
     char *path;
     entity_t *children;
+    void *(*on_destroy)();
     entity_t *parent;
     entity_t *next;
     entity_t *back;

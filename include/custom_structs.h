@@ -18,7 +18,7 @@ typedef enum {
     LEVEL_1, SCENE_2, SCENE_3, SCENE_4
 } scene_id;
 
-enum entity_id_e{MOB, PNJ, PLAYER, WALL, TOWER, MAP, ROUTE};
+enum entity_id_e{MOB, PNJ, PLAYER, WALL, TOWER, MAP, ROUTE, PROJECTILE};
 
 typedef enum anim_type_e{
     IDLE, ATTACK, DEFENSE, MOVING, HURT,
@@ -70,9 +70,8 @@ enum {
     UP, DOWN, RIGHT, LEFT,
 };
 
-// Projectile type
 
-typedef enum projectile_type_s {ARROW, BOMB}projectile_type_t;
+//************************ MOB ROUTE ******************************//
 
 static const sfVector2f routeslvl_1[] = {
         {72, 0},
@@ -94,26 +93,6 @@ static const td_route_t td_routes[] = {
         [LEVEL_1] = {routeslvl_1, 8},
 };
 
-typedef struct projectile_s projectile_t;
-
-struct projectile_s {
-    int damage;
-};
-
-// tower type
-typedef struct tower_data_s tower_data_t;
-
-struct tower_data_s {
-    toggle_t is_targeting;
-    toggle_t is_attacking;
-    entity_list_t *targets;
-    sfVector2f target;
-    int level;
-    int damage;
-    int range;
-    float attack_speed;
-};
-
 typedef struct mob_route_s {
     sfVector2f target;
     int checkpoints_passed;
@@ -124,6 +103,20 @@ typedef struct next_route_sdata_s {
     sfVector2f next_pos;
     int route_nb;
 } next_route_sdata_t;
+//*********************** END MOB ROUTE ***************************//
+/////////////////////////////////////////////////////////////////////
+/////////////////////////////////////////////////////////////////////
+//*********************** RP Component's **************************//
+
+typedef enum projectile_type_s {ARROW, BOMB} projectile_type_t;
+
+typedef struct projectile_s projectile_t;
+
+struct projectile_s {
+    int damage;
+    entity_t *target;
+    sfVector2f target_center;
+};
 
 
 typedef struct health_stats_s {
@@ -152,5 +145,24 @@ typedef struct level_waves_s {
     wave_t *waves;
     sfVector2f start;
 } level_waves_t;
+
+
+typedef struct tower_data_s {
+    toggle_t is_targeting;
+    toggle_t is_attacking;
+    entity_list_t *targets;
+    entity_t *target;
+    int level;
+    int damage;
+    int range;
+    float attack_speed;
+} tower_data_t;
+
+//********************** END TD Component's ***********************//
+/////////////////////////////////////////////////////////////////////
+/////////////////////////////////////////////////////////////////////
+//********************** Constants ********************************//
+
+static const char *towers_stats_conf_filepath = "conf/towers_stats.xml";
 
 #endif //MY_DEFENDER_CUSTOM_STRUCTS_H

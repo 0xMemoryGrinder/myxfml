@@ -65,7 +65,7 @@
 
 
 //  CLOCK
-#define G_CLOCK data->stats->time->game_clock
+#define G_CLOCK data->stats->time
 
 
 //  AUDIO

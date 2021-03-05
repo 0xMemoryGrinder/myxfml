@@ -20,6 +20,6 @@ void transform_collider(entity_t *entity);
 void reset_transform(entity_t *entity);
 void transform_updates(game_data_t *data, entity_list_t *transforms);
 
-sfVector3f get_direction(sfVector2f position, float speed, sfVector2f target);
+float get_direction(sfVector2f position, float speed, sfVector2f target, sfVector2f *new);
 
 #endif //LIBCSFML_PHYSICS_H

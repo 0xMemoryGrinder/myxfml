@@ -7,8 +7,8 @@
 
 #include <stdlib.h>
 #include <stdio.h>
-#include "../../include/my_csfml.h"
-#include "../../include/graphic_engine/render_fonctions.h"
+#include "my_csfml.h"
+#include "my.h"
 
 void get_render_updates(game_data_t *data, entity_list_t *renders)
 {
@@ -25,3 +25,13 @@ void get_render_updates(game_data_t *data, entity_list_t *renders)
     }
 }
 
+int graphic_engine(game_data_t *data)
+{
+    if (!get_animations_update(data, G_ACTUAL_SCENEOBJS->render))
+        return 0;
+    G_ACTUAL_SCENEOBJS->render = mergeSort(G_ACTUAL_SCENEOBJS->render);
+    get_render_updates(data, G_ACTUAL_SCENEOBJS->render);
+    get_render_updates(data, G_ACTUAL_SCENEOBJS->gui);
+    get_texts_updates(data, G_ACTUAL_SCENEOBJS->text);
+    return 1;
+}

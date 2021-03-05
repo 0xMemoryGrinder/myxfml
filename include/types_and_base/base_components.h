@@ -110,6 +110,8 @@ struct interact_s {
     toggle_t click_left;
     toggle_t is_lclick;
     toggle_t is_rclick;
+    sfVector2f rclick;
+    sfVector2f lclick;
 };
 
 
@@ -135,6 +137,7 @@ struct anim_s {
     int (* frame_action)(game_data_t *d, entity_t *e, animation_t *a);
     anim_t *next;
 };
+
 
 struct frame_s {
     sfIntRect crop;

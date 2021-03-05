@@ -15,17 +15,17 @@
 
 entity_list_t *split(entity_list_t *head);
 
-int get_y_pivot(entity_list_t *entity)
+float get_y_pivot(entity_list_t *entity)
 {
-    return entity->E_TRANSFORM->position.y +
-    (entity->E_ANIMATION->actual->frame[entity->ACTUAL_FRAME].crop.height *
-    entity->E_TRANSFORM->scale.y);
+    sfFloatRect rect = sfSprite_getGlobalBounds(entity->E_RSPRITE->sprite);
+
+    return rect.top + (rect.height);
 }
 
 static entity_list_t *merge(entity_list_t *first, entity_list_t *second)
 {
-    int f;
-    int s;
+    float f;
+    float s;
 
     if (!first)
         return second;

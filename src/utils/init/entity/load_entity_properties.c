@@ -52,6 +52,8 @@ static int load_entity_child(xmlnode_t *node, entity_t *entity)
     if (!status1)
         return 0;
     to_add = load_entity(path, entity);
+    if (!entity)
+        return -1;
     add_entity_children(to_add, &(entity->children));
     return 1;
 }

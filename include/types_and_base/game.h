@@ -25,17 +25,34 @@ struct camera_s{
 
 struct time_stats_s{
     sfClock *game_clock;
-    sfInt32 time;
+    sfInt64 time;
+    float dt;
 };
 
-struct game_stats_s{
-    time_stats_t *time;
-    sfEvent *event;
+typedef struct click_info_s {
     toggle_t is_rclick;
     toggle_t is_lclick;
     sfVector2f rclick;
     sfVector2f lclick;
+    sfInt64 lclick_time;
+    sfInt64 lclick_trigger;
+    sfInt64 rclick_time;
+    sfInt64 rclick_trigger;
+} click_info_t;
+
+typedef struct click_log {
+    toggle_t is_rclick;
+    toggle_t is_lclick;
+    sfVector2f rclick;
+    sfVector2f lclick;
+} click_log_t;
+
+struct game_stats_s{
+    time_stats_t *time;
+    sfEvent *event;
     camera_t *camera;
+    click_info_t click;
+    click_log_t click_log;
 };
 
 struct settings_s{

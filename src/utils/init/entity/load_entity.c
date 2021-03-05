@@ -73,9 +73,37 @@ entity_t *load_entity(char *filepath, entity_t *parent)
     return entity;
 }
 
-/*
-int main()
+entity_t *gen_entity_fromnode(xmlnode_t *node, entity_t *parent,
+game_data_t *data, sfBool is_insert)
 {
-    entity_t *test = load_entity("conf/entity_templates/template_with_child.xml", NULL);
-    return 0;
-} */
+    char *path = get_entity_path(node, G_ACTUAL_SCENE.name);
+    entity_t *entity = load_entity(path, parent);
+    int status = 1;
+
+    if (!entity)
+        return NULL;
+    if (xml_toggle("modify", node, &status) == 1)
+        moddify_entity(node, entity);
+    if (is_insert)
+        insert_entity_inlists(entity, G_ACTUAL_SCENEOBJS, false);
+    free(path);
+    return entity;
+}
+
+entity_t *gen_entity_template_byname(char *name, entity_t *parent,
+game_data_t *data, sfBool is_insert)
+{
+    char *path = my_multiple_strcat(3, "conf/entity_templates/",
+    name , ".xml");
+    entity_t *entity;
+
+    if (path == NULL)
+        return NULL;
+    entity = load_entity(path, parent);
+    if (!entity)
+        return NULL;
+    if (is_insert)
+        insert_entity_inlists(entity, G_ACTUAL_SCENEOBJS, false);
+    free(path);
+    return entity;
+}

@@ -12,7 +12,7 @@
 
 sfVector2f get_cursor_pos(game_data_t *data);
 void check_inputs(game_data_t *data, entity_list_t *interacts,
-sfVector2f right, sfVector2f left);
+sfVector2f *right, sfVector2f *left);
 void get_clicks_info(sfVector2f *right, sfVector2f *left, game_data_t *data);
 
 #endif //LIBCSFML_INPUT_ENGINE_H

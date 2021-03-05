@@ -128,6 +128,8 @@ static const struct global_func_ptr_tab_s scripts_func_ptr_tab[] = {
         {"health_stats_script", (void *(*)()) &health_stats_script},
         {"attack_stats_script", (void *(*)()) &attack_stats_script},
         {"wave_control_script", (void *(*)()) &wave_control_script},
+        {"set_buildmenu_script", (void *(*)()) &set_buildmenu_script},
+        {"on_sign_click", (void *(*)()) &on_sign_click},
         {"walking_direction_script",
         (void *(*)()) &walking_direction_script},
         {NULL, NULL}

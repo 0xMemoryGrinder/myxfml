@@ -106,8 +106,8 @@ int load_scene(char *path, scene_id id, game_data_t *data)
     &G_ACTUAL_SCENE);
     insert_globals(extract_xml_child("insert", node, false),
     data, &data->scenes->list[id]);
-    if (!load_scene_entities(extract_xml_child("entities", node, false),
-    &data->scenes->list[id]))
+    if (!status || !load_scene_entities(extract_xml_child("entities",
+    node, false), &data->scenes->list[id]))
         return 0;
     free_xmlnode(doc->root);
     free_multiple_ptr(2, doc, path1);

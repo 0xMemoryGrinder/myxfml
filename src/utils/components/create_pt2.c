@@ -81,5 +81,10 @@ interact_t *malloc_interact(void)
         __FILE__, __LINE__).ptr;
     new->click_left = OFF;
     new->click_right = OFF;
+    new->is_lclick = OFF;
+    new->is_rclick = OFF;
+    new->toggle = OFF;
+    new->lclick = (sfVector2f){0, 0};
+    new->rclick = (sfVector2f){0, 0};
     return new;
 }

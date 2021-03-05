@@ -47,7 +47,8 @@ int get_animations_update(game_data_t *data, entity_list_t *animation)
     if (!list || list->entity == NULL)
         return -1;
     for (; status && list; list = list->next) {
-        if (list->entity->toggle == OFF || list->E_ANIMATION->toggle == OFF)
+        if (list->entity->toggle == OFF || !list->E_ANIMATION
+        || list->E_ANIMATION->toggle == OFF)
             continue;
         if (list->E_ANIMATION->actual_anim != list->E_ANIMATION->actual->name)
             update_anim_state(list->entity);

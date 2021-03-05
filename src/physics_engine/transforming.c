@@ -59,6 +59,8 @@ void transform_updates(game_data_t *data, entity_list_t *transforms)
     for (;list ; list = list->next) {
         if (list->entity->toggle == OFF || list->E_TRANSFORM->toggle == OFF)
             continue;
+        list->E_TRANSFORM->velocity.x *= data->stats->time->dt;
+        list->E_TRANSFORM->velocity.y *= data->stats->time->dt;
         transform_collider(list->entity);
         transform_rendersprite(list->entity);
         reset_transform(list->entity);

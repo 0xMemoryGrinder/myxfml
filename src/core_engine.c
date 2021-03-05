@@ -6,21 +6,16 @@
 */
 
 #include <stdio.h>
-#include <stdlib.h>
-#include <time.h>
-#include <math.h>
-
-#include "utils/init_xfml.h"
 #include "my_csfml.h"
 #include "my_puterr.h"
-#include "audio_engine/audio_engine.h"
-#include "scripts_engine/script_updates.h"
-#include "physics_engine/physics.h"
-#include "graphic_engine/render_fonctions.h"
-#include "input_engine/input_engine.h"
+#include <math.h>
 
 void start_game(game_data_t *data)
 {
+    data->stats->click.lclick_time = 0;
+    data->stats->click.rclick_time = 0;
+    data->stats->click.lclick_trigger = SECONDS(0);
+    data->stats->click.rclick_trigger = SECONDS(0);
     if (data->game_settings->video->is_fullscreen)
         G_WINDOW = sfRenderWindow_create(sfVideoMode_getDesktopMode(),
         data->game_settings->video->game_title, sfFullscreen, NULL);
@@ -28,6 +23,8 @@ void start_game(game_data_t *data)
         G_WINDOW = sfRenderWindow_create(data->game_settings->video->mode,
         data->game_settings->video->game_title, sfClose, NULL);
     data->stats->time->game_clock = sfClock_create();
+    sfRenderWindow_setFramerateLimit(G_WINDOW, data->game_settings->video->fps);
+    data->stats->time->time = 0;
 }
 
 void input_engine(game_data_t *data)
@@ -40,7 +37,12 @@ void input_engine(game_data_t *data)
             sfRenderWindow_close(G_WINDOW);
     }
     get_clicks_info(&right, &left, data);
-    check_inputs(data, G_ACTUAL_SCENEOBJS->interact, right, left);
+    if (data->stats->click.is_lclick || data->stats->click.is_rclick)
+        check_inputs(data, G_ACTUAL_SCENEOBJS->gui, &right, &left);
+    if (data->stats->click.is_lclick || data->stats->click.is_rclick)
+        check_inputs(data, G_ACTUAL_SCENEOBJS->interact, &right, &left);
+    data->stats->click.lclick = left;
+    data->stats->click.rclick = right;
 }
 
 int scene_scripts_updates(game_data_t *data)
@@ -49,7 +51,7 @@ int scene_scripts_updates(game_data_t *data)
     int status = 1;
 
     if (G_ACTUAL_SCENE.scene_scripts->toggle == OFF)
-        return - 1;
+        return -1;
     for (; status && scripts; scripts = scripts->next) {
         if (scripts->toggle == OFF)
             continue;
@@ -58,34 +60,59 @@ int scene_scripts_updates(game_data_t *data)
     return status;
 }
 
-int graphic_engine(game_data_t *data)
+static int get_updates(game_data_t *data)
 {
-    if (!get_animations_update(data, G_ACTUAL_SCENEOBJS->render))
-        return 0;
-    G_ACTUAL_SCENEOBJS->render = mergeSort(G_ACTUAL_SCENEOBJS->render);
-    get_render_updates(data, G_ACTUAL_SCENEOBJS->render);
-    get_render_updates(data, G_ACTUAL_SCENEOBJS->gui);
-    get_texts_updates(data, G_ACTUAL_SCENEOBJS->text);
+    int status1;
+    int status2;
+    int status3;
+
+    status1 = physics_update(G_ACTUAL_SCENEOBJS->colliders, data);
+    if (status1 == 0 || status1 == SCENE_LOADING)
+        return status1;
+    status2 = scene_scripts_updates(data);
+    if (status2 == 0 || status2 == SCENE_LOADING)
+        return status2;
+    status3 = get_scripts_updates(data, G_ACTUAL_SCENEOBJS->scripts);
+    if (status3 == 0 || status3 == SCENE_LOADING)
+        return status3;
     return 1;
 }
 
 int xfml_game_loop(game_data_t * data)
 {
+    int status = 1;
+    int loops = 0;
+    float t = 0;
+    float t0 = 0;
+
+    sfClock *clock = sfClock_create();
     while (sfRenderWindow_isOpen(G_WINDOW)) {
+
+        t0 = t;
+
+        t = sfTime_asSeconds(sfClock_getElapsedTime(clock));
+
+        data->stats->time->dt = t - t0;
+        if (data->stats->time->dt > 0.15f)
+            data->stats->time->dt = 0.15f;
+
         input_engine(data);
         sfRenderWindow_clear(G_WINDOW, sfBlack);
         music_engine(data, G_AUDIO);
         sfx_engine(data, G_ACTUAL_SCENEOBJS->sfx);
         render_background(data, G_ACTUAL_SCENEOBJS->background);
-        if (!physics_update(G_ACTUAL_SCENEOBJS->colliders, data)
-        || !scene_scripts_updates(data)
-        || !get_scripts_updates(data, G_ACTUAL_SCENEOBJS->scripts))
+        status = get_updates(data);
+        if (status == 0)
             return 0;
+        else if (status == SCENE_LOADING)
+            continue;
         transform_updates(data, G_ACTUAL_SCENEOBJS->transforms);
         if (!graphic_engine(data))
             return 0;
         sfRenderWindow_display(G_WINDOW);
+        //printf(" FRAME : %i, FRAME TIME = %llu\n", loops, t);
         kill_entities(data, G_ACTUAL_SCENE.to_free);
+        loops++;
     }
     return 1;
 }

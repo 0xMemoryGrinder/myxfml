@@ -73,7 +73,7 @@ game_data_t *data)
             is_collide = check_circles(entity->E_COLLIDER,
             collider->E_COLLIDER);
         else
-            is_collide = rectangle_and_rectangle(
+             is_collide = rectangle_and_rectangle(
             entity->E_COLLIDER->rect_collider,
             collider->E_COLLIDER->rect_collider);
         status = check_collide_script(entity, collider, data, is_collide);

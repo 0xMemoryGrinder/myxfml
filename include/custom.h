@@ -22,6 +22,9 @@ int attack_stats_script(void **none, game_data_t *data,
 entity_t *entity);
 int wave_control_script(void **none, game_data_t *data,
 entity_t *unused);
+int on_sign_click(void **none, game_data_t *data, entity_t *entity);
+int set_buildmenu_script(void **unused, game_data_t *data, entity_t *entity);
+
 
 // DESTROY DATA FUNCTIONS
 void destroy_script_data(void **data);

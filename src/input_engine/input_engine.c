@@ -5,7 +5,7 @@
 ** header for input_engine.c
 */
 
-#include "../../include/my_csfml.h"
+#include "my_csfml.h"
 
 sfVector2f get_cursor_pos(game_data_t *data)
 {

@@ -81,21 +81,16 @@ static int get_updates(game_data_t *data)
 int xfml_game_loop(game_data_t * data)
 {
     int status = 1;
-    int loops = 0;
     float t = 0;
     float t0 = 0;
-
     sfClock *clock = sfClock_create();
+
     while (sfRenderWindow_isOpen(G_WINDOW)) {
-
         t0 = t;
-
         t = sfTime_asSeconds(sfClock_getElapsedTime(clock));
-
         data->stats->time->dt = t - t0;
         if (data->stats->time->dt > 0.15f)
             data->stats->time->dt = 0.15f;
-
         input_engine(data);
         sfRenderWindow_clear(G_WINDOW, sfBlack);
         music_engine(data, G_AUDIO);
@@ -110,9 +105,7 @@ int xfml_game_loop(game_data_t * data)
         if (!graphic_engine(data))
             return 0;
         sfRenderWindow_display(G_WINDOW);
-        //printf(" FRAME : %i, FRAME TIME = %llu\n", loops, t);
         kill_entities(data, G_ACTUAL_SCENE.to_free);
-        loops++;
     }
     return 1;
 }

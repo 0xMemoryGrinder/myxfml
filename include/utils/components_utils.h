@@ -12,7 +12,21 @@
 
 
 void toggle_collider_fromlist(entity_t *list, char *name, toggle_t toggle);
+
+
+//********* SPRITES  *********//
 void toggle_rendersprite_fromlist(entity_t *list, char *name, toggle_t toggle);
+
+// get sprites position
+void get_sprite_side(entity_t *entity1, entity_t *entity,
+int side, float spacing);
+sfVector2f get_sprite_center(entity_t *entity);
+void set_sprite_oncenter(entity_t *entity, sfVector2f center);
+
+
+//********* END SPRITES  *********//
+
+
 void toggle_transform_fromlist(entity_t *list, char *name, toggle_t toggle);
 
 // SCRIPTS

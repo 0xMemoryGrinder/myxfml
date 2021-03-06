@@ -32,8 +32,8 @@ int load_script_destroy(xmlnode_t *node, script_t *script)
         return 0;
     if (!content)
         return 1;
-    script->destroy = fill_function(content, destroy_sdata_func_ptr_tab,
-    &status);
+    script->destroy = (void (*)(void **))fill_function(content,
+    destroy_sdata_func_ptr_tab, &status);
     free(content);
     if (!status)
         return 0;

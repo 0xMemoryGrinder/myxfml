@@ -16,7 +16,7 @@
 //
 void update_anim_frame(game_data_t *data, entity_t *list);
 int get_animations_update(game_data_t *data, entity_list_t *animation);
-void update_anim_state(entity_t * entity);
+int update_anim_state(entity_t * entity);
 int graphic_engine(game_data_t *data);
 
 //

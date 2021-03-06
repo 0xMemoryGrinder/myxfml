@@ -21,16 +21,15 @@
 #define E_INTERACT entity->components->interact
 #define E_SCRIPT entity->components->scripts
 #define E_ANIMATION entity->components->animation
-//  FROM : COLLIDER
-#define C_COLLIDER collider->components->collider
-#define C_RSPRITE collider->components->render
-#define C_TRANSFORM collider->components->transform
-#define C_SOUND collider->components->sounds
-#define C_TEXT collider->components->texts
-#define C_INTERACT collider->components->interact
-#define C_SCRIPT collider->components->scripts
-#define C_ANIMATION collider->components->animation
-
+//  FROM : COMPONENTS
+#define C_COLLIDER components->collider
+#define C_RSPRITE components->render
+#define C_TRANSFORM components->transform
+#define C_SOUND components->sounds
+#define C_TEXT components->texts
+#define C_INTERACT components->interact
+#define C_SCRIPT components->scripts
+#define C_ANIMATION components->animation
 
 //
 //  Animation component

@@ -14,7 +14,7 @@
 #include "../../include/types_and_base/clock.h"
 #include "../../include/types_and_base/struct_shortcuts.h"
 
-void update_anim_state(entity_t * entity)
+int update_anim_state(entity_t * entity)
 {
     anim_t *list = E_ANIMATION->list;
 
@@ -22,10 +22,12 @@ void update_anim_state(entity_t * entity)
         if (list->name == E_ANIMATION->actual_anim) {
             E_ANIMATION->actual = list;
             E_ANIMATION->actual_frame = 0;
-            return;
+            sfSprite_setTextureRect(E_RSPRITE->sprite, ACTUAL_CROP.crop);
+            return 0;
         }
     }
     E_ANIMATION->actual_anim = E_ANIMATION->actual->name;
+    return 1;
 }
 
 void update_anim_frame(game_data_t *data, entity_t *entity)
@@ -37,6 +39,7 @@ void update_anim_frame(game_data_t *data, entity_t *entity)
         ACTUAL_FRAME++;
     if (ACTUAL_FRAME >= E_ANIMATION->actual->frames_count)
         ACTUAL_FRAME = 0;
+    sfSprite_setTextureRect(E_RSPRITE->sprite, ACTUAL_CROP.crop);
 }
 
 int get_animations_update(game_data_t *data, entity_list_t *animation)
@@ -50,11 +53,12 @@ int get_animations_update(game_data_t *data, entity_list_t *animation)
         if (list->entity->toggle == OFF || !list->E_ANIMATION
         || list->E_ANIMATION->toggle == OFF)
             continue;
-        if (list->E_ANIMATION->actual_anim != list->E_ANIMATION->actual->name)
+        if (list->E_ANIMATION->actual_anim !=
+        list->E_ANIMATION->actual->name) {
             update_anim_state(list->entity);
+            continue;
+        }
         update_anim_frame(data, list->entity);
-        sfSprite_setTextureRect(list->E_RSPRITE->sprite,
-        list->A_CROP[list->ACTUAL_FRAME].crop);
         if (list->E_ANIMATION->actual->frame_action != NULL)
             status = list->E_ANIMATION->actual->frame_action(data,
             list->entity, list->E_ANIMATION);

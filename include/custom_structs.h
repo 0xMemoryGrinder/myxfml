@@ -120,8 +120,8 @@ struct projectile_s {
 
 
 typedef struct health_stats_s {
-    int health;
-    int max_health;
+    float health;
+    float max_health;
     sfRectangleShape *life;
     sfRectangleShape *total_life;
 } health_stats_t;
